@@ -1,0 +1,10 @@
+# Backup files from the live server
+*.bak*
+
+# Common junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo

@@ -1,0 +1,719 @@
+[
+  {
+    "id": "lora1-lett-01",
+    "nivå": "lett",
+    "type": "flervalg",
+    "spørsmål": "Hva står forkortelsen LoRA for?",
+    "alternativer": [
+      "Low-Rank Adaptation",
+      "Long-Range Attention",
+      "Layer-wise Optimized Retraining Algorithm",
+      "Low-Resolution Approximation"
+    ],
+    "svar": [
+      "Low-Rank Adaptation"
+    ],
+    "forklaring": {
+      "steg": [
+        "LoRA = Low-Rank Adaptation, altså tilpasning med lav rang.",
+        "Navnet kommer av at endringen i vektene, ΔW, skrives som et produkt av to smale matriser med lav rang r."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-02",
+    "nivå": "lett",
+    "type": "flervalg",
+    "spørsmål": "Hvilke vekter oppdateres når du trener med LoRA?",
+    "alternativer": [
+      "Alle vektene i modellen",
+      "Bare adaptermatrisene A og B",
+      "Bare det siste laget i modellen",
+      "Basemodellen først, deretter A og B"
+    ],
+    "svar": [
+      "Bare adaptermatrisene A og B"
+    ],
+    "forklaring": {
+      "steg": [
+        "Basemodellens vekter W₀ er frosset og får verken gradienter eller optimizer-tilstand.",
+        "Bare de små matrisene A og B trenes. Derfor er LoRA så billig."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-03",
+    "nivå": "lett",
+    "type": "tall",
+    "spørsmål": "En vektmatrise i et attention-lag har formen 4096 × 4096. Hvor mange parametre (tall) inneholder den?",
+    "svar": [
+      "16777216"
+    ],
+    "forklaring": {
+      "steg": [
+        "Antall elementer i en matrise = rader · kolonner.",
+        "4096 · 4096 = 16 777 216."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-04",
+    "nivå": "lett",
+    "type": "tall",
+    "spørsmål": "Du legger en LoRA-adapter med r = 8 på en 4096 × 4096-matrise. Hvor mange trenbare parametre har adapteren (A og B til sammen)?",
+    "svar": [
+      "65536"
+    ],
+    "forklaring": {
+      "steg": [
+        "A er r × k = 8 × 4096 = 32 768 parametre.",
+        "B er d × r = 4096 × 8 = 32 768 parametre.",
+        "Til sammen: r(d + k) = 8 · 8192 = 65 536."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-05",
+    "nivå": "lett",
+    "type": "tall",
+    "spørsmål": "Hva blir skaleringsfaktoren s = α/r når r = 16 og lora_alpha = 32?",
+    "svar": [
+      "2"
+    ],
+    "forklaring": {
+      "steg": [
+        "s = α / r = 32 / 16 = 2.",
+        "Adapterens bidrag B·A·x ganges altså med 2."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-06",
+    "nivå": "lett",
+    "type": "tall",
+    "spørsmål": "Hva blir skaleringsfaktoren s = α/r når r = 8 og lora_alpha = 8?",
+    "svar": [
+      "1"
+    ],
+    "forklaring": {
+      "steg": [
+        "s = α / r = 8 / 8 = 1.",
+        "Når α = r, legges B·A til uten ekstra forsterkning eller demping."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-07",
+    "nivå": "lett",
+    "type": "tekst",
+    "spørsmål": "Den ene LoRA-matrisen initialiseres med bare nuller, slik at ΔW = 0 når treningen starter. Hvilken matrise er det? (Svar med bokstaven.)",
+    "svar": [
+      "B",
+      "matrise B",
+      "matrisen B",
+      "B-matrisen"
+    ],
+    "forklaring": {
+      "steg": [
+        "A får små tilfeldige verdier, B settes til 0.",
+        "Da er ΔW = B·A = 0 i første steg, og modellen oppfører seg nøyaktig som basemodellen når treningen starter."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-08",
+    "nivå": "lett",
+    "type": "flervalg",
+    "spørsmål": "Hva er ΔW = B·A i det aller første treningssteget, med standard initialisering?",
+    "alternativer": [
+      "En nullmatrise",
+      "En identitetsmatrise",
+      "Lik W₀",
+      "En tilfeldig matrise"
+    ],
+    "svar": [
+      "En nullmatrise"
+    ],
+    "forklaring": {
+      "steg": [
+        "B er initialisert til 0.",
+        "Uansett hva A er, blir B·A = 0·A = 0.",
+        "Modellen starter derfor identisk med basemodellen."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-09",
+    "nivå": "lett",
+    "type": "tekst",
+    "spørsmål": "Hva heter 4-bits datatypen som QLoRA bruker for å lagre basemodellen? (Forkortelsen holder.)",
+    "svar": [
+      "NF4",
+      "NormalFloat4",
+      "NormalFloat",
+      "4-bit NormalFloat",
+      "NormalFloat 4",
+      "Normal Float 4",
+      "nf-4"
+    ],
+    "forklaring": {
+      "steg": [
+        "QLoRA lagrer de frosne vektene i NF4 (4-bit NormalFloat).",
+        "NF4 legger de 16 nivåene tettest der vektene ligger, siden vektene er omtrent normalfordelt rundt 0."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-10",
+    "nivå": "lett",
+    "type": "flervalg",
+    "spørsmål": "Hva bestemmer innstillingen target_modules i LoraConfig?",
+    "alternativer": [
+      "Hvilke lag i modellen som får en LoRA-adapter",
+      "Hvilken GPU treningen kjører på",
+      "Hvor mange epoker du trener",
+      "Hvilket filformat adapteren lagres i"
+    ],
+    "svar": [
+      "Hvilke lag i modellen som får en LoRA-adapter"
+    ],
+    "forklaring": {
+      "steg": [
+        "target_modules er en liste (eller \"all-linear\") over hvilke lineære lag adapteren festes på, f.eks. q_proj og v_proj.",
+        "Lag som ikke står i listen, får ingen adapter og endres ikke."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-11",
+    "nivå": "lett",
+    "type": "tall",
+    "spørsmål": "En modell har 7 milliarder parametre lagret i bf16 (2 byte per parameter). Omtrent hvor mange GB tar vektene? (1 GB = 10⁹ byte)",
+    "svar": [
+      "14"
+    ],
+    "toleranse": 1.0,
+    "forklaring": {
+      "steg": [
+        "Byte = parametre · byte per parameter.",
+        "7 · 10⁹ · 2 = 14 · 10⁹ byte = 14 GB.",
+        "Toleranse ±1 GB, så svar i GiB (≈ 13,04) godtas også."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-12",
+    "nivå": "lett",
+    "type": "flervalg",
+    "spørsmål": "Omtrent hvor stor er en typisk LoRA-adapterfil for en 7B-språkmodell?",
+    "alternativer": [
+      "Noen få kB",
+      "Fra noen få til noen hundre MB",
+      "Omtrent 14 GB, som modellen",
+      "Over 100 GB"
+    ],
+    "svar": [
+      "Fra noen få til noen hundre MB"
+    ],
+    "forklaring": {
+      "steg": [
+        "Adapteren har typisk 0,1–1 % av parameterne, altså noen millioner til noen titalls millioner.",
+        "4–40 millioner parametre i 16 bit blir ca. 8–80 MB.",
+        "Hele modellen i bf16 er til sammenligning ca. 14 GB."
+      ]
+    }
+  },
+  {
+    "id": "lora1-lett-13",
+    "nivå": "lett",
+    "type": "tekst",
+    "spørsmål": "Hva heter parameteren i PEFT sin LoraConfig som setter rank? (Bare navnet.)",
+    "svar": [
+      "r",
+      "r=",
+      "rank"
+    ],
+    "forklaring": {
+      "steg": [
+        "I LoraConfig skrives rank som r, f.eks. LoraConfig(r=16, ...).",
+        "Alpha heter lora_alpha og dropout heter lora_dropout."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-01",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "Hvor mange trenbare parametre får en LoRA-adapter med r = 16 på en 4096 × 4096-matrise?",
+    "svar": [
+      "131072"
+    ],
+    "forklaring": {
+      "steg": [
+        "Formel: r(d + k).",
+        "16 · (4096 + 4096) = 16 · 8192 = 131 072.",
+        "Doblet rank gir doblet antall parametre: antallet vokser lineært med r."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-02",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "Hvor mange prosent av parameterne i en 4096 × 4096-matrise er trenbare med LoRA r = 16? (Svar i prosent, f.eks. 1.5)",
+    "svar": [
+      "0.78125"
+    ],
+    "toleranse": 0.01,
+    "forklaring": {
+      "steg": [
+        "Adapter: 16 · 8192 = 131 072. Full: 4096² = 16 777 216.",
+        "131 072 / 16 777 216 = 0,0078125.",
+        "· 100 = 0,78125 %. Toleranse ±0,01 slik at 0,78 godtas."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-03",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "Llama-2-7B har 32 lag, og q_proj og v_proj er 4096 × 4096 i hvert lag. Hvor mange trenbare parametre får du totalt med LoRA r = 8 på bare q_proj og v_proj?",
+    "svar": [
+      "4194304"
+    ],
+    "forklaring": {
+      "steg": [
+        "Per matrise: 8 · (4096 + 4096) = 65 536.",
+        "Per lag: 2 matriser · 65 536 = 131 072.",
+        "32 lag · 131 072 = 4 194 304 ≈ 4,2 millioner."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-04",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "up_proj i Llama-2-7B har formen 11008 × 4096 (d = 11008 utganger, k = 4096 innganger). Hvor mange parametre får en LoRA-adapter med r = 16 på dette laget?",
+    "svar": [
+      "241664"
+    ],
+    "forklaring": {
+      "steg": [
+        "Formelen r(d + k) gjelder også for ikke-kvadratiske matriser.",
+        "B: 11008 × 16 = 176 128. A: 16 × 4096 = 65 536.",
+        "Sum: 16 · (11008 + 4096) = 16 · 15104 = 241 664."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-05",
+    "nivå": "middels",
+    "type": "flervalg",
+    "spørsmål": "W₀ har formen d × k, og ΔW = B·A med rank r. Hvilke former har B og A?",
+    "alternativer": [
+      "B: d × r, A: r × k",
+      "B: r × d, A: k × r",
+      "B: d × k, A: k × k",
+      "B: r × r, A: d × k"
+    ],
+    "svar": [
+      "B: d × r, A: r × k"
+    ],
+    "forklaring": {
+      "steg": [
+        "Produktet må få samme form som W₀, altså d × k.",
+        "(d × r) · (r × k) = d × k. De indre dimensjonene (r) må være like.",
+        "A komprimerer inngangen (k → r), og B ekspanderer igjen (r → d)."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-06",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "Med rsLoRA er skaleringen s = α/√r. Hva blir s når r = 16 og lora_alpha = 16?",
+    "svar": [
+      "4"
+    ],
+    "forklaring": {
+      "steg": [
+        "√16 = 4.",
+        "s = 16 / 4 = 4.",
+        "Til sammenligning gir vanlig LoRA s = 16/16 = 1."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-07",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "Vanlig LoRA (s = α/r): Hva blir skaleringsfaktoren når r = 64 og lora_alpha = 16?",
+    "svar": [
+      "0.25"
+    ],
+    "forklaring": {
+      "steg": [
+        "s = α / r = 16 / 64 = 0,25.",
+        "Med høy rank og liten alpha blir adapteren kraftig dempet. Det er dette problemet rsLoRA prøver å løse."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-08",
+    "nivå": "middels",
+    "type": "flervalg",
+    "spørsmål": "Du har r = 16 og lora_alpha = 16 i vanlig LoRA, og dobler r til 32 uten å endre alpha. Hva skjer med skaleringsfaktoren s?",
+    "alternativer": [
+      "Den halveres (fra 1 til 0,5)",
+      "Den dobles (fra 1 til 2)",
+      "Den er uendret",
+      "Den blir √2 ganger større"
+    ],
+    "svar": [
+      "Den halveres (fra 1 til 0,5)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Før: s = 16/16 = 1.",
+        "Etter: s = 16/32 = 0,5.",
+        "s er omvendt proporsjonal med r når α er fast. Derfor skalerer mange alpha sammen med r (f.eks. α = 2r)."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-09",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "En 8B-modell (8 milliarder parametre) lastes i NF4 (4 bit per vekt). Omtrent hvor mange GB tar vektene, hvis du ser bort fra kvantiseringskonstantene?",
+    "svar": [
+      "4"
+    ],
+    "toleranse": 0.4,
+    "forklaring": {
+      "steg": [
+        "4 bit = 0,5 byte.",
+        "8 · 10⁹ · 0,5 = 4 · 10⁹ byte = 4 GB.",
+        "Toleranse ±0,4 GB, slik at GiB (≈ 3,73) og små tillegg for konstanter (≈ 0,13 GB) godtas."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-10",
+    "nivå": "middels",
+    "type": "tekst",
+    "spørsmål": "Hva kalles QLoRA-teknikken som bruker unified memory til å flytte optimizer-tilstand mellom GPU og CPU-RAM ved minnetopper? (To ord på engelsk.)",
+    "svar": [
+      "paged optimizers",
+      "paged optimizer",
+      "paged optimisers",
+      "paged optimiser",
+      "paged adamw",
+      "paged adam",
+      "paged_adamw",
+      "paged_adamw_8bit",
+      "paged-optimizers"
+    ],
+    "forklaring": {
+      "steg": [
+        "Teknikken heter paged optimizers.",
+        "Optimizer-tilstanden kan pages ut til CPU-RAM ved en minnetopp, på samme måte som et OS bytter minnesider til disk.",
+        "I transformers velges den f.eks. med optim=\"paged_adamw_8bit\"."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-11",
+    "nivå": "middels",
+    "type": "flervalg",
+    "spørsmål": "Hva gjør lora_dropout?",
+    "alternativer": [
+      "Nullstiller tilfeldige elementer i inngangen til LoRA-grenen under trening, for å motvirke overtilpasning",
+      "Fjerner (pruner) lag fra basemodellen for å spare VRAM",
+      "Senker rank gradvis under treningen",
+      "Hopper over tilfeldige treningseksempler"
+    ],
+    "svar": [
+      "Nullstiller tilfeldige elementer i inngangen til LoRA-grenen under trening, for å motvirke overtilpasning"
+    ],
+    "forklaring": {
+      "steg": [
+        "Dropout er regularisering: tilfeldige elementer settes til 0 med sannsynlighet p under trening.",
+        "I LoRA gjelder det bare inngangen til adapteren (B·A-grenen), ikke basemodellen.",
+        "Ved inferens er dropout slått av."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-12",
+    "nivå": "middels",
+    "type": "flervalg",
+    "spørsmål": "Hva er hovedfordelen med å merge adapteren inn i basemodellen (W = W₀ + s·B·A) før bruk?",
+    "alternativer": [
+      "Ingen ekstra regnetid ved inferens",
+      "Mindre fil enn adapteren alene",
+      "Du kan bytte mellom flere adaptere",
+      "Modellen blir automatisk kvantisert"
+    ],
+    "svar": [
+      "Ingen ekstra regnetid ved inferens"
+    ],
+    "forklaring": {
+      "steg": [
+        "Etter merge er modellen en vanlig modell med samme form som originalen.",
+        "B·A·x trenger ikke regnes ut separat, så inferensen er like rask som for basemodellen.",
+        "Ulempen er at du får en full kopi av modellen og ikke lenger kan bytte adapter."
+      ]
+    }
+  },
+  {
+    "id": "lora1-middels-13",
+    "nivå": "middels",
+    "type": "tall",
+    "spørsmål": "En adapter har 4 194 304 parametre lagret i fp16 (2 byte per parameter). Omtrent hvor mange MB blir filen? (1 MB = 10⁶ byte)",
+    "svar": [
+      "8.39"
+    ],
+    "toleranse": 0.5,
+    "forklaring": {
+      "steg": [
+        "4 194 304 · 2 = 8 388 608 byte.",
+        "8 388 608 / 10⁶ ≈ 8,39 MB.",
+        "Toleranse ±0,5 MB, slik at MiB (= 8,0) også godtas. Filhode og metadata er neglisjerbare."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-01",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "Llama-2-7B: 32 lag, q/k/v/o_proj er 4096 × 4096, gate_proj og up_proj er 11008 × 4096, og down_proj er 4096 × 11008. Hvor mange millioner trenbare parametre gir LoRA med r = 16 og target_modules=\"all-linear\"? (Svar i millioner, f.eks. 12.3)",
+    "svar": [
+      "39.98"
+    ],
+    "toleranse": 0.1,
+    "forklaring": {
+      "steg": [
+        "Attention per lag: 4 · 16 · (4096 + 4096) = 524 288.",
+        "MLP per lag: 3 · 16 · (4096 + 11008) = 3 · 16 · 15104 = 724 992.",
+        "Per lag: 524 288 + 724 992 = 1 249 280.",
+        "32 lag: 39 976 960 ≈ 39,98 millioner. Toleranse ±0,1."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-02",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "Fortsettelse: Llama-2-7B har 6,74 milliarder parametre. Hvor mange prosent utgjør adapteren på 39 976 960 parametre? (Svar i prosent)",
+    "svar": [
+      "0.593"
+    ],
+    "toleranse": 0.02,
+    "forklaring": {
+      "steg": [
+        "39 976 960 / 6 740 000 000 ≈ 0,005931.",
+        "· 100 ≈ 0.593 %.",
+        "Toleranse ±0,02."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-03",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "QLoRA kvantiserer vekter i blokker på 64, med én fp32-konstant (32 bit) per blokk. Hvor mange ekstra bit per vekt koster konstantene uten dobbel kvantisering?",
+    "svar": [
+      "0.5"
+    ],
+    "forklaring": {
+      "steg": [
+        "Én konstant på 32 bit deles på 64 vekter.",
+        "32 / 64 = 0,5 bit per vekt."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-04",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "Med dobbel kvantisering lagres blokkonstantene (én per 64 vekter) i 8 bit, og de kvantiseres selv i blokker på 256 med én fp32-konstant per blokk. Hvor mange ekstra bit per vekt blir det? (3 desimaler)",
+    "svar": [
+      "0.127"
+    ],
+    "toleranse": 0.001,
+    "forklaring": {
+      "steg": [
+        "Første nivå: 8 bit per 64 vekter = 8/64 = 0,125 bit per vekt.",
+        "Andre nivå: 32 bit per 64 · 256 = 16 384 vekter = 0,00195 bit per vekt.",
+        "Sum: 0,125 + 0,00195 = 0.126953 ≈ 0,127. Toleranse ±0,001."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-05",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "Hvor mange GB sparer dobbel kvantisering på en 65B-modell? Bruk 0,5 bit per vekt uten og 0,126953 bit per vekt med. (1 GB = 10⁹ byte)",
+    "svar": [
+      "3.03"
+    ],
+    "toleranse": 0.2,
+    "forklaring": {
+      "steg": [
+        "Besparelse per vekt: 0,5 − 0,126953 = 0,373047 bit.",
+        "65 · 10⁹ · 0,373047 = 2,4248 · 10¹⁰ bit.",
+        "/ 8 = 3,031 · 10⁹ byte ≈ 3.03 GB. Toleranse ±0,2 (QLoRA-artikkelen sier ca. 3 GB)."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-06",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "Full finjustering med Adam og blandet presisjon koster ca. 16 byte per parameter (bf16-vekt 2 + gradient 2 + fp32-kopi 4 + Adam 8). Hvor mange GB trengs for en 7B-modell, aktiveringer ikke medregnet?",
+    "svar": [
+      "112"
+    ],
+    "toleranse": 8,
+    "forklaring": {
+      "steg": [
+        "7 · 10⁹ · 16 byte = 112 · 10⁹ byte.",
+        "= 112 GB. Toleranse ±8 GB (GiB ≈ 104,3 godtas).",
+        "Det er langt mer enn noe forbrukerkort har, og det er hovedmotivasjonen for LoRA og QLoRA."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-07",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "Hva er den høyeste mulige rangen ΔW = B·A kan ha når r = 8 og W₀ er 4096 × 4096?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "rang(B·A) ≤ min(rang(B), rang(A)).",
+        "B er 4096 × 8 og A er 8 × 4096, så hver av dem har rang høyst 8.",
+        "ΔW har derfor rang høyst 8, selv om den er en 4096 × 4096-matrise."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-08",
+    "nivå": "vanskelig",
+    "type": "flervalg",
+    "spørsmål": "Hvorfor initialiseres ikke både A og B til null?",
+    "alternativer": [
+      "Da blir gradientene til både A og B null, så ingenting lærer",
+      "Det gir divisjon med null i skaleringen α/r",
+      "Modellen ville da avvike fra basemodellen ved start",
+      "PEFT tillater ikke nullmatriser"
+    ],
+    "svar": [
+      "Da blir gradientene til både A og B null, så ingenting lærer"
+    ],
+    "forklaring": {
+      "steg": [
+        "Utgangen fra grenen er s·B·A·x.",
+        "Gradienten til B er proporsjonal med (A·x)ᵀ, og gradienten til A er proporsjonal med Bᵀ.",
+        "Er begge null, blir begge gradientene null, og treningen står fast. Med A tilfeldig får B en gradient i første steg."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-09",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "For hvilken rank r har en LoRA-adapter på en 4096 × 4096-matrise like mange parametre som selve matrisen?",
+    "svar": [
+      "2048"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sett r(d + k) = d·k: r · 8192 = 16 777 216.",
+        "r = 16 777 216 / 8192 = 2048.",
+        "Til sammenligning er vanlige rank-verdier 8–64, altså langt under dette."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-10",
+    "nivå": "vanskelig",
+    "type": "tekst",
+    "spørsmål": "Hva heter argumentet i PEFT sin LoraConfig som slår på rsLoRA-skalering (α/√r)? (Bare navnet.)",
+    "svar": [
+      "use_rslora",
+      "use_rslora=True",
+      "use_rslora = True"
+    ],
+    "forklaring": {
+      "steg": [
+        "Argumentet heter use_rslora og settes til True.",
+        "Da bruker PEFT s = lora_alpha / √r i stedet for lora_alpha / r."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-11",
+    "nivå": "vanskelig",
+    "type": "flervalg",
+    "spørsmål": "Du har trent en adapter med QLoRA (base i NF4) og vil lage én samlet modell. Hva er riktig fremgangsmåte?",
+    "alternativer": [
+      "Last basemodellen i 16 bit, legg på adapteren og merge",
+      "Merge direkte inn i NF4-vektene, siden det er dem adapteren ble trent på",
+      "Merging er umulig etter QLoRA",
+      "Del adaptervektene på 4 før merge"
+    ],
+    "svar": [
+      "Last basemodellen i 16 bit, legg på adapteren og merge"
+    ],
+    "forklaring": {
+      "steg": [
+        "Adapteren er trent i 16 bit, mens basen var 4-bit under trening.",
+        "Merger du rett inn i 4-bit-vektene, må summen kvantiseres igjen, og du får ekstra avrundingsfeil.",
+        "Last derfor basen i bf16/fp16, merge med merge_and_unload(), og kvantiser eventuelt etterpå (f.eks. til GGUF)."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-12",
+    "nivå": "vanskelig",
+    "type": "tall",
+    "spørsmål": "VRAM-overslag for QLoRA på en 13B-modell: Vektene er i NF4 (0,5 byte per vekt, se bort fra konstantene), adapteren har 50 millioner parametre som koster 16 byte hver (fp32-vekt, gradient og Adam), og aktiveringer pluss CUDA-overhead er 1,5 GB. Hvor mange GB blir det totalt?",
+    "svar": [
+      "8.8"
+    ],
+    "toleranse": 0.5,
+    "forklaring": {
+      "steg": [
+        "Vekter: 13 · 10⁹ · 0,5 = 6,5 GB.",
+        "Adapter: 50 · 10⁶ · 16 = 0,8 GB.",
+        "Totalt: 6,5 + 0,8 + 1,5 = 8.8 GB.",
+        "Toleranse ±0,5 GB. Et slikt oppsett går trangt på 12 GB, men greit på 16 GB."
+      ]
+    }
+  },
+  {
+    "id": "lora1-vanskelig-13",
+    "nivå": "vanskelig",
+    "type": "flervalg",
+    "spørsmål": "Du trener en LoRA for SDXL. Hvilke target modules er det typiske valget?",
+    "alternativer": [
+      "Attention-projeksjonene i UNet: to_q, to_k, to_v, to_out.0",
+      "q_proj og v_proj i tekstdekoderen",
+      "Bare VAE-dekoderen",
+      "Ingen. Bildemodeller trenes alltid fullt"
+    ],
+    "svar": [
+      "Attention-projeksjonene i UNet: to_q, to_k, to_v, to_out.0"
+    ],
+    "forklaring": {
+      "steg": [
+        "Diffusjonsmodeller bruker andre lagnavn enn språkmodeller.",
+        "I diffusers/SDXL heter attention-projeksjonene to_q, to_k, to_v og to_out.0, og LoRA legges typisk på dem.",
+        "q_proj/v_proj er navnene i Llama-lignende språkmodeller."
+      ]
+    }
+  }
+]
