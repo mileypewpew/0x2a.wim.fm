@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Øvingsoppgaver i IPv6: heksadesimalt tallsystem, adressenotasjon, subnetting og mer.">
+  <title>IPv6-trening</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232563eb'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' text-anchor='middle' fill='white'%3E:%3A%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css?v=20261117b">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <nav class="crumbs" aria-label="Brødsmulesti"><a href="../../">← 0x2a</a> / <a href="../">Nettverk</a> /</nav>
+      <a href="#" class="brand" data-nav="start"><span class="brand-mark">::</span> IPv6-trening</a>
+    </div>
+    <nav class="nav">
+      <button type="button" data-nav="start">Start</button>
+      <button type="button" data-nav="teori">Teori</button>
+      <button type="button" data-nav="statistikk">Statistikk</button>
+    </nav>
+  </header>
+
+  <main id="app">
+    <noscript><p class="card">Denne siden trenger JavaScript for å lage oppgaver.</p></noscript>
+
+    <!-- START -->
+    <section id="view-start" class="view" hidden>
+      <div class="intro">
+        <h1>Øv på IPv6</h1>
+        <p>Tilfeldige oppgaver med retting med en gang, fasit med forklaring og statistikk over fremgangen din.</p>
+      </div>
+      <h2 class="section-title">1. Velg modul</h2>
+      <div id="module-list" class="module-grid"></div>
+
+      <form id="setup-form" class="card setup">
+        <h2 class="section-title">2. Innstillinger</h2>
+        <fieldset>
+          <legend>Vanskelighetsgrad</legend>
+          <div id="level-choices" class="segmented"></div>
+        </fieldset>
+        <div class="row">
+          <label>Antall oppgaver
+            <input id="count-input" type="number" min="1" max="100" value="10" inputmode="numeric">
+          </label>
+          <label>Oppgavetype
+            <select id="type-select"></select>
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn primary">Start runde</button>
+          <button type="button" class="btn" data-nav="teori">Les teori først</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- RUNDE -->
+    <section id="view-round" class="view" hidden>
+      <div class="round-head">
+        <div><span id="round-progress">Oppgave 1 av 10</span> · <span id="round-level"></span></div>
+        <div><span id="round-score">0 riktige</span> · <span id="round-timer">0:00</span></div>
+      </div>
+      <div class="progressbar"><div id="round-bar"></div></div>
+
+      <div class="card task">
+        <div class="task-type" id="task-type"></div>
+        <p class="task-question" id="task-question"></p>
+        <div class="task-subject" id="task-subject"></div>
+        <form id="answer-form" autocomplete="off">
+          <input id="answer-input" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="go" aria-label="Svar">
+          <button type="submit" class="btn primary" id="answer-btn">Svar</button>
+        </form>
+        <div class="task-tools">
+          <button type="button" class="linklike" id="dontknow-btn">Vet ikke – vis fasit</button>
+          <button type="button" class="linklike" id="theory-toggle">Vis teori</button>
+          <button type="button" class="linklike danger" id="quit-btn">Avslutt runde</button>
+        </div>
+        <div id="feedback" class="feedback" hidden></div>
+      </div>
+      <div id="round-theory" class="card theory" hidden></div>
+    </section>
+
+    <!-- RESULTAT -->
+    <section id="view-result" class="view" hidden>
+      <div class="card result-summary">
+        <h1 id="result-title">Ferdig!</h1>
+        <div class="big-score" id="result-score"></div>
+        <p id="result-meta"></p>
+        <div class="actions">
+          <button type="button" class="btn primary" id="replay-btn">Øv på feilene</button>
+          <button type="button" class="btn" id="again-btn">Ny runde</button>
+          <button type="button" class="btn" data-nav="start">Til start</button>
+        </div>
+      </div>
+      <div id="missed-wrap">
+        <h2 class="section-title">Oppgaver du bommet på</h2>
+        <div id="missed-list"></div>
+      </div>
+    </section>
+
+    <!-- TEORI -->
+    <section id="view-teori" class="view" hidden>
+      <div id="theory-content" class="card theory"></div>
+    </section>
+
+    <!-- STATISTIKK -->
+    <section id="view-statistikk" class="view" hidden>
+      <h1>Statistikk</h1>
+      <p class="muted note">Statistikken lagres lokalt i nettleseren, per nettadresse. Hvis du har øvd på ipv6.wim.fm før, blir den statistikken liggende der og følger ikke med hit.</p>
+      <div id="stats-content"></div>
+      <div class="actions">
+        <button type="button" class="btn danger" id="reset-stats-btn">Nullstill statistikk</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Egne øvingsoppgaver til RIPE NCC Academy – IPv6 Fundamentals. Statistikken lagres bare i nettleseren din. Del av <a href="../../">0x2a – Wims utdanningsportal</a>.
+  </footer>
+
+  <script src="js/registry.js?v=20261117b"></script>
+  <script src="js/modules/hex.js?v=20261117b"></script>
+  <script src="js/modules/planned.js?v=20261117b"></script>
+  <script src="js/stats.js?v=20261117b"></script>
+  <script src="js/charts.js?v=20261117b"></script>
+  <script src="js/app.js?v=20261117b"></script>
+</body>
+</html>
