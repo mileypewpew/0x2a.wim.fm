@@ -1,0 +1,465 @@
+[
+  {
+    "id": "11-001",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva heter PDU-en på transportlaget i TCP?",
+    "alternativer": [
+      "Segment",
+      "Pakke",
+      "Ramme",
+      "Bit"
+    ],
+    "svar": [
+      "Segment"
+    ],
+    "forklaring": {
+      "steg": [
+        "Transportlaget (lag 4) pakker data i segmenter (TCP) eller datagrammer (UDP).",
+        "Pakke = lag 3, ramme = lag 2, bit = lag 1."
+      ]
+    }
+  },
+  {
+    "id": "11-002",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange lag har OSI-modellen?",
+    "svar": [
+      "7"
+    ],
+    "forklaring": {
+      "steg": [
+        "OSI har 7 lag: fysisk, datalink, nettverk, transport, sesjon, presentasjon og applikasjon."
+      ]
+    }
+  },
+  {
+    "id": "11-003",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange lag har TCP/IP-modellen slik den er beskrevet i RFC 1122?",
+    "svar": [
+      "4"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 1122 har fire lag: link, internett, transport og applikasjon."
+      ]
+    }
+  },
+  {
+    "id": "11-004",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket OSI-lag står for ruting og IP-adresser?",
+    "alternativer": [
+      "Nettverkslaget (lag 3)",
+      "Datalinklaget (lag 2)",
+      "Transportlaget (lag 4)",
+      "Sesjonslaget (lag 5)"
+    ],
+    "svar": [
+      "Nettverkslaget (lag 3)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lag 3 har logiske adresser (IP) og finner veien mellom nett.",
+        "Rutere arbeider på dette laget."
+      ]
+    }
+  },
+  {
+    "id": "11-005",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva heter PDU-en på datalinklaget (lag 2)?",
+    "alternativer": [
+      "Ramme",
+      "Segment",
+      "Pakke",
+      "Datagram"
+    ],
+    "svar": [
+      "Ramme"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lag 2 pakker inn IP-pakken i en ramme, f.eks. en Ethernet-ramme med MAC-adresser."
+      ]
+    }
+  },
+  {
+    "id": "11-006",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket utstyr arbeider først og fremst på lag 2?",
+    "alternativer": [
+      "Switch",
+      "Ruter",
+      "Hub",
+      "Modem"
+    ],
+    "svar": [
+      "Switch"
+    ],
+    "forklaring": {
+      "steg": [
+        "En switch lærer MAC-adresser og sender rammer bare ut på riktig port.",
+        "En hub (lag 1) sender alt ut på alle porter."
+      ]
+    }
+  },
+  {
+    "id": "11-007",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "På hvilket OSI-lag arbeider en ruter?",
+    "alternativer": [
+      "Lag 3",
+      "Lag 1",
+      "Lag 2",
+      "Lag 7"
+    ],
+    "svar": [
+      "Lag 3"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ruteren ser på IP-adressen i pakken og velger neste hopp ut fra rutetabellen."
+      ]
+    }
+  },
+  {
+    "id": "11-008",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket OSI-lag har ansvar for dataformat, tegnkoding og (i modellen) kryptering?",
+    "alternativer": [
+      "Presentasjonslaget (lag 6)",
+      "Sesjonslaget (lag 5)",
+      "Applikasjonslaget (lag 7)",
+      "Transportlaget (lag 4)"
+    ],
+    "svar": [
+      "Presentasjonslaget (lag 6)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lag 6 sørger for at data har et format begge sider forstår.",
+        "I praksis er dette ofte bygget inn i applikasjonen eller TLS."
+      ]
+    }
+  },
+  {
+    "id": "11-009",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva heter OSI-lag 1 på norsk?",
+    "svar": [
+      "Det fysiske laget",
+      "Fysiske laget",
+      "Fysisk lag",
+      "Fysisk",
+      "Det fysiske lag",
+      "Physical",
+      "Physical layer"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lag 1 er det fysiske laget: bit som elektriske signaler, lys eller radiobølger."
+      ]
+    }
+  },
+  {
+    "id": "11-010",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilket lagnummer har transportlaget i OSI?",
+    "svar": [
+      "4"
+    ],
+    "forklaring": {
+      "steg": [
+        "Rekkefølgen er 1 fysisk, 2 datalink, 3 nettverk, 4 transport."
+      ]
+    }
+  },
+  {
+    "id": "11-011",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilket lagnummer har applikasjonslaget i OSI?",
+    "svar": [
+      "7"
+    ],
+    "forklaring": {
+      "steg": [
+        "Applikasjonslaget er øverst, lag 7, nærmest brukerprogrammene."
+      ]
+    }
+  },
+  {
+    "id": "11-012",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken rekkefølge er riktig for OSI-lagene fra lag 1 til lag 7?",
+    "alternativer": [
+      "Fysisk, datalink, nettverk, transport, sesjon, presentasjon, applikasjon",
+      "Fysisk, nettverk, datalink, transport, sesjon, presentasjon, applikasjon",
+      "Datalink, fysisk, nettverk, transport, presentasjon, sesjon, applikasjon",
+      "Fysisk, datalink, transport, nettverk, sesjon, applikasjon, presentasjon"
+    ],
+    "svar": [
+      "Fysisk, datalink, nettverk, transport, sesjon, presentasjon, applikasjon"
+    ],
+    "forklaring": {
+      "steg": [
+        "Huskeregel: F-D-N-T-S-P-A fra bunnen.",
+        "Datalink (2) ligger under nettverk (3), og sesjon (5) under presentasjon (6)."
+      ]
+    }
+  },
+  {
+    "id": "11-013",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "I hvilken rekkefølge pakkes data inn når en maskin sender over TCP/IP og Ethernet?",
+    "alternativer": [
+      "Data → segment → pakke → ramme → bit",
+      "Data → pakke → segment → ramme → bit",
+      "Bit → ramme → pakke → segment → data",
+      "Data → ramme → pakke → segment → bit"
+    ],
+    "svar": [
+      "Data → segment → pakke → ramme → bit"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hvert lag legger til sin header ovenfra og ned: TCP (segment), IP (pakke), Ethernet (ramme).",
+        "Til slutt sendes rammen som bit på lag 1."
+      ]
+    }
+  },
+  {
+    "id": "11-014",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket lag i TCP/IP-modellen tilsvarer OSI-lag 5, 6 og 7?",
+    "alternativer": [
+      "Applikasjonslaget",
+      "Transportlaget",
+      "Internettlaget",
+      "Linklaget"
+    ],
+    "svar": [
+      "Applikasjonslaget"
+    ],
+    "forklaring": {
+      "steg": [
+        "TCP/IP slår sammen sesjon, presentasjon og applikasjon til ett applikasjonslag."
+      ]
+    }
+  },
+  {
+    "id": "11-015",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket lag i TCP/IP-modellen tilsvarer OSI-lag 1 og 2?",
+    "alternativer": [
+      "Linklaget (nettverkstilgang)",
+      "Internettlaget",
+      "Transportlaget",
+      "Applikasjonslaget"
+    ],
+    "svar": [
+      "Linklaget (nettverkstilgang)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Linklaget dekker både det fysiske og datalinklaget, f.eks. Ethernet og Wi-Fi."
+      ]
+    }
+  },
+  {
+    "id": "11-016",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket lag i TCP/IP-modellen hører IP til?",
+    "alternativer": [
+      "Internettlaget",
+      "Transportlaget",
+      "Linklaget",
+      "Applikasjonslaget"
+    ],
+    "svar": [
+      "Internettlaget"
+    ],
+    "forklaring": {
+      "steg": [
+        "IP er kjernen i internettlaget, som tilsvarer OSI-lag 3."
+      ]
+    }
+  },
+  {
+    "id": "11-017",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "På hvilket OSI-lag brukes MAC-adresser?",
+    "alternativer": [
+      "Lag 2 (datalink)",
+      "Lag 3 (nettverk)",
+      "Lag 1 (fysisk)",
+      "Lag 4 (transport)"
+    ],
+    "svar": [
+      "Lag 2 (datalink)"
+    ],
+    "forklaring": {
+      "steg": [
+        "MAC-adresser står i Ethernet-rammen og brukes for levering i det lokale nettet."
+      ]
+    }
+  },
+  {
+    "id": "11-018",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "På hvilket lag arbeider en hub?",
+    "alternativer": [
+      "Lag 1",
+      "Lag 2",
+      "Lag 3",
+      "Lag 4"
+    ],
+    "svar": [
+      "Lag 1"
+    ],
+    "forklaring": {
+      "steg": [
+        "En hub forsterker og kopierer signalet ut på alle porter uten å se på adresser."
+      ]
+    }
+  },
+  {
+    "id": "11-019",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva heter PDU-en på nettverkslaget (lag 3)?",
+    "svar": [
+      "Pakke",
+      "Pakker",
+      "Packet",
+      "IP-pakke",
+      "Datagram",
+      "IP-datagram"
+    ],
+    "forklaring": {
+      "steg": [
+        "På lag 3 kalles enheten en pakke. RFC-ene for IP kaller den også et datagram."
+      ]
+    }
+  },
+  {
+    "id": "11-020",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket OSI-lag opprettholder og avslutter dialoger (sesjoner) mellom programmer?",
+    "alternativer": [
+      "Sesjonslaget (lag 5)",
+      "Transportlaget (lag 4)",
+      "Presentasjonslaget (lag 6)",
+      "Nettverkslaget (lag 3)"
+    ],
+    "svar": [
+      "Sesjonslaget (lag 5)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lag 5 styrer selve dialogen: start, synkronisering og avslutning."
+      ]
+    }
+  },
+  {
+    "id": "11-021",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "En mottaker får inn en Ethernet-ramme. Hvilket lag fjerner Ethernet-headeren før innholdet sendes videre opp?",
+    "alternativer": [
+      "Datalinklaget",
+      "Nettverkslaget",
+      "Transportlaget",
+      "Applikasjonslaget"
+    ],
+    "svar": [
+      "Datalinklaget"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ved dekapsling fjerner hvert lag sin egen header.",
+        "Ethernet-headeren hører til lag 2, så datalinklaget fjerner den og gir IP-pakken til lag 3."
+      ]
+    }
+  },
+  {
+    "id": "11-022",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Spenningsnivåer, kontakter og kabeltyper hører til hvilket OSI-lag?",
+    "alternativer": [
+      "Det fysiske laget",
+      "Datalinklaget",
+      "Nettverkslaget",
+      "Presentasjonslaget"
+    ],
+    "svar": [
+      "Det fysiske laget"
+    ],
+    "forklaring": {
+      "steg": [
+        "Alt som handler om selve signalet og mediet, hører til lag 1."
+      ]
+    }
+  },
+  {
+    "id": "11-023",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "På hvilket OSI-lag finner vi portnumre?",
+    "alternativer": [
+      "Transportlaget (lag 4)",
+      "Nettverkslaget (lag 3)",
+      "Datalinklaget (lag 2)",
+      "Sesjonslaget (lag 5)"
+    ],
+    "svar": [
+      "Transportlaget (lag 4)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Portnumre står i TCP- og UDP-headeren og forteller hvilken prosess dataene skal til."
+      ]
+    }
+  },
+  {
+    "id": "11-024",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om OSI og TCP/IP er riktig?",
+    "alternativer": [
+      "OSI er en referansemodell, mens TCP/IP beskriver protokollene internett faktisk bruker",
+      "TCP/IP har flere lag enn OSI",
+      "OSI-protokollene er det internett bruker i dag",
+      "TCP/IP har eget sesjons- og presentasjonslag"
+    ],
+    "svar": [
+      "OSI er en referansemodell, mens TCP/IP beskriver protokollene internett faktisk bruker"
+    ],
+    "forklaring": {
+      "steg": [
+        "OSI brukes mest for å forklare og feilsøke («det er et lag 2-problem»).",
+        "TCP/IP har 4 lag og slår sammen OSI 5–7 til applikasjonslaget."
+      ]
+    }
+  }
+]

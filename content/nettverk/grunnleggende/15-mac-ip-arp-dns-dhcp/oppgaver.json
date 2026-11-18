@@ -1,0 +1,466 @@
+[
+  {
+    "id": "15-001",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er en MAC-adresse?",
+    "svar": [
+      "48"
+    ],
+    "forklaring": {
+      "steg": [
+        "En MAC-adresse er 48 bit, altså 6 byte."
+      ]
+    }
+  },
+  {
+    "id": "15-002",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange byte er en MAC-adresse?",
+    "svar": [
+      "6"
+    ],
+    "forklaring": {
+      "steg": [
+        "$48 / 8 = 6$ byte, skrevet som 6 par med heks-sifre."
+      ]
+    }
+  },
+  {
+    "id": "15-003",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er en IPv4-adresse?",
+    "svar": [
+      "32"
+    ],
+    "forklaring": {
+      "steg": [
+        "IPv4 er 32 bit, skrevet som fire desimaltall (oktetter) fra 0 til 255."
+      ]
+    }
+  },
+  {
+    "id": "15-004",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange heks-sifre har en MAC-adresse?",
+    "svar": [
+      "12"
+    ],
+    "forklaring": {
+      "steg": [
+        "6 byte · 2 heks-sifre per byte = 12 heks-sifre."
+      ]
+    }
+  },
+  {
+    "id": "15-005",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør ARP?",
+    "alternativer": [
+      "Finner MAC-adressen til en IPv4-adresse i det lokale nettet",
+      "Gjør om domenenavn til IP-adresser",
+      "Deler ut IP-adresser automatisk",
+      "Ruter pakker mellom nett"
+    ],
+    "svar": [
+      "Finner MAC-adressen til en IPv4-adresse i det lokale nettet"
+    ],
+    "forklaring": {
+      "steg": [
+        "ARP (RFC 826) kobler lag 3-adressen (IPv4) til lag 2-adressen (MAC)."
+      ]
+    }
+  },
+  {
+    "id": "15-006",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvordan sendes en ARP-forespørsel?",
+    "alternativer": [
+      "Som kringkasting til alle i det lokale nettet",
+      "Som unicast til ruteren",
+      "Via DNS-serveren",
+      "Som multicast over internett"
+    ],
+    "svar": [
+      "Som kringkasting til alle i det lokale nettet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Avsenderen kjenner ikke MAC-adressen ennå og sender derfor til `ff:ff:ff:ff:ff:ff`.",
+        "Svaret kommer som unicast."
+      ]
+    }
+  },
+  {
+    "id": "15-007",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva er kringkastingsadressen (broadcast) for MAC?",
+    "svar": [
+      "ff:ff:ff:ff:ff:ff",
+      "ff-ff-ff-ff-ff-ff",
+      "ffff.ffff.ffff",
+      "ffffffffffff"
+    ],
+    "forklaring": {
+      "steg": [
+        "Alle 48 bit satt til 1 betyr «til alle» i det lokale nettet."
+      ]
+    }
+  },
+  {
+    "id": "15-008",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva erstatter ARP i IPv6?",
+    "alternativer": [
+      "NDP (Neighbor Discovery Protocol)",
+      "DHCPv6",
+      "DNS",
+      "RARP"
+    ],
+    "svar": [
+      "NDP (Neighbor Discovery Protocol)"
+    ],
+    "forklaring": {
+      "steg": [
+        "IPv6 bruker NDP (RFC 4861) med ICMPv6-meldingene Neighbor Solicitation og Neighbor Advertisement."
+      ]
+    }
+  },
+  {
+    "id": "15-009",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken rekkefølge har meldingene når en klient får IP-adresse fra DHCP?",
+    "alternativer": [
+      "Discover → Offer → Request → Acknowledge",
+      "Request → Offer → Discover → Acknowledge",
+      "Discover → Request → Offer → Acknowledge",
+      "Offer → Discover → Acknowledge → Request"
+    ],
+    "svar": [
+      "Discover → Offer → Request → Acknowledge"
+    ],
+    "forklaring": {
+      "steg": [
+        "Huskeord: DORA.",
+        "Klienten leter (Discover), serveren tilbyr (Offer), klienten ber om adressen (Request) og serveren bekrefter (ACK)."
+      ]
+    }
+  },
+  {
+    "id": "15-010",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva står DHCP for?",
+    "svar": [
+      "Dynamic Host Configuration Protocol"
+    ],
+    "forklaring": {
+      "steg": [
+        "DHCP konfigurerer verter automatisk med IP-adresse, maske, gateway og DNS."
+      ]
+    }
+  },
+  {
+    "id": "15-011",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva gir en DHCP-server vanligvis IKKE til klienten?",
+    "alternativer": [
+      "Klientens MAC-adresse",
+      "IP-adresse og nettmaske",
+      "Standard gateway",
+      "DNS-servere"
+    ],
+    "svar": [
+      "Klientens MAC-adresse"
+    ],
+    "forklaring": {
+      "steg": [
+        "MAC-adressen sitter i nettverkskortet, og klienten sender den selv i forespørselen.",
+        "Serveren bruker den bl.a. til faste reservasjoner."
+      ]
+    }
+  },
+  {
+    "id": "15-012",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken DNS-post peker et navn til en IPv4-adresse?",
+    "alternativer": [
+      "A",
+      "AAAA",
+      "MX",
+      "PTR"
+    ],
+    "svar": [
+      "A"
+    ],
+    "forklaring": {
+      "steg": [
+        "A-posten gir IPv4-adressen. AAAA gir IPv6-adressen."
+      ]
+    }
+  },
+  {
+    "id": "15-013",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken DNS-post peker et navn til en IPv6-adresse?",
+    "alternativer": [
+      "AAAA",
+      "A",
+      "CNAME",
+      "NS"
+    ],
+    "svar": [
+      "AAAA"
+    ],
+    "forklaring": {
+      "steg": [
+        "AAAA heter «quad-A» fordi en IPv6-adresse er fire ganger så lang som IPv4 (128 mot 32 bit)."
+      ]
+    }
+  },
+  {
+    "id": "15-014",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken DNS-post forteller hvilken server som tar imot e-post for et domene?",
+    "alternativer": [
+      "MX",
+      "A",
+      "TXT",
+      "PTR"
+    ],
+    "svar": [
+      "MX"
+    ],
+    "forklaring": {
+      "steg": [
+        "MX (mail exchanger) peker til e-postservere og har en prioritet."
+      ]
+    }
+  },
+  {
+    "id": "15-015",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken DNS-post brukes ved omvendt oppslag fra IP-adresse til navn?",
+    "alternativer": [
+      "PTR",
+      "A",
+      "CNAME",
+      "MX"
+    ],
+    "svar": [
+      "PTR"
+    ],
+    "forklaring": {
+      "steg": [
+        "PTR-poster ligger under `in-addr.arpa` (IPv4) og `ip6.arpa` (IPv6)."
+      ]
+    }
+  },
+  {
+    "id": "15-016",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er en CNAME-post?",
+    "alternativer": [
+      "Et alias som peker til et annet navn",
+      "En IPv6-adresse",
+      "En e-postserver",
+      "En navneserver"
+    ],
+    "svar": [
+      "Et alias som peker til et annet navn"
+    ],
+    "forklaring": {
+      "steg": [
+        "Eksempel: `www.example.com CNAME example.com`. Resolveren slår deretter opp målnavnet."
+      ]
+    }
+  },
+  {
+    "id": "15-017",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken av disse er en privat IPv4-adresse (RFC 1918)?",
+    "alternativer": [
+      "192.168.1.10",
+      "8.8.8.8",
+      "172.32.0.1",
+      "11.0.0.1"
+    ],
+    "svar": [
+      "192.168.1.10"
+    ],
+    "forklaring": {
+      "steg": [
+        "Private områder: 10.0.0.0/8, 172.16.0.0/12 og 192.168.0.0/16.",
+        "172.32.0.1 ligger rett utenfor 172.16.0.0/12."
+      ]
+    }
+  },
+  {
+    "id": "15-018",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilke adresser dekker det private området 172.16.0.0/12?",
+    "alternativer": [
+      "172.16.0.0–172.31.255.255",
+      "172.16.0.0–172.16.255.255",
+      "172.0.0.0–172.255.255.255",
+      "172.16.0.0–172.24.255.255"
+    ],
+    "svar": [
+      "172.16.0.0–172.31.255.255"
+    ],
+    "forklaring": {
+      "steg": [
+        "/12 betyr at de 12 første bitene er faste. Da kan andre oktett gå fra 16 til 31 (16 verdier)."
+      ]
+    }
+  },
+  {
+    "id": "15-019",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er OUI-delen av en MAC-adresse, som viser produsenten?",
+    "svar": [
+      "24"
+    ],
+    "forklaring": {
+      "steg": [
+        "De første 24 bitene (3 byte) er OUI-en som IEEE tildeler produsenten.",
+        "De siste 24 bitene velger produsenten selv."
+      ]
+    }
+  },
+  {
+    "id": "15-020",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva heter delen av MAC-adressen som identifiserer produsenten?",
+    "svar": [
+      "OUI",
+      "Organizationally Unique Identifier"
+    ],
+    "forklaring": {
+      "steg": [
+        "OUI står for Organizationally Unique Identifier og tildeles av IEEE."
+      ]
+    }
+  },
+  {
+    "id": "15-021",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvor sender en klient uten IP-adresse en DHCP Discover?",
+    "alternativer": [
+      "Som kringkasting til 255.255.255.255 fra 0.0.0.0",
+      "Direkte til ruterens IP-adresse",
+      "Til DNS-serveren",
+      "Til 127.0.0.1"
+    ],
+    "svar": [
+      "Som kringkasting til 255.255.255.255 fra 0.0.0.0"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienten vet ikke hvor serveren er og har ingen adresse ennå, så den kringkaster."
+      ]
+    }
+  },
+  {
+    "id": "15-022",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr TTL på en DNS-post?",
+    "alternativer": [
+      "Hvor lenge svaret kan mellomlagres",
+      "Hvor mange rutere pakken kan passere",
+      "Hvor lang tid oppslaget tok",
+      "Hvor mange IP-adresser navnet har"
+    ],
+    "svar": [
+      "Hvor lenge svaret kan mellomlagres"
+    ],
+    "forklaring": {
+      "steg": [
+        "TTL oppgis i sekunder. Lav TTL gjør endringer synlige raskere, men gir flere oppslag.",
+        "IP-headeren har også et TTL-felt, men det betyr maks antall hopp."
+      ]
+    }
+  },
+  {
+    "id": "15-023",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør en rekursiv DNS-resolver?",
+    "alternativer": [
+      "Spør andre DNS-servere på vegne av klienten og mellomlagrer svaret",
+      "Eier sonen og gir autoritative svar",
+      "Deler ut IP-adresser",
+      "Oversetter MAC til IP"
+    ],
+    "svar": [
+      "Spør andre DNS-servere på vegne av klienten og mellomlagrer svaret"
+    ],
+    "forklaring": {
+      "steg": [
+        "Resolveren går fra rotserverne til TLD-serveren og videre til den autoritative serveren, og husker svaret i TTL-tiden.",
+        "Eksempel: Unbound i OPNsense."
+      ]
+    }
+  },
+  {
+    "id": "15-024",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken kommando viser ARP-/nabotabellen på Linux?",
+    "alternativer": [
+      "ip neigh",
+      "ip route",
+      "dig",
+      "ss -tulpn"
+    ],
+    "svar": [
+      "ip neigh"
+    ],
+    "forklaring": {
+      "steg": [
+        "`ip neigh` viser nabotabellen for IPv4 (ARP) og IPv6 (NDP). Den eldre kommandoen er `arp -n`."
+      ]
+    }
+  },
+  {
+    "id": "15-025",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr det at en DHCP-adresse har en leietid (lease)?",
+    "alternativer": [
+      "Adressen er lånt for en begrenset tid og må fornyes",
+      "Adressen koster penger",
+      "Adressen er fast for alltid",
+      "Adressen kan bare brukes til DNS"
+    ],
+    "svar": [
+      "Adressen er lånt for en begrenset tid og må fornyes"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienten prøver å fornye ved halve leietiden.",
+        "Fornyes den ikke, kan serveren gi adressen til en annen."
+      ]
+    }
+  }
+]

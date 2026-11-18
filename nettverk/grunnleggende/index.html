@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Øv på nettverkets grunnbegreper: OSI, TCP/IP, porter og HTTP, med fasit og statistikk.">
+  <meta name="ngrunn-innhold-versjon" content="20261118b">
+  <title>Nettverk grunnleggende — 0x2a Lab</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232563eb'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='18' font-weight='700' text-anchor='middle' fill='white'%3ENG%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../ai/lora/vendor/katex/katex.min.css?v=20261118a">
+  <link rel="stylesheet" href="css/style.css?v=20261118a">
+</head>
+<body>
+  <a class="skip" href="#app">Hopp til innhold</a>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <nav class="crumbs" aria-label="Brødsmulesti"><a href="../../">← 0x2a</a> / <a href="../">Nettverk</a> /</nav>
+      <a href="#start" class="brand" data-nav="start"><span class="brand-mark">NG</span> Nettverk grunnleggende</a>
+    </div>
+    <nav class="nav" aria-label="Sider">
+      <button type="button" data-nav="start">Start</button>
+      <button type="button" data-nav="teori">Teori</button>
+      <button type="button" data-nav="statistikk">Statistikk</button>
+    </nav>
+  </header>
+
+  <main id="app">
+    <noscript><p class="card">Denne siden trenger JavaScript for å laste temaer og lage oppgaver.</p></noscript>
+
+    <section id="view-start" class="view">
+      <div class="intro">
+        <h1>Nettverk grunnleggende</h1>
+        <p>Tilfeldige oppgaver med retting med en gang, fasit med forklaring og statistikk over fremgangen din. Nivå 1 er åpent. Nivå 2 og 3 kommer senere.</p>
+      </div>
+      <div id="load-status" class="card" role="status">Laster temaer …</div>
+      <div id="load-error" class="card banner bad" role="alert" hidden></div>
+
+      <h2 class="section-title">1. Velg nivå</h2>
+      <div id="level-list" class="module-grid" role="group" aria-label="Nivå">
+        <button type="button" class="module-card selected" id="level-1" data-level="1" aria-pressed="true">
+          <span class="module-code">1</span>
+          <span class="module-title">Grunnleggende</span>
+          <span class="module-desc">OSI og TCP/IP, porter, HTTP og hva ARP, DNS og DHCP gjør.</span>
+        </button>
+        <button type="button" class="module-card soon" id="level-2" data-level="2" disabled aria-disabled="true" aria-pressed="false">
+          <span class="module-code">2</span>
+          <span class="module-title">Adressering og oppsett</span>
+          <span class="module-desc">Adresser, masker og oppsett.</span>
+          <span class="badge">Kommer snart</span>
+        </button>
+        <button type="button" class="module-card soon" id="level-3" data-level="3" disabled aria-disabled="true" aria-pressed="false">
+          <span class="module-code">3</span>
+          <span class="module-title">Feilsøking og scenarioer</span>
+          <span class="module-desc">Feilsøking og scenarioer.</span>
+          <span class="badge">Kommer snart</span>
+        </button>
+      </div>
+      <div id="content-notes"></div>
+
+      <h2 class="section-title">2. Velg tema</h2>
+      <div id="topic-list" class="module-grid" role="group" aria-label="Tema"></div>
+
+      <form id="setup-form" class="card setup" hidden>
+        <h2 class="section-title">3. Innstillinger</h2>
+        <div class="row">
+          <label>Antall oppgaver
+            <input id="count-input" type="number" min="1" max="100" value="10" inputmode="numeric">
+          </label>
+          <label>Oppgavetype
+            <select id="type-select"></select>
+          </label>
+        </div>
+        <p id="setup-note" class="muted"></p>
+        <div class="actions">
+          <button type="submit" class="btn primary" id="start-btn">Start runde</button>
+          <button type="button" class="btn" data-nav="teori">Les teori først</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="view-round" class="view" hidden>
+      <div class="round-head">
+        <div><span id="round-progress">Oppgave 1 av 10</span> · <span id="round-level"></span></div>
+        <div><span id="round-score">0 riktige</span> · <span id="round-timer">0:00</span></div>
+      </div>
+      <div class="progressbar" id="round-progressbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Fremdrift i runden"><div id="round-bar"></div></div>
+
+      <div class="card task">
+        <div class="task-type" id="task-type"></div>
+        <p class="task-question" id="task-question"></p>
+        <form id="answer-form" autocomplete="off">
+          <fieldset id="choice-block" class="choices" hidden>
+            <legend>Velg ett alternativ</legend>
+            <div id="choice-list"></div>
+          </fieldset>
+          <div id="text-block">
+            <label id="answer-label" for="answer-input">Svar</label>
+            <p id="answer-hint" class="muted answer-hint"></p>
+          </div>
+          <p id="form-alert" class="form-alert" role="alert" hidden></p>
+          <div class="answer-row">
+            <input id="answer-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="go" aria-describedby="answer-hint">
+            <button type="submit" class="btn primary" id="answer-btn">Svar</button>
+          </div>
+        </form>
+        <div class="task-tools">
+          <button type="button" class="linklike" id="dontknow-btn">Vet ikke – vis fasit</button>
+          <button type="button" class="linklike" id="theory-toggle" aria-expanded="false" aria-controls="round-theory">Vis teori</button>
+          <button type="button" class="linklike danger" id="quit-btn">Avslutt runde</button>
+        </div>
+        <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+      </div>
+      <div id="round-theory" class="card theory" hidden></div>
+    </section>
+
+    <section id="view-result" class="view" hidden>
+      <div class="card result-summary">
+        <h1 id="result-title">Ferdig.</h1>
+        <div class="big-score" id="result-score"></div>
+        <p id="result-meta"></p>
+        <div class="actions">
+          <button type="button" class="btn primary" id="replay-btn">Øv på feilene</button>
+          <button type="button" class="btn" id="again-btn">Ny runde</button>
+          <button type="button" class="btn" data-nav="start">Til start</button>
+        </div>
+      </div>
+      <div id="missed-wrap">
+        <h2 class="section-title">Oppgaver du bommet på</h2>
+        <div id="missed-list"></div>
+      </div>
+    </section>
+
+    <section id="view-teori" class="view" hidden>
+      <div id="theory-content"></div>
+    </section>
+
+    <section id="view-statistikk" class="view" hidden>
+      <h1>Statistikk</h1>
+      <p class="muted note">Statistikken lagres bare i denne nettleseren, atskilt fra IPv6-treneren og LoRA-treneren. Ingen ting sendes til serveren.</p>
+      <div id="stats-content"></div>
+      <div class="actions">
+        <button type="button" class="btn danger" id="reset-stats-btn">Nullstill statistikk</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Nettverk grunnleggende. Statistikken lagres bare i nettleseren din. Del av <a href="../../">0x2a Lab</a>.
+  </footer>
+
+  <script src="../../ai/lora/vendor/katex/katex.min.js?v=20261118a"></script>
+  <script src="../../ai/lora/vendor/marked/marked.min.js?v=20261118a"></script>
+  <script src="js/yaml.js?v=20261118a"></script>
+  <script src="js/grade.js?v=20261118a"></script>
+  <script src="js/markdown.js?v=20261118a"></script>
+  <script src="js/content.js?v=20261118a"></script>
+  <script src="js/stats.js?v=20261118a"></script>
+  <script src="js/charts.js?v=20261118a"></script>
+  <script src="js/app.js?v=20261118a"></script>
+</body>
+</html>

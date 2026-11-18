@@ -1,0 +1,394 @@
+[
+  {
+    "id": "13-001",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker SSH?",
+    "svar": [
+      "22"
+    ],
+    "forklaring": {
+      "steg": [
+        "SSH lytter på TCP port 22 som standard."
+      ]
+    }
+  },
+  {
+    "id": "13-002",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker HTTPS?",
+    "svar": [
+      "443"
+    ],
+    "forklaring": {
+      "steg": [
+        "HTTPS bruker TCP 443. HTTP/3 bruker UDP 443."
+      ]
+    }
+  },
+  {
+    "id": "13-003",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker HTTP uten kryptering?",
+    "svar": [
+      "80"
+    ],
+    "forklaring": {
+      "steg": [
+        "HTTP bruker TCP port 80."
+      ]
+    }
+  },
+  {
+    "id": "13-004",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker DNS?",
+    "svar": [
+      "53"
+    ],
+    "forklaring": {
+      "steg": [
+        "DNS bruker port 53, vanligvis over UDP og over TCP for store svar."
+      ]
+    }
+  },
+  {
+    "id": "13-005",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port lytter en DHCP-server (IPv4) på?",
+    "svar": [
+      "67"
+    ],
+    "forklaring": {
+      "steg": [
+        "DHCP-serveren lytter på UDP 67. Klienten bruker UDP 68."
+      ]
+    }
+  },
+  {
+    "id": "13-006",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker DHCP-klienten (IPv4)?",
+    "svar": [
+      "68"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienten sender fra og mottar på UDP 68. Serveren bruker 67."
+      ]
+    }
+  },
+  {
+    "id": "13-007",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker NTP?",
+    "svar": [
+      "123"
+    ],
+    "forklaring": {
+      "steg": [
+        "NTP (tidssynkronisering) bruker UDP 123."
+      ]
+    }
+  },
+  {
+    "id": "13-008",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker RDP (Fjernskrivebord i Windows)?",
+    "svar": [
+      "3389"
+    ],
+    "forklaring": {
+      "steg": [
+        "RDP bruker port 3389 over TCP (og UDP)."
+      ]
+    }
+  },
+  {
+    "id": "13-009",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker SMTP mellom e-postservere?",
+    "svar": [
+      "25"
+    ],
+    "forklaring": {
+      "steg": [
+        "SMTP mellom servere bruker TCP 25. Innsending fra klient bruker helst 587."
+      ]
+    }
+  },
+  {
+    "id": "13-010",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker IMAP over TLS (IMAPS)?",
+    "svar": [
+      "993"
+    ],
+    "forklaring": {
+      "steg": [
+        "IMAP er 143, og IMAP med TLS er 993."
+      ]
+    }
+  },
+  {
+    "id": "13-011",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilken protokoll bruker TCP port 23?",
+    "svar": [
+      "Telnet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Telnet er ukryptert fjerninnlogging og bør erstattes av SSH (22)."
+      ]
+    }
+  },
+  {
+    "id": "13-012",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilken protokoll bruker UDP port 161?",
+    "svar": [
+      "SNMP",
+      "Simple Network Management Protocol"
+    ],
+    "forklaring": {
+      "steg": [
+        "SNMP brukes til å overvåke og styre nettutstyr. Traps sendes til port 162."
+      ]
+    }
+  },
+  {
+    "id": "13-013",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilken protokoll bruker UDP port 69?",
+    "svar": [
+      "TFTP",
+      "Trivial File Transfer Protocol"
+    ],
+    "forklaring": {
+      "steg": [
+        "TFTP er en enkel filoverføring uten pålogging, brukt bl.a. til firmware og nettverksoppstart (PXE)."
+      ]
+    }
+  },
+  {
+    "id": "13-014",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket portområde er systemporter (well-known ports)?",
+    "alternativer": [
+      "0–1023",
+      "1024–49151",
+      "49152–65535",
+      "0–65535"
+    ],
+    "svar": [
+      "0–1023"
+    ],
+    "forklaring": {
+      "steg": [
+        "IANA (RFC 6335) kaller 0–1023 systemporter.",
+        "På Linux kreves normalt root for å lytte på dem."
+      ]
+    }
+  },
+  {
+    "id": "13-015",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket portområde er dynamiske/private porter ifølge IANA?",
+    "alternativer": [
+      "49152–65535",
+      "0–1023",
+      "1024–49151",
+      "32768–60999"
+    ],
+    "svar": [
+      "49152–65535"
+    ],
+    "forklaring": {
+      "steg": [
+        "IANA setter av 49152–65535 til dynamiske porter.",
+        "32768–60999 er standardområdet Linux bruker for kildeporter, ikke IANA-området."
+      ]
+    }
+  },
+  {
+    "id": "13-016",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilket portområde er registrerte porter (user ports)?",
+    "alternativer": [
+      "1024–49151",
+      "0–1023",
+      "49152–65535",
+      "1–1024"
+    ],
+    "svar": [
+      "1024–49151"
+    ],
+    "forklaring": {
+      "steg": [
+        "Registrerte porter, 1024–49151, tildeles applikasjoner etter søknad til IANA."
+      ]
+    }
+  },
+  {
+    "id": "13-017",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er en socket?",
+    "alternativer": [
+      "IP-adresse og portnummer (og protokoll) sammen",
+      "En nettverkskabel",
+      "En MAC-adresse",
+      "Et DNS-navn"
+    ],
+    "svar": [
+      "IP-adresse og portnummer (og protokoll) sammen"
+    ],
+    "forklaring": {
+      "steg": [
+        "En socket er et endepunkt, f.eks. `10.0.0.5:443/tcp`.",
+        "En tilkobling har to sockets, én i hver ende."
+      ]
+    }
+  },
+  {
+    "id": "13-018",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Du åpner en nettside fra PC-en din. Hvilken kildeport bruker PC-en vanligvis?",
+    "alternativer": [
+      "En tilfeldig høy (midlertidig) port",
+      "Port 443",
+      "Port 80",
+      "Port 0"
+    ],
+    "svar": [
+      "En tilfeldig høy (midlertidig) port"
+    ],
+    "forklaring": {
+      "steg": [
+        "Målporten er 443 hos serveren.",
+        "Kildeporten velges tilfeldig fra et høyt område, så svaret finner tilbake til riktig program."
+      ]
+    }
+  },
+  {
+    "id": "13-019",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken protokoll er ukryptert og bør erstattes av SSH?",
+    "alternativer": [
+      "Telnet",
+      "HTTPS",
+      "IMAPS",
+      "SFTP"
+    ],
+    "svar": [
+      "Telnet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Telnet sender alt, også passord, i klartekst.",
+        "SSH gir samme funksjon med kryptering."
+      ]
+    }
+  },
+  {
+    "id": "13-020",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port brukes til innsending av e-post fra klient med STARTTLS?",
+    "svar": [
+      "587"
+    ],
+    "forklaring": {
+      "steg": [
+        "Port 587 (submission) er for klienter som sender e-post. STARTTLS oppgraderer tilkoblingen til TLS."
+      ]
+    }
+  },
+  {
+    "id": "13-021",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken transportprotokoll bruker NTP?",
+    "alternativer": [
+      "UDP",
+      "TCP",
+      "ICMP",
+      "Både TCP og ICMP"
+    ],
+    "svar": [
+      "UDP"
+    ],
+    "forklaring": {
+      "steg": [
+        "NTP sender små tidsmeldinger over UDP 123. Lav forsinkelse er viktig for nøyaktig tid."
+      ]
+    }
+  },
+  {
+    "id": "13-022",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port lytter en DHCPv6-server på?",
+    "svar": [
+      "547"
+    ],
+    "forklaring": {
+      "steg": [
+        "DHCPv6: serveren og reléet lytter på UDP 547, klienten på UDP 546."
+      ]
+    }
+  },
+  {
+    "id": "13-023",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken port bruker DNS over TLS (DoT)?",
+    "svar": [
+      "853"
+    ],
+    "forklaring": {
+      "steg": [
+        "DNS over TLS bruker TCP 853. DNS over HTTPS bruker 443."
+      ]
+    }
+  },
+  {
+    "id": "13-024",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken kommando viser porter maskinen lytter på i Linux?",
+    "alternativer": [
+      "ss -tulpn",
+      "ip route",
+      "ping",
+      "dig"
+    ],
+    "svar": [
+      "ss -tulpn"
+    ],
+    "forklaring": {
+      "steg": [
+        "`ss -tulpn` viser TCP- (t) og UDP-sockets (u) som lytter (l), med prosess (p), uten navneoppslag (n).",
+        "`netstat -tulpn` er den eldre varianten."
+      ]
+    }
+  }
+]
