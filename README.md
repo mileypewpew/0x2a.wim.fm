@@ -25,7 +25,7 @@ DOELad og LoraLad legger til nytt innhold via en egen branch og en pull request.
 
 ### Deploy
 
-Deploy skjer fra `main`. I dag gjør HomeLad det manuelt etter at Wim har sagt ja i chatten. Automatisering kommer senere. Det ligger ingen GitHub Actions-workflows, deploy-konfigurasjon eller nøkler i dette repoet. `tests/` er ikke en del av nettstedet og blir ikke deployet.
+Nettstedet deployes fra `main`. Serveren henter `main` automatisk omtrent hvert andre minutt. Direkte endringer på serveren blir overskrevet ved neste henting. Det ligger ingen GitHub Actions-workflows, deploy-konfigurasjon eller nøkler i dette repoet. `tests/` er ikke en del av nettstedet og blir ikke deployet.
 
 ## Tester
 
@@ -43,11 +43,18 @@ Utskriften er på norsk. Siste linje er `N/N sjekker OK` når alle sjekkene pass
 
 ### Cache-busting
 
-Cloudflare cacher statiske filer. HTML caches ikke.
+Cloudflare cacher statiske filer (CSS, JS og andre ressurser). Nettleseren får `max-age` på 4 timer. HTML caches ikke av Cloudflare, så en oppdatert HTML-side blir synlig så snart serveren har hentet `main`.
 
-- CSS- og JS-lenker i HTML bruker `?v=YYYYMMDDx`. Øk verdien når den filen endres. LoRA-siden bruker `?v=20261118a` på sine egne filer.
-- LoRA-treneren henter tekstfiler i `content/ai/lora/` med samme type versjon. Verdien står i `<meta name="lora-innhold-versjon">` i `ai/lora/index.html` og legges på `index.json`, `teori.md` og `oppgaver.json`. Øk meta-verdien når innhold eller manifest endres. Ellers kan Cloudflare fortsette å servere den gamle filen selv om HTML-en er ny.
-- KaTeX-fontene lastes relativt fra CSS-en (`fonts/*.woff2`). De har ikke eget `?v=`. woff2 står først i CSS-en, så nettleseren henter ikke woff/ttf, og de filene ligger ikke i repoet. Ved bytte av KaTeX-versjon byttes fontfilene ut.
+CSS- og JS-filer lenkes med queryen `?v=YYYYMMDDx`:
+
+- `YYYYMMDD` er datoen filen endres.
+- Bokstaven til slutt er `a` første gang den dagen, deretter `b`, `c` og videre hvis samme fil endres flere ganger samme dag.
+- Når en CSS- eller JS-fil endres, må `?v=` økes i alle HTML-sider som lenker den filen. En side som beholder den gamle queryen, kan fortsette å få den cachede utgaven.
+- `assets/portal.css` lenkes fra forsiden, `nettverk/` og `ai/` med `?v=20261118a`.
+
+LoRA-innhold har et eget versjonsmerke, atskilt fra `?v=` på CSS og JS. `<meta name="lora-innhold-versjon">` i `ai/lora/index.html` legges på `index.json`, `teori.md` og `oppgaver.json`. Øk meta-verdien når innhold eller manifest endres. Ellers kan Cloudflare fortsette å servere den gamle filen selv om HTML-en er ny.
+
+KaTeX-fontene lastes relativt fra CSS-en (`fonts/*.woff2`). De har ikke eget `?v=`. woff2 står først i CSS-en, så nettleseren henter ikke woff/ttf, og de filene ligger ikke i repoet. Ved bytte av KaTeX-versjon byttes fontfilene ut.
 
 ## LoRA-innhold
 
