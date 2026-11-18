@@ -39,6 +39,10 @@ ok(G.check({ type: 'tall', svar: ['0.3'], toleranse: 0.1 }, '0.4'), 'toleranse p
 ok(!G.check({ type: 'tall', svar: ['1'], toleranse: 0.1 }, '1.2'), 'utenfor toleranse');
 ok(G.check({ type: 'tall', svar: ['10'], toleranse: 0 }, '10'), 'toleranse 0 er eksakt');
 ok(!G.check({ type: 'tall', svar: ['10'], toleranse: 0 }, '10.1'), 'toleranse 0 avviser avvik');
+require(path.join(dir, 'js/markdown.js'));
+ok(NGRUNN.markdown.renderInline('Kjør `ip route` nå <b>') === 'Kjør <code>ip route</code> nå &lt;b&gt;', 'inline kode escapes og blir code');
+ok(G.check({ type: 'flervalg', svar: ['`ip route`'], alternativer: ['`ip route`', 'ping'] }, '`ip route`'), 'flervalg sammenligner den rå alternativteksten');
+ok(!G.check({ type: 'flervalg', svar: ['`ip route`'], alternativer: ['`ip route`', 'ping'] }, 'ip route'), 'baktegn er en del av svaret');
 ok(G.check({ type: 'tekst', svar: ['Domain Name System'] }, '  domain   name   system '), 'tekst trim, case og mellomrom');
 ok(!G.check({ type: 'tekst', svar: ['DNS'] }, 'dnsx'), 'tekst avviser feil');
 ok(!G.check({ type: 'tekst', svar: ['Ramme'] }, ''), 'tekst avviser tomt');
@@ -58,16 +62,18 @@ var sample = [
 var p1 = C.pool(sample, { level: 1, topicId: '', type: '' });
 ok(p1.length === 1 && p1[0].id === 'a1', 'nivå 1 tar ikke med nivå 2 eller en modul som ikke ble lastet');
 ok(C.pool(sample, { level: 1, topicId: 'a', type: 'tall' }).length === 0, 'tema- og typefilter');
-ok(C.pool(sample, { level: 2 }).length === 1 && C.pool(sample, { level: 2 })[0].id === 'b1', 'nivå 2-pool finnes i data, men siden tilbyr det ikke');
-ok(C.pool(sample, { level: 3 }).length === 0, 'nivå 3 er tomt');
+ok(C.pool(sample, { level: 2 }).length === 1 && C.pool(sample, { level: 2 })[0].id === 'b1', 'nivå 2 filtrerer bort nivå 1');
+ok(C.pool(sample, { level: 2, topicId: 'a' }).length === 0, 'tema på et annet nivå gir ingen oppgaver');
 ok(C.topicsForLevel(sample, 1).length === 1 && C.topicsForLevel(sample, 1)[0].id === 'a', 'temaliste for nivå 1');
-var soon = C.LEVELS.filter(function (l) { return l.status === 'soon'; });
-ok(soon.length === 2 && soon[0].id === 2 && soon[1].id === 3 && soon[0].tittel === 'Adressering og oppsett' && soon[1].tittel === 'Feilsøking og scenarioer', 'nivå 2 og 3 er sperret');
+ok(C.LEVELS.every(function (l) { return l.status === 'active'; }), 'alle tre nivåer kan velges');
+ok(C.levelById(2).tittel === 'Adressering og oppsett' && C.levelById(3).tittel === 'Feilsøking og scenarioer', 'nivå 2 og 3 har riktig tittel');
 ok(C.levelById(1).status === 'active' && C.parseLevel('1') === 1 && C.parseLevel(2) === 2 && C.parseLevel('4') == null, 'nivå parser bare 1–3');
 
 console.log('3) Innholdet til DOELad');
 var manifest = JSON.parse(fs.readFileSync(path.join(contentDir, 'index.json'), 'utf8'));
-ok(JSON.stringify(manifest) === JSON.stringify({ moduler: ['11-osi-tcpip', '12-tcp-udp', '13-porter-protokoller', '14-http-https', '15-mac-ip-arp-dns-dhcp'] }), 'manifestet er de fem temaene');
+var expectMods = ['11-osi-tcpip', '12-tcp-udp', '13-porter-protokoller', '14-http-https', '15-mac-ip-arp-dns-dhcp', '21-ipv4-cidr', '22-subnetting', '23-nat-pat', '24-dhcp', '25-dns', '26-switching-vlan', '27-ruting', '31-feilsokingsmetodikk', '32-verktoy', '33-scenarioer', '34-brannmur'];
+ok(JSON.stringify(manifest) === JSON.stringify({ moduler: expectMods }), 'manifestet er 11–15, 21–27 og 31–34');
+ok(!manifest.moduler.some(function (m) { return m.indexOf('35') === 0 || m.indexOf('homelab') >= 0; }), '35-homelab er ikke med');
 var seenTask = {};
 var typeCount = {};
 var totalTasks = 0;
@@ -78,7 +84,7 @@ var modules = manifest.moduler.map(function (folder) {
   var opp = fs.readFileSync(oppPath, 'utf8');
   var mod = C.normalizeModule(folder, teori, opp);
   ok(!mod.warnings.length, folder + ' uten merknader: ' + mod.warnings.join(' | '));
-  ok(mod.id === folder && mod.nivå === 1 && mod.tittel && mod.beskrivelse && mod.kode, folder + ' har id, nivå 1, tittel og kode');
+  ok(mod.id === folder && mod.nivå === Number(folder.charAt(0)) && mod.tittel && mod.beskrivelse && mod.kode, folder + ' har id, nivå, tittel og kode');
   ok(/^\d{4}-\d{2}-\d{2}$/.test(mod.oppdatert), folder + ' oppdatert er en dato: ' + mod.oppdatert);
   ok(mod.kilder.length > 0 && mod.kilder.every(function (k) { return k.tittel && /^https:\/\//.test(k.url); }), folder + ' kilder er {tittel, url}');
   ok(mod.teori.indexOf('Plassholder') < 0, folder + ' er ikke plassholdertekst');
@@ -87,8 +93,11 @@ var modules = manifest.moduler.map(function (folder) {
     typeCount[t.type] = (typeCount[t.type] || 0) + 1;
     ok(!seenTask[t.id], 'unik oppgave-id ' + t.id);
     seenTask[t.id] = folder;
-    ok(t.nivå === 1, t.id + ' har nivå 1');
+    ok(t.nivå === mod.nivå, t.id + ' har samme nivå som temaet');
     ok(t.toleranse === 0, t.id + ' har ingen toleranse');
+    if (t.type === 'tall') t.svar.forEach(function (s) {
+      ok(!/\//.test(s) && !/^255(?:\.\d{1,3}){3}$/.test(s), t.id + ' er tall, ikke subnett eller maske: ' + s);
+    });
     ok(t.forklaring.steg.length >= 1 && t.forklaring.steg.length <= 4, t.id + ' har 1–4 forklaringssteg');
     t.svar.forEach(function (s) { ok(G.check(t, s), t.id + ' godtar eget svar «' + s + '»'); });
     ok(!G.check(t, 'dette-er-feil'), t.id + ' avviser tull');
@@ -102,10 +111,11 @@ var modules = manifest.moduler.map(function (folder) {
   });
   return mod;
 });
-ok(totalTasks === 121, '121 oppgaver, fikk ' + totalTasks);
-ok(typeCount.flervalg === 72 && typeCount.tall === 34 && typeCount.tekst === 15, 'fordeling flervalg/tall/tekst: ' + JSON.stringify(typeCount));
-ok(C.pool(modules, { level: 1 }).length === 121, 'pool nivå 1 er alle oppgavene');
-ok(C.pool(modules, { level: 2 }).length === 0 && C.pool(modules, { level: 3 }).length === 0, 'ingen oppgaver på nivå 2 eller 3');
+ok(totalTasks === 390, '390 oppgaver, fikk ' + totalTasks);
+ok(typeCount.flervalg === 259 && typeCount.tall === 82 && typeCount.tekst === 49, 'fordeling flervalg/tall/tekst: ' + JSON.stringify(typeCount));
+ok(C.pool(modules, { level: 1 }).length === 121, 'pool nivå 1');
+ok(C.pool(modules, { level: 2 }).length === 176 && C.pool(modules, { level: 2 }).every(function (t) { return t.nivå === 2; }), 'pool nivå 2 er 176 oppgaver');
+ok(C.pool(modules, { level: 3 }).length === 93 && C.pool(modules, { level: 3 }).every(function (t) { return t.nivå === 3; }), 'pool nivå 3 er 93 oppgaver');
 ok(C.pool(modules, { level: 1, topicId: '13-porter-protokoller', type: 'tall' }).length === 13, 'port-temaet har 13 talloppgaver');
 
 console.log('4) Statistikk, egen nøkkel');
@@ -187,7 +197,7 @@ if (!JSDOM) {
   var d = w.document;
   function waitReady(n) {
     var app = w.NGRUNN && w.NGRUNN.app;
-    if (app && app.state.modules.length === 5) return runDom();
+    if (app && app.state.modules.length === 16) return runDom();
     if (n > 50) {
       ok(false, 'temaene ble ikke lastet: ' + (app && app.state.modules.length));
       return finishDom();
@@ -196,22 +206,24 @@ if (!JSDOM) {
   }
   function runDom() {
     var app = w.NGRUNN.app;
-    ok(d.querySelector('meta[name="ngrunn-innhold-versjon"]').getAttribute('content') === '20261118c', 'innholdsversjon 20261118c');
+    ok(d.querySelector('meta[name="ngrunn-innhold-versjon"]').getAttribute('content') === '20261118d', 'innholdsversjon 20261118d');
     ok(!d.getElementById('setup-form').hidden, 'oppsettet vises når nivå 1 har temaer');
-    ok(d.querySelectorAll('#topic-list .module-card:not([disabled])').length === 6, 'Alle temaer pluss fem temaer');
+    ok(d.querySelectorAll('#topic-list .module-card:not([disabled])').length === 6, 'Alle temaer pluss fem temaer på nivå 1');
     [2, 3].forEach(function (n) {
       var b = d.getElementById('level-' + n);
-      ok(b && b.tagName === 'BUTTON' && b.disabled && b.getAttribute('aria-disabled') === 'true', 'nivå ' + n + ' er disabled og aria-disabled');
-      ok(b.classList.contains('soon') && !b.classList.contains('selected'), 'nivå ' + n + ' er merket kommer snart og ikke valgt');
-      ok(b.querySelector('.badge') && b.querySelector('.badge').textContent === 'Kommer snart', 'nivå ' + n + ' sier Kommer snart');
-      ok(b.getAttribute('aria-pressed') === 'false', 'nivå ' + n + ' er ikke trykket inn');
-      b.click();
-      b.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
-      b.dispatchEvent(new w.KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }));
+      ok(b && b.tagName === 'BUTTON' && !b.disabled && b.getAttribute('aria-disabled') !== 'true', 'nivå ' + n + ' kan velges');
+      ok(!b.classList.contains('soon') && !b.querySelector('.badge'), 'nivå ' + n + ' er ikke merket kommer snart');
     });
-    ok(app.state.level === 1 && d.getElementById('level-1').classList.contains('selected'), 'klikk og tastatur på nivå 2/3 endrer ikke valget');
-    try { d.getElementById('level-2').focus(); } catch (e) { /* ignorer */ }
-    ok(d.activeElement !== d.getElementById('level-2'), 'nivå 2 kan ikke få fokus');
+    d.getElementById('level-2').focus();
+    ok(d.activeElement === d.getElementById('level-2'), 'nivå 2 kan få fokus');
+    d.getElementById('level-2').click();
+    ok(app.state.level === 2 && d.getElementById('level-2').getAttribute('aria-pressed') === 'true', 'klikk velger nivå 2');
+    ok(d.querySelectorAll('#topic-list .module-card:not([disabled])').length === 8, 'nivå 2 har Alle temaer og sju temaer');
+    ok(C.topicsForLevel(app.state.modules, 2).every(function (m) { return m.nivå === 2; }), 'temalisten på nivå 2 er bare nivå 2');
+    d.getElementById('level-3').click();
+    ok(app.state.level === 3 && d.querySelectorAll('#topic-list .module-card:not([disabled])').length === 5, 'nivå 3 har Alle temaer og fire temaer');
+    d.getElementById('level-1').click();
+    ok(app.state.level === 1 && d.getElementById('level-1').classList.contains('selected'), 'tilbake til nivå 1');
 
     var form = d.getElementById('setup-form');
     var inp = d.getElementById('answer-input');
@@ -265,7 +277,56 @@ if (!JSDOM) {
       ok(!!found && !found.disabled, 'temaknapp ' + title);
       if (found) found.click();
     }
-    modules.forEach(function (mod) {
+    d.getElementById('level-2').click();
+    clickTopic('Alle temaer');
+    firstType.value = 'flervalg';
+    firstType.dispatchEvent(new w.Event('change', { bubbles: true }));
+    d.getElementById('count-input').value = '1';
+    form.dispatchEvent(new w.Event('submit', { cancelable: true, bubbles: true }));
+    ok(app.state.round && app.state.round.level === 2 && app.state.round.tasks.every(function (t) { return t.nivå === 2; }), 'en runde på nivå 2');
+    answerCurrent(true);
+    ok(d.querySelector('#feedback .verdict').textContent.indexOf('Riktig') >= 0, 'nivå 2-svaret er riktig');
+    d.getElementById('answer-form').dispatchEvent(new w.Event('submit', { cancelable: true, bubbles: true }));
+    ok(!d.getElementById('view-result').hidden, 'resultat etter nivå 2');
+
+    d.getElementById('level-3').click();
+    clickTopic('Verktøy og utdata');
+    var codeType = d.getElementById('type-select');
+    codeType.value = 'flervalg';
+    codeType.dispatchEvent(new w.Event('change', { bubbles: true }));
+    var realShuffle = w.NGRUNN.grade.shuffle;
+    w.NGRUNN.grade.shuffle = function (list, rng) {
+      if (list && list[0] && list[0].id) {
+        var first = list.filter(function (t) { return t.id === '32-021'; });
+        var rest = list.filter(function (t) { return t.id !== '32-021'; });
+        return first.concat(rest);
+      }
+      return realShuffle(list, rng);
+    };
+    d.getElementById('count-input').value = '1';
+    form.dispatchEvent(new w.Event('submit', { cancelable: true, bubbles: true }));
+    w.NGRUNN.grade.shuffle = realShuffle;
+    var codeTask = app.state.round && app.state.round.tasks[0];
+    ok(codeTask && codeTask.id === '32-021' && codeTask.nivå === 3, 'kode-oppgaven er 32-021 på nivå 3');
+    var qHtml = d.getElementById('task-question').innerHTML;
+    ok(qHtml.indexOf('<code>') >= 0 && qHtml.indexOf('<script') < 0 && qHtml.indexOf('`') < 0, 'spørsmålet viser kode uten rå baktegn: ' + qHtml);
+    var radios = d.querySelectorAll('#choice-list input');
+    var rawHit = false;
+    var codeChoice = false;
+    Array.prototype.forEach.call(radios, function (el) {
+      if (el.value === codeTask.svar[0]) rawHit = true;
+      var span = el.parentNode.querySelector('span');
+      if (span && span.querySelector('code') && span.innerHTML.indexOf('`') < 0) codeChoice = true;
+      ok(el.value === codeTask.alternativer.filter(function (a) { return a === el.value; })[0], 'radioknappen har rå alternativtekst');
+    });
+    ok(rawHit && codeChoice, 'alternativet rendres som kode og verdien er rå tekst');
+    answerCurrent(true);
+    ok(d.querySelector('#feedback .verdict').textContent.indexOf('Riktig') >= 0, 'kode-alternativet rettes mot rå tekst');
+    d.getElementById('answer-form').dispatchEvent(new w.Event('submit', { cancelable: true, bubbles: true }));
+    d.querySelector('[data-nav="start"]').click();
+    d.getElementById('level-1').click();
+
+    modules.filter(function (mod) { return mod.nivå === 1; }).forEach(function (mod) {
       ['flervalg', 'tall', 'tekst'].forEach(function (type) {
         d.querySelector('[data-nav="start"]').click();
         clickTopic(mod.tittel);
@@ -282,21 +343,25 @@ if (!JSDOM) {
       });
     });
 
-    d.querySelector('[data-nav="start"]').click();
-    clickTopic('Alle temaer');
-    d.querySelector('.nav [data-nav="teori"]').click();
-    ok(!d.getElementById('view-teori').hidden, 'teorifanene åpnes');
-    var bodies = d.querySelectorAll('#theory-content .theory-body');
-    ok(bodies.length === 5, 'fem teoripaneler, fikk ' + bodies.length);
-    modules.forEach(function (mod, i) {
-      var body = bodies[i];
-      ok(!!body, mod.kode + ' har et teoripanel');
-      if (!body) return;
-      ok(!!body.querySelector('table'), mod.kode + ' viser en tabell');
-      ok(body.textContent.indexOf(mod.tittel) >= 0 || d.getElementById('theory-content').textContent.indexOf(mod.tittel) >= 0, mod.kode + ' sin tittel vises');
-      ok(body.innerHTML.indexOf('LORAMATH') < 0 && body.innerHTML.indexOf('LORACODE') < 0, mod.kode + ' har ikke rå matte-merker');
-      ok(!body.querySelector('.katex-error'), mod.kode + ' har ingen KaTeX-feil');
-      ok(!body.querySelector('script'), mod.kode + ' har ikke script-tagger');
+    [1, 2, 3].forEach(function (level) {
+      d.querySelector('[data-nav="start"]').click();
+      d.getElementById('level-' + level).click();
+      clickTopic('Alle temaer');
+      d.querySelector('.nav [data-nav="teori"]').click();
+      ok(!d.getElementById('view-teori').hidden, 'teorifanene åpnes på nivå ' + level);
+      var ofLevel = modules.filter(function (mod) { return mod.nivå === level; });
+      var bodies = d.querySelectorAll('#theory-content .theory-body');
+      ok(bodies.length === ofLevel.length, 'nivå ' + level + ' har ' + ofLevel.length + ' teoripaneler, fikk ' + bodies.length);
+      ofLevel.forEach(function (mod, i) {
+        var body = bodies[i];
+        ok(!!body, mod.kode + ' har et teoripanel');
+        if (!body) return;
+        ok(!!body.querySelector('table'), mod.kode + ' viser en tabell');
+        ok(body.textContent.indexOf(mod.tittel) >= 0 || d.getElementById('theory-content').textContent.indexOf(mod.tittel) >= 0, mod.kode + ' sin tittel vises');
+        ok(body.innerHTML.indexOf('LORAMATH') < 0 && body.innerHTML.indexOf('LORACODE') < 0, mod.kode + ' har ikke rå matte-merker');
+        ok(!body.querySelector('.katex-error'), mod.kode + ' har ingen KaTeX-feil');
+        ok(!body.querySelector('script'), mod.kode + ' har ikke script-tagger');
+      });
     });
     ok(d.getElementById('theory-content').textContent.indexOf('Plassholder') < 0, 'teorien er ikke plassholder');
 

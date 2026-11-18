@@ -1,0 +1,496 @@
+[
+  {
+    "id": "32-001",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr `time=38.2 ms` i et ping-svar?",
+    "alternativer": [
+      "Rundturstiden: tid fra forespørselen ble sendt til svaret kom",
+      "Tiden siden maskinen startet",
+      "Tiden DNS-oppslaget tok",
+      "Hvor lenge svaret kan mellomlagres"
+    ],
+    "svar": [
+      "Rundturstiden: tid fra forespørselen ble sendt til svaret kom"
+    ],
+    "forklaring": {
+      "steg": [
+        "ping måler tiden mellom ICMP Echo Request og Echo Reply."
+      ]
+    }
+  },
+  {
+    "id": "32-002",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilken protokoll bruker ping?",
+    "alternativer": [
+      "ICMP (Echo Request og Echo Reply)",
+      "TCP port 80",
+      "UDP port 53",
+      "ARP"
+    ],
+    "svar": [
+      "ICMP (Echo Request og Echo Reply)"
+    ],
+    "forklaring": {
+      "steg": [
+        "ICMP type 8 er Echo Request, og type 0 er Echo Reply (RFC 792).",
+        "Mange brannmurer blokkerer ICMP, så manglende svar betyr ikke alltid at verten er nede."
+      ]
+    }
+  },
+  {
+    "id": "32-003",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ping 10.0.0.60` gir «From 10.0.0.15 icmp_seq=1 Destination Host Unreachable». 10.0.0.15 er din egen PC. Hva betyr det?",
+    "alternativer": [
+      "PC-en fikk ikke svar på ARP for 10.0.0.60 i eget nett: verten er av, borte eller har feil adresse",
+      "DNS er feil",
+      "Gatewayen mangler rute til internett",
+      "Porten er stengt"
+    ],
+    "svar": [
+      "PC-en fikk ikke svar på ARP for 10.0.0.60 i eget nett: verten er av, borte eller har feil adresse"
+    ],
+    "forklaring": {
+      "steg": [
+        "Meldingen kommer fra din egen adresse, ikke fra en ruter.",
+        "Det betyr at den lokale ARP-forespørselen ikke fikk svar."
+      ]
+    }
+  },
+  {
+    "id": "32-004",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvordan finner traceroute hvert hopp på veien?",
+    "alternativer": [
+      "Den sender pakker med økende TTL (1, 2, 3 …), og hver ruter svarer med ICMP Time Exceeded",
+      "Den spør DNS om hver ruter",
+      "Den leser rutetabellen til alle rutere",
+      "Den bruker ARP"
+    ],
+    "svar": [
+      "Den sender pakker med økende TTL (1, 2, 3 …), og hver ruter svarer med ICMP Time Exceeded"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ruteren der TTL blir 0, kaster pakken og svarer.",
+        "Slik avslører den seg."
+      ]
+    }
+  },
+  {
+    "id": "32-005",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr `* * *` på et hopp i traceroute?",
+    "alternativer": [
+      "Hoppet svarte ikke innen tidsfristen, ofte på grunn av filtrering. Det er ikke nødvendigvis en feil",
+      "Ruteren er alltid nede",
+      "DNS-feil",
+      "Pakken kom fram"
+    ],
+    "svar": [
+      "Hoppet svarte ikke innen tidsfristen, ofte på grunn av filtrering. Det er ikke nødvendigvis en feil"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fortsetter senere hopp å svare, går trafikken gjennom.",
+        "Bare når alle hopp etter et punkt er `* * *`, er det et tegn på brudd."
+      ]
+    }
+  },
+  {
+    "id": "32-006",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva bruker Linux `traceroute` og Windows `tracert` som standard?",
+    "alternativer": [
+      "Linux: UDP-pakker. Windows: ICMP Echo",
+      "Begge bruker TCP 443",
+      "Linux: ICMP. Windows: UDP",
+      "Begge bruker ARP"
+    ],
+    "svar": [
+      "Linux: UDP-pakker. Windows: ICMP Echo"
+    ],
+    "forklaring": {
+      "steg": [
+        "Derfor kan resultatet variere bak brannmurer.",
+        "Linux-`traceroute -I` bruker ICMP, og `-T` bruker TCP."
+      ]
+    }
+  },
+  {
+    "id": "32-007",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ip addr` viser `eth0: <NO-CARRIER,BROADCAST,MULTICAST,UP> ... state DOWN`. Hva betyr det?",
+    "alternativer": [
+      "Grensesnittet er slått på, men har ingen link (kabel eller port)",
+      "Grensesnittet har IP fra DHCP",
+      "DNS er nede",
+      "Alt er i orden"
+    ],
+    "svar": [
+      "Grensesnittet er slått på, men har ingen link (kabel eller port)"
+    ],
+    "forklaring": {
+      "steg": [
+        "`UP` betyr at grensesnittet er aktivert.",
+        "`NO-CARRIER` betyr at det ikke er signal fra den andre enden: sjekk kabel og switchport."
+      ]
+    }
+  },
+  {
+    "id": "32-008",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Linjen `inet 10.0.0.15/24 brd 10.0.0.255 scope global dynamic eth0` viser at adressen …",
+    "alternativer": [
+      "… er fra DHCP (dynamic), i nettet 10.0.0.0/24",
+      "… er statisk satt",
+      "… er link-local",
+      "… er IPv6"
+    ],
+    "svar": [
+      "… er fra DHCP (dynamic), i nettet 10.0.0.0/24"
+    ],
+    "forklaring": {
+      "steg": [
+        "`dynamic` betyr at adressen har en leietid fra DHCP.",
+        "/24 gir broadcast 10.0.0.255."
+      ]
+    }
+  },
+  {
+    "id": "32-009",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilken Windows-kommando viser DHCP-server, DNS-servere, MAC-adresse og leietid?",
+    "alternativer": [
+      "ipconfig /all",
+      "ipconfig",
+      "ping -a",
+      "tracert"
+    ],
+    "svar": [
+      "ipconfig /all"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vanlig `ipconfig` viser bare adresse, maske og gateway."
+      ]
+    }
+  },
+  {
+    "id": "32-010",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvordan ber du en Windows-PC om ny adresse fra DHCP?",
+    "alternativer": [
+      "ipconfig /release og så ipconfig /renew",
+      "ipconfig /flushdns",
+      "arp -d",
+      "netstat -ano"
+    ],
+    "svar": [
+      "ipconfig /release og så ipconfig /renew"
+    ],
+    "forklaring": {
+      "steg": [
+        "`/release` gir fra seg leien, og `/renew` starter DHCP på nytt."
+      ]
+    }
+  },
+  {
+    "id": "32-011",
+    "nivå": 3,
+    "type": "tekst",
+    "spørsmål": "Hvilken Windows-kommando tømmer DNS-bufferen?",
+    "svar": [
+      "ipconfig /flushdns"
+    ],
+    "forklaring": {
+      "steg": [
+        "Nyttig etter en DNS-endring, når PC-en har et gammelt svar lagret."
+      ]
+    }
+  },
+  {
+    "id": "32-012",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva viser `arp -a`?",
+    "alternativer": [
+      "ARP-tabellen: IP-adresser i lokalt nett og MAC-adressene de har",
+      "Rutetabellen",
+      "Lyttende porter",
+      "DNS-bufferen"
+    ],
+    "svar": [
+      "ARP-tabellen: IP-adresser i lokalt nett og MAC-adressene de har"
+    ],
+    "forklaring": {
+      "steg": [
+        "På Linux er `ip neigh` det moderne alternativet."
+      ]
+    }
+  },
+  {
+    "id": "32-013",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ss -tulpn` viser `127.0.0.1:8080` for en app. Hvorfor når du den ikke fra en annen maskin?",
+    "alternativer": [
+      "Appen lytter bare på loopback, ikke på nettverksgrensesnittet",
+      "Port 8080 er alltid blokkert",
+      "DNS mangler",
+      "Appen bruker UDP"
+    ],
+    "svar": [
+      "Appen lytter bare på loopback, ikke på nettverksgrensesnittet"
+    ],
+    "forklaring": {
+      "steg": [
+        "127.0.0.1 kan bare nås fra maskinen selv.",
+        "Det er greit bak en omvendt proxy på samme maskin. Ellers må appen lytte på 0.0.0.0 eller LAN-adressen."
+      ]
+    }
+  },
+  {
+    "id": "32-014",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr `0.0.0.0:443` i kolonnen for lokal adresse i `ss -tulpn`?",
+    "alternativer": [
+      "Tjenesten lytter på port 443 på alle IPv4-grensesnitt",
+      "Tjenesten er slått av",
+      "Port 443 er blokkert",
+      "Ingen adresse er satt"
+    ],
+    "svar": [
+      "Tjenesten lytter på port 443 på alle IPv4-grensesnitt"
+    ],
+    "forklaring": {
+      "steg": [
+        "`[::]:443` er det samme for IPv6."
+      ]
+    }
+  },
+  {
+    "id": "32-015",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr `status: NXDOMAIN` i utdata fra `dig`?",
+    "alternativer": [
+      "Navnet finnes ikke",
+      "Svaret er OK",
+      "Resolveren feilet",
+      "Svaret er avkortet"
+    ],
+    "svar": [
+      "Navnet finnes ikke"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sjekk stavemåten, eller om posten faktisk er opprettet i sonen."
+      ]
+    }
+  },
+  {
+    "id": "32-016",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr `status: SERVFAIL` i utdata fra `dig`?",
+    "alternativer": [
+      "Resolveren klarte ikke å få et gyldig svar, f.eks. fordi den autoritative serveren ikke svarte eller DNSSEC feilet",
+      "Navnet finnes ikke",
+      "Alt er OK",
+      "Klienten mangler IP"
+    ],
+    "svar": [
+      "Resolveren klarte ikke å få et gyldig svar, f.eks. fordi den autoritative serveren ikke svarte eller DNSSEC feilet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Prøv en annen resolver (`dig @1.1.1.1`) for å se om feilen er lokal."
+      ]
+    }
+  },
+  {
+    "id": "32-017",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvordan spør du en bestemt DNS-server, f.eks. 10.0.0.1, med dig?",
+    "alternativer": [
+      "dig @10.0.0.1 navn",
+      "dig navn 10.0.0.1 -server",
+      "dig -s 10.0.0.1",
+      "dig navn +server"
+    ],
+    "svar": [
+      "dig @10.0.0.1 navn"
+    ],
+    "forklaring": {
+      "steg": [
+        "`@server` overstyrer resolveren i systemoppsettet.",
+        "Slik kan du sammenligne svar fra den lokale resolveren og en offentlig."
+      ]
+    }
+  },
+  {
+    "id": "32-018",
+    "nivå": 3,
+    "type": "tall",
+    "spørsmål": "I linjen `wim.fm. 300 IN A 203.0.113.10` fra dig: hvor mange sekunder gjenstår av TTL-en?",
+    "svar": [
+      "300"
+    ],
+    "forklaring": {
+      "steg": [
+        "Andre kolonne er TTL i sekunder.",
+        "En resolver som har svaret i bufferen, viser hvor mye som er igjen."
+      ]
+    }
+  },
+  {
+    "id": "32-019",
+    "nivå": 3,
+    "type": "tekst",
+    "spørsmål": "Hvilket dig-alternativ gjør et omvendt oppslag (IP → navn)?",
+    "svar": [
+      "-x",
+      "dig -x"
+    ],
+    "forklaring": {
+      "steg": [
+        "`dig -x 10.0.0.54` spør etter PTR for 54.0.0.10.in-addr.arpa."
+      ]
+    }
+  },
+  {
+    "id": "32-020",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr «Non-authoritative answer» i `nslookup`?",
+    "alternativer": [
+      "Svaret kom fra en resolver (ofte fra bufferen), ikke direkte fra den autoritative serveren",
+      "Svaret er feil",
+      "Navnet finnes ikke",
+      "DNS er slått av"
+    ],
+    "svar": [
+      "Svaret kom fra en resolver (ofte fra bufferen), ikke direkte fra den autoritative serveren"
+    ],
+    "forklaring": {
+      "steg": [
+        "Det er helt normalt for vanlige oppslag via en rekursiv resolver."
+      ]
+    }
+  },
+  {
+    "id": "32-021",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "I `curl -v`: hva betyr linjer som starter med `>` og `<`?",
+    "alternativer": [
+      "`>` er det curl sender (forespørselen), `<` er det serveren svarer (respons-headere)",
+      "`>` er feil, `<` er advarsler",
+      "Begge er DNS-oppslag",
+      "`>` er TLS, `<` er TCP"
+    ],
+    "svar": [
+      "`>` er det curl sender (forespørselen), `<` er det serveren svarer (respons-headere)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Linjer med `*` er curls egne meldinger om DNS, TCP og TLS."
+      ]
+    }
+  },
+  {
+    "id": "32-022",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilken curl-kommando henter bare responsheaderne (HEAD-forespørsel)?",
+    "alternativer": [
+      "curl -I https://wim.fm",
+      "curl -v https://wim.fm",
+      "curl -k https://wim.fm",
+      "curl -o fil https://wim.fm"
+    ],
+    "svar": [
+      "curl -I https://wim.fm"
+    ],
+    "forklaring": {
+      "steg": [
+        "`-I` sender HEAD og viser statuskode og headere."
+      ]
+    }
+  },
+  {
+    "id": "32-023",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor bør du være forsiktig med `curl -k`?",
+    "alternativer": [
+      "Det slår av kontroll av TLS-sertifikatet, så du ikke oppdager feil eller falske servere",
+      "Det sletter filer",
+      "Det er tregere",
+      "Det bruker UDP"
+    ],
+    "svar": [
+      "Det slår av kontroll av TLS-sertifikatet, så du ikke oppdager feil eller falske servere"
+    ],
+    "forklaring": {
+      "steg": [
+        "`-k` kan hjelpe under feilsøking for å se om bare sertifikatet er problemet.",
+        "Bruk det aldri som fast løsning."
+      ]
+    }
+  },
+  {
+    "id": "32-024",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilken Windows-kommando viser tilkoblinger og lyttende porter med prosess-ID?",
+    "alternativer": [
+      "netstat -ano",
+      "ipconfig /all",
+      "arp -a",
+      "nslookup"
+    ],
+    "svar": [
+      "netstat -ano"
+    ],
+    "forklaring": {
+      "steg": [
+        "`-a` viser alle, `-n` viser tall i stedet for navn og `-o` viser PID."
+      ]
+    }
+  },
+  {
+    "id": "32-025",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ip neigh` viser `10.0.0.1 dev eth0 FAILED`. Hva betyr det?",
+    "alternativer": [
+      "PC-en fikk ikke svar på ARP fra 10.0.0.1, så lag 2-kontakten med gatewayen er brutt",
+      "Gatewayen er OK",
+      "DNS-feil",
+      "10.0.0.1 har ny IP"
+    ],
+    "svar": [
+      "PC-en fikk ikke svar på ARP fra 10.0.0.1, så lag 2-kontakten med gatewayen er brutt"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sjekk link, VLAN og om gatewayen faktisk har denne adressen."
+      ]
+    }
+  }
+]

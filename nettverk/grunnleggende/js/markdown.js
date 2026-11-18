@@ -158,6 +158,22 @@
     }
   }
 
+  /* Bare `kode` i løpende tekst. Alt annet escapes, så spørsmål ikke kan bære HTML. */
+  function renderInline(text) {
+    var s = String(text == null ? '' : text);
+    var out = '';
+    var re = /`([^`\n]+)`/g;
+    var last = 0;
+    var m;
+    while ((m = re.exec(s))) {
+      out += escapeHtml(s.slice(last, m.index));
+      out += '<code>' + escapeHtml(m[1]) + '</code>';
+      last = re.lastIndex;
+    }
+    out += escapeHtml(s.slice(last));
+    return out;
+  }
+
   function render(md) {
     if (!g.marked || typeof g.marked.parse !== 'function') {
       throw new Error('Markdown-biblioteket marked er ikke lastet.');
@@ -177,5 +193,5 @@
     return html;
   }
 
-  NGRUNN.markdown = { render: render, shieldMath: shieldMath, sanitize: sanitize, escapeHtml: escapeHtml };
+  NGRUNN.markdown = { render: render, renderInline: renderInline, shieldMath: shieldMath, sanitize: sanitize, escapeHtml: escapeHtml };
 })(typeof window !== 'undefined' ? window : globalThis);

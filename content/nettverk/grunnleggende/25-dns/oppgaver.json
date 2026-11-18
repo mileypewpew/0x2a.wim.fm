@@ -1,0 +1,472 @@
+[
+  {
+    "id": "25-001",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er forskjellen på et rekursivt og et iterativt DNS-oppslag?",
+    "alternativer": [
+      "Rekursivt: klienten ber om et ferdig svar. Iterativt: resolveren spør seg fram fra rot til autoritativ server",
+      "Rekursivt bruker TCP, iterativt UDP",
+      "Iterativt er bare for IPv6",
+      "Det er det samme"
+    ],
+    "svar": [
+      "Rekursivt: klienten ber om et ferdig svar. Iterativt: resolveren spør seg fram fra rot til autoritativ server"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klientens stub-resolver gjør et rekursivt spørsmål til resolveren.",
+        "Resolveren går selv iterativt: rot, TLD og autoritativ server."
+      ]
+    }
+  },
+  {
+    "id": "25-002",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør en autoritativ DNS-server?",
+    "alternativer": [
+      "Har sonedataene for et domene og gir endelige svar for det",
+      "Spør andre servere for klienter og mellomlagrer",
+      "Deler ut IP-adresser",
+      "Oversetter MAC-adresser"
+    ],
+    "svar": [
+      "Har sonedataene for et domene og gir endelige svar for det"
+    ],
+    "forklaring": {
+      "steg": [
+        "Svar fra den har AA-flagget (authoritative answer).",
+        "For `wim.fm` er det navneserverne i NS-postene."
+      ]
+    }
+  },
+  {
+    "id": "25-003",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "I hvilken rekkefølge spør en rekursiv resolver når den ikke har noe i hurtigbufferen?",
+    "alternativer": [
+      "Rotserver → TLD-server → autoritativ server",
+      "Autoritativ server → TLD-server → rotserver",
+      "TLD-server → rotserver → autoritativ server",
+      "Bare den autoritative serveren"
+    ],
+    "svar": [
+      "Rotserver → TLD-server → autoritativ server"
+    ],
+    "forklaring": {
+      "steg": [
+        "Rotserveren henviser til TLD-en (f.eks. `.fm`).",
+        "TLD-serveren henviser til domenets navneservere, som gir svaret."
+      ]
+    }
+  },
+  {
+    "id": "25-004",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange navngitte rotserveridentiteter (a til m) finnes det?",
+    "svar": [
+      "13"
+    ],
+    "forklaring": {
+      "steg": [
+        "a.root-servers.net til m.root-servers.net er 13 navn.",
+        "Hver består av mange servere spredt over verden via anycast."
+      ]
+    }
+  },
+  {
+    "id": "25-005",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken posttype brukes for et alias som peker til et annet navn?",
+    "alternativer": [
+      "CNAME",
+      "A",
+      "PTR",
+      "SOA"
+    ],
+    "svar": [
+      "CNAME"
+    ],
+    "forklaring": {
+      "steg": [
+        "CNAME = canonical name.",
+        "Resolveren følger aliaset og slår opp målnavnet."
+      ]
+    }
+  },
+  {
+    "id": "25-006",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor kan du ikke ha en CNAME på sonetoppen (f.eks. `wim.fm` selv)?",
+    "alternativer": [
+      "Et navn med CNAME kan ikke ha andre poster, og sonetoppen må ha SOA og NS",
+      "CNAME virker bare for IPv6",
+      "CNAME krever TCP",
+      "Sonetoppen kan bare ha MX"
+    ],
+    "svar": [
+      "Et navn med CNAME kan ikke ha andre poster, og sonetoppen må ha SOA og NS"
+    ],
+    "forklaring": {
+      "steg": [
+        "Noen leverandører, som Cloudflare, tilbyr «CNAME flattening» som løsning. Da svarer de med A/AAAA i stedet."
+      ]
+    }
+  },
+  {
+    "id": "25-007",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken posttype sier hvilke servere som er autoritative for en sone?",
+    "alternativer": [
+      "NS",
+      "MX",
+      "TXT",
+      "A"
+    ],
+    "svar": [
+      "NS"
+    ],
+    "forklaring": {
+      "steg": [
+        "NS-poster i foreldresonen (henvisning) og i sonen selv peker på navneserverne."
+      ]
+    }
+  },
+  {
+    "id": "25-008",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes TXT-poster ofte til?",
+    "alternativer": [
+      "SPF for e-post og bekreftelse av domeneeierskap",
+      "IPv6-adresser",
+      "Omvendt oppslag",
+      "Aliaser"
+    ],
+    "svar": [
+      "SPF for e-post og bekreftelse av domeneeierskap"
+    ],
+    "forklaring": {
+      "steg": [
+        "Eksempel: `v=spf1 include:_spf.example.com -all`.",
+        "Tjenester ber deg ofte legge inn en TXT-post for å bevise at du eier domenet."
+      ]
+    }
+  },
+  {
+    "id": "25-009",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "To MX-poster: `MX 10 a.example.com` og `MX 20 b.example.com`. Hvilken server prøves først?",
+    "alternativer": [
+      "a.example.com",
+      "b.example.com",
+      "Begge samtidig",
+      "Den med lengst navn"
+    ],
+    "svar": [
+      "a.example.com"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lavest prioritetstall prøves først.",
+        "b brukes som reserve."
+      ]
+    }
+  },
+  {
+    "id": "25-010",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv PTR-navnet for omvendt oppslag av 10.0.0.54.",
+    "svar": [
+      "54.0.0.10.in-addr.arpa",
+      "54.0.0.10.in-addr.arpa."
+    ],
+    "forklaring": {
+      "steg": [
+        "Snu oktettene: 54.0.0.10.",
+        "Legg til `.in-addr.arpa`."
+      ]
+    }
+  },
+  {
+    "id": "25-011",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv PTR-navnet for omvendt oppslag av 192.168.1.20.",
+    "svar": [
+      "20.1.168.192.in-addr.arpa",
+      "20.1.168.192.in-addr.arpa."
+    ],
+    "forklaring": {
+      "steg": [
+        "Snu oktettene: 20.1.168.192.",
+        "Legg til `.in-addr.arpa`."
+      ]
+    }
+  },
+  {
+    "id": "25-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr TTL på en DNS-post?",
+    "alternativer": [
+      "Hvor mange sekunder svaret kan mellomlagres",
+      "Hvor mange hopp pakken kan gå",
+      "Hvor lenge domenet er registrert",
+      "Hvor lang tid oppslaget tok"
+    ],
+    "svar": [
+      "Hvor mange sekunder svaret kan mellomlagres"
+    ],
+    "forklaring": {
+      "steg": [
+        "Når TTL-en er ute, må resolveren spørre på nytt."
+      ]
+    }
+  },
+  {
+    "id": "25-013",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "En A-post har TTL 3600. Hvor mange minutter kan en resolver mellomlagre svaret?",
+    "svar": [
+      "60"
+    ],
+    "forklaring": {
+      "steg": [
+        "3600 sekunder / 60 = 60 minutter (1 time)."
+      ]
+    }
+  },
+  {
+    "id": "25-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Du har endret A-posten for et navn, men noen får fortsatt den gamle adressen. Hva er den mest sannsynlige grunnen?",
+    "alternativer": [
+      "Resolvere mellomlagrer det gamle svaret til TTL-en går ut",
+      "DNS virker bare om natten",
+      "A-poster kan ikke endres",
+      "DHCP overstyrer DNS"
+    ],
+    "svar": [
+      "Resolvere mellomlagrer det gamle svaret til TTL-en går ut"
+    ],
+    "forklaring": {
+      "steg": [
+        "Endringen er aktiv hos den autoritative serveren med en gang, men bufrede svar lever til TTL-en er ute.",
+        "Senk TTL-en i forkant av planlagte endringer."
+      ]
+    }
+  },
+  {
+    "id": "25-015",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er negativ mellomlagring (RFC 2308)?",
+    "alternativer": [
+      "At også svaret «finnes ikke» (NXDOMAIN) mellomlagres en stund",
+      "At gamle poster slettes",
+      "At DNS blokkerer reklame",
+      "At TTL er negativ"
+    ],
+    "svar": [
+      "At også svaret «finnes ikke» (NXDOMAIN) mellomlagres en stund"
+    ],
+    "forklaring": {
+      "steg": [
+        "Varigheten styres av SOA-posten (minimum/negativ TTL).",
+        "Oppretter du et navn rett etter et mislykket oppslag, kan det ta litt tid før det virker."
+      ]
+    }
+  },
+  {
+    "id": "25-016",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr NXDOMAIN?",
+    "alternativer": [
+      "Navnet finnes ikke",
+      "Serveren feilet",
+      "Svaret er for stort",
+      "Tilgang nektet"
+    ],
+    "svar": [
+      "Navnet finnes ikke"
+    ],
+    "forklaring": {
+      "steg": [
+        "NXDOMAIN = non-existent domain.",
+        "SERVFAIL betyr derimot at serveren ikke klarte å gi svar, og REFUSED at den nektet."
+      ]
+    }
+  },
+  {
+    "id": "25-017",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor kan ikke en klient som bruker 8.8.8.8 slå opp navn i et lokalt domene som `nermo.farm`?",
+    "alternativer": [
+      "Den offentlige resolveren kjenner ikke det lokale domenet. Bare din egen DNS-server har de postene",
+      "8.8.8.8 støtter bare IPv6",
+      "Lokale domener må slås opp med ARP",
+      "8.8.8.8 er en DHCP-server"
+    ],
+    "svar": [
+      "Den offentlige resolveren kjenner ikke det lokale domenet. Bare din egen DNS-server har de postene"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lokale navn ligger i den lokale resolveren eller DHCP-serveren, f.eks. Unbound eller Dnsmasq.",
+        "Klientene må få den lokale DNS-serveren via DHCP."
+      ]
+    }
+  },
+  {
+    "id": "25-018",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er en DNS-videresender (forwarder)?",
+    "alternativer": [
+      "En DNS-server som sender spørsmål videre til en annen resolver i stedet for å slå opp selv",
+      "En autoritativ server",
+      "En DHCP-funksjon",
+      "En brannmurregel"
+    ],
+    "svar": [
+      "En DNS-server som sender spørsmål videre til en annen resolver i stedet for å slå opp selv"
+    ],
+    "forklaring": {
+      "steg": [
+        "Mange hjemmerutere videresender til operatøren.",
+        "Unbound kan både slå opp selv og videresende bestemte domener."
+      ]
+    }
+  },
+  {
+    "id": "25-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken port og transport bruker vanlig DNS?",
+    "alternativer": [
+      "Port 53, mest UDP og TCP ved behov",
+      "Port 443 TCP",
+      "Port 67 UDP",
+      "Port 853 UDP"
+    ],
+    "svar": [
+      "Port 53, mest UDP og TCP ved behov"
+    ],
+    "forklaring": {
+      "steg": [
+        "UDP 53 for vanlige oppslag.",
+        "TCP 53 ved store svar og soneoverføring."
+      ]
+    }
+  },
+  {
+    "id": "25-020",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange tegn kan én etikett (delen mellom to punktum) i et DNS-navn maksimalt ha?",
+    "svar": [
+      "63"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 1035: hver etikett kan være 1–63 oktetter.",
+        "Hele navnet kan være maks 255 oktetter i kodet form."
+      ]
+    }
+  },
+  {
+    "id": "25-021",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken post inneholder serienummeret til en sone?",
+    "alternativer": [
+      "SOA",
+      "NS",
+      "TXT",
+      "CNAME"
+    ],
+    "svar": [
+      "SOA"
+    ],
+    "forklaring": {
+      "steg": [
+        "SOA (start of authority) har primærserver, kontaktadresse, serienummer og tidsverdier.",
+        "Sekundærservere ser på serienummeret for å vite om sonen er endret."
+      ]
+    }
+  },
+  {
+    "id": "25-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Kan en MX-post peke direkte på en IP-adresse?",
+    "alternativer": [
+      "Nei, den skal peke på et vertsnavn som har A- eller AAAA-post",
+      "Ja, alltid",
+      "Bare for IPv6",
+      "Bare med TTL 0"
+    ],
+    "svar": [
+      "Nei, den skal peke på et vertsnavn som har A- eller AAAA-post"
+    ],
+    "forklaring": {
+      "steg": [
+        "MX-målet skal være et vertsnavn, og det skal heller ikke være et CNAME."
+      ]
+    }
+  },
+  {
+    "id": "25-023",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør kommandoen `dig wim.fm AAAA`?",
+    "alternativer": [
+      "Slår opp IPv6-adressen(e) til wim.fm",
+      "Slår opp e-postserveren",
+      "Viser ruten til wim.fm",
+      "Slår opp IPv4-adressen"
+    ],
+    "svar": [
+      "Slår opp IPv6-adressen(e) til wim.fm"
+    ],
+    "forklaring": {
+      "steg": [
+        "Siste argument er posttypen. Uten den spør `dig` etter A."
+      ]
+    }
+  },
+  {
+    "id": "25-024",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket flagg i et DNS-spørsmål betyr «gjør hele jobben for meg»?",
+    "alternativer": [
+      "RD (recursion desired)",
+      "AA (authoritative answer)",
+      "TC (truncated)",
+      "NX"
+    ],
+    "svar": [
+      "RD (recursion desired)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienten setter RD. Resolveren svarer med RA (recursion available) hvis den støtter rekursjon.",
+        "TC betyr at svaret ble avkortet, så klienten bør prøve TCP."
+      ]
+    }
+  }
+]

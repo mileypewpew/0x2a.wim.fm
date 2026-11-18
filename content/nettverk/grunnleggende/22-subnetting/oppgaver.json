@@ -1,0 +1,600 @@
+[
+  {
+    "id": "22-001",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er nettadressen til 192.168.75.246/25?",
+    "svar": [
+      "192.168.75.128",
+      "192.168.75.128/25"
+    ],
+    "forklaring": {
+      "steg": [
+        "/25 gir masken 255.255.255.128. Den interessante oktetten er nr. 4 (maskeverdi 128).",
+        "Blokkstørrelse: 256 − 128 = 128.",
+        "246 ligger i blokken 128–255 i oktett 4.",
+        "Nettadressen er 192.168.75.128/25."
+      ]
+    }
+  },
+  {
+    "id": "22-002",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er nettadressen til 192.168.65.133/27?",
+    "svar": [
+      "192.168.65.128",
+      "192.168.65.128/27"
+    ],
+    "forklaring": {
+      "steg": [
+        "/27 gir masken 255.255.255.224. Den interessante oktetten er nr. 4 (maskeverdi 224).",
+        "Blokkstørrelse: 256 − 224 = 32.",
+        "133 ligger i blokken 128–159 i oktett 4.",
+        "Nettadressen er 192.168.65.128/27."
+      ]
+    }
+  },
+  {
+    "id": "22-003",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er nettadressen til 172.21.50.154/30?",
+    "svar": [
+      "172.21.50.152",
+      "172.21.50.152/30"
+    ],
+    "forklaring": {
+      "steg": [
+        "/30 gir masken 255.255.255.252. Den interessante oktetten er nr. 4 (maskeverdi 252).",
+        "Blokkstørrelse: 256 − 252 = 4.",
+        "154 ligger i blokken 152–155 i oktett 4.",
+        "Nettadressen er 172.21.50.152/30."
+      ]
+    }
+  },
+  {
+    "id": "22-004",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er nettadressen til 10.108.249.179/26?",
+    "svar": [
+      "10.108.249.128",
+      "10.108.249.128/26"
+    ],
+    "forklaring": {
+      "steg": [
+        "/26 gir masken 255.255.255.192. Den interessante oktetten er nr. 4 (maskeverdi 192).",
+        "Blokkstørrelse: 256 − 192 = 64.",
+        "179 ligger i blokken 128–191 i oktett 4.",
+        "Nettadressen er 10.108.249.128/26."
+      ]
+    }
+  },
+  {
+    "id": "22-005",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er nettadressen til 172.27.170.161/23?",
+    "svar": [
+      "172.27.170.0",
+      "172.27.170.0/23"
+    ],
+    "forklaring": {
+      "steg": [
+        "/23 gir masken 255.255.254.0. Den interessante oktetten er nr. 3 (maskeverdi 254).",
+        "Blokkstørrelse: 256 − 254 = 2.",
+        "170 ligger i blokken 170–171 i oktett 3.",
+        "Nettadressen er 172.27.170.0/23."
+      ]
+    }
+  },
+  {
+    "id": "22-006",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er nettadressen til 10.51.118.156/20?",
+    "svar": [
+      "10.51.112.0",
+      "10.51.112.0/20"
+    ],
+    "forklaring": {
+      "steg": [
+        "/20 gir masken 255.255.240.0. Den interessante oktetten er nr. 3 (maskeverdi 240).",
+        "Blokkstørrelse: 256 − 240 = 16.",
+        "118 ligger i blokken 112–127 i oktett 3.",
+        "Nettadressen er 10.51.112.0/20."
+      ]
+    }
+  },
+  {
+    "id": "22-007",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er kringkastingsadressen (broadcast) for 172.20.216.13/26?",
+    "svar": [
+      "172.20.216.63"
+    ],
+    "forklaring": {
+      "steg": [
+        "/26 gir masken 255.255.255.192. Den interessante oktetten er nr. 4 (maskeverdi 192).",
+        "Blokkstørrelse: 256 − 192 = 64.",
+        "13 ligger i blokken 0–63 i oktett 4.",
+        "Broadcast = neste nett − 1 = 172.20.216.63."
+      ]
+    }
+  },
+  {
+    "id": "22-008",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er kringkastingsadressen (broadcast) for 192.168.52.9/28?",
+    "svar": [
+      "192.168.52.15"
+    ],
+    "forklaring": {
+      "steg": [
+        "/28 gir masken 255.255.255.240. Den interessante oktetten er nr. 4 (maskeverdi 240).",
+        "Blokkstørrelse: 256 − 240 = 16.",
+        "9 ligger i blokken 0–15 i oktett 4.",
+        "Broadcast = neste nett − 1 = 192.168.52.15."
+      ]
+    }
+  },
+  {
+    "id": "22-009",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er kringkastingsadressen (broadcast) for 172.21.190.9/30?",
+    "svar": [
+      "172.21.190.11"
+    ],
+    "forklaring": {
+      "steg": [
+        "/30 gir masken 255.255.255.252. Den interessante oktetten er nr. 4 (maskeverdi 252).",
+        "Blokkstørrelse: 256 − 252 = 4.",
+        "9 ligger i blokken 8–11 i oktett 4.",
+        "Broadcast = neste nett − 1 = 172.21.190.11."
+      ]
+    }
+  },
+  {
+    "id": "22-010",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er kringkastingsadressen (broadcast) for 10.127.158.142/22?",
+    "svar": [
+      "10.127.159.255"
+    ],
+    "forklaring": {
+      "steg": [
+        "/22 gir masken 255.255.252.0. Den interessante oktetten er nr. 3 (maskeverdi 252).",
+        "Blokkstørrelse: 256 − 252 = 4.",
+        "158 ligger i blokken 156–159 i oktett 3.",
+        "Broadcast = neste nett − 1 = 10.127.159.255."
+      ]
+    }
+  },
+  {
+    "id": "22-011",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er kringkastingsadressen (broadcast) for 172.25.237.13/20?",
+    "svar": [
+      "172.25.239.255"
+    ],
+    "forklaring": {
+      "steg": [
+        "/20 gir masken 255.255.240.0. Den interessante oktetten er nr. 3 (maskeverdi 240).",
+        "Blokkstørrelse: 256 − 240 = 16.",
+        "237 ligger i blokken 224–239 i oktett 3.",
+        "Broadcast = neste nett − 1 = 172.25.239.255."
+      ]
+    }
+  },
+  {
+    "id": "22-012",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er første brukbare vertsadresse i nettet som 10.142.163.82/26 tilhører?",
+    "svar": [
+      "10.142.163.65"
+    ],
+    "forklaring": {
+      "steg": [
+        "/26 gir masken 255.255.255.192. Den interessante oktetten er nr. 4 (maskeverdi 192).",
+        "Blokkstørrelse: 256 − 192 = 64.",
+        "82 ligger i blokken 64–127 i oktett 4.",
+        "Nett: 10.142.163.64. Første vert = nett + 1 = 10.142.163.65."
+      ]
+    }
+  },
+  {
+    "id": "22-013",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er første brukbare vertsadresse i nettet som 172.30.27.43/29 tilhører?",
+    "svar": [
+      "172.30.27.41"
+    ],
+    "forklaring": {
+      "steg": [
+        "/29 gir masken 255.255.255.248. Den interessante oktetten er nr. 4 (maskeverdi 248).",
+        "Blokkstørrelse: 256 − 248 = 8.",
+        "43 ligger i blokken 40–47 i oktett 4.",
+        "Nett: 172.30.27.40. Første vert = nett + 1 = 172.30.27.41."
+      ]
+    }
+  },
+  {
+    "id": "22-014",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er første brukbare vertsadresse i nettet som 172.28.122.95/23 tilhører?",
+    "svar": [
+      "172.28.122.1"
+    ],
+    "forklaring": {
+      "steg": [
+        "/23 gir masken 255.255.254.0. Den interessante oktetten er nr. 3 (maskeverdi 254).",
+        "Blokkstørrelse: 256 − 254 = 2.",
+        "122 ligger i blokken 122–123 i oktett 3.",
+        "Nett: 172.28.122.0. Første vert = nett + 1 = 172.28.122.1."
+      ]
+    }
+  },
+  {
+    "id": "22-015",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er siste brukbare vertsadresse i nettet som 172.30.165.35/26 tilhører?",
+    "svar": [
+      "172.30.165.62"
+    ],
+    "forklaring": {
+      "steg": [
+        "/26 gir masken 255.255.255.192. Den interessante oktetten er nr. 4 (maskeverdi 192).",
+        "Blokkstørrelse: 256 − 192 = 64.",
+        "35 ligger i blokken 0–63 i oktett 4.",
+        "Broadcast: 172.30.165.63. Siste vert = broadcast − 1 = 172.30.165.62."
+      ]
+    }
+  },
+  {
+    "id": "22-016",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er siste brukbare vertsadresse i nettet som 192.168.213.11/28 tilhører?",
+    "svar": [
+      "192.168.213.14"
+    ],
+    "forklaring": {
+      "steg": [
+        "/28 gir masken 255.255.255.240. Den interessante oktetten er nr. 4 (maskeverdi 240).",
+        "Blokkstørrelse: 256 − 240 = 16.",
+        "11 ligger i blokken 0–15 i oktett 4.",
+        "Broadcast: 192.168.213.15. Siste vert = broadcast − 1 = 192.168.213.14."
+      ]
+    }
+  },
+  {
+    "id": "22-017",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er siste brukbare vertsadresse i nettet som 172.31.28.98/21 tilhører?",
+    "svar": [
+      "172.31.31.254"
+    ],
+    "forklaring": {
+      "steg": [
+        "/21 gir masken 255.255.248.0. Den interessante oktetten er nr. 3 (maskeverdi 248).",
+        "Blokkstørrelse: 256 − 248 = 8.",
+        "28 ligger i blokken 24–31 i oktett 3.",
+        "Broadcast: 172.31.31.255. Siste vert = broadcast − 1 = 172.31.31.254."
+      ]
+    }
+  },
+  {
+    "id": "22-018",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange brukbare vertsadresser har et /27-nett?",
+    "svar": [
+      "30"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vertsbit: 32 − 27 = 5.",
+        "$2^{5} - 2 = 32 - 2 = 30$ (nettadresse og broadcast trekkes fra)."
+      ]
+    }
+  },
+  {
+    "id": "22-019",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange brukbare vertsadresser har et /29-nett?",
+    "svar": [
+      "6"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vertsbit: 32 − 29 = 3.",
+        "$2^{3} - 2 = 8 - 2 = 6$ (nettadresse og broadcast trekkes fra)."
+      ]
+    }
+  },
+  {
+    "id": "22-020",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange brukbare vertsadresser har et /22-nett?",
+    "svar": [
+      "1022"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vertsbit: 32 − 22 = 10.",
+        "$2^{10} - 2 = 1024 - 2 = 1022$ (nettadresse og broadcast trekkes fra)."
+      ]
+    }
+  },
+  {
+    "id": "22-021",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange brukbare vertsadresser har et /19-nett?",
+    "svar": [
+      "8190"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vertsbit: 32 − 19 = 13.",
+        "$2^{13} - 2 = 8192 - 2 = 8190$ (nettadresse og broadcast trekkes fra)."
+      ]
+    }
+  },
+  {
+    "id": "22-022",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange brukbare vertsadresser har et /25-nett?",
+    "svar": [
+      "126"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vertsbit: 32 − 25 = 7.",
+        "$2^{7} - 2 = 128 - 2 = 126$ (nettadresse og broadcast trekkes fra)."
+      ]
+    }
+  },
+  {
+    "id": "22-023",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange /26-subnett får du ved å dele en /24?",
+    "svar": [
+      "4"
+    ],
+    "forklaring": {
+      "steg": [
+        "Du låner 26 − 24 = 2 bit.",
+        "$2^{2} = 4$ subnett."
+      ]
+    }
+  },
+  {
+    "id": "22-024",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange /28-subnett får du ved å dele en /24?",
+    "svar": [
+      "16"
+    ],
+    "forklaring": {
+      "steg": [
+        "Du låner 28 − 24 = 4 bit.",
+        "$2^{4} = 16$ subnett."
+      ]
+    }
+  },
+  {
+    "id": "22-025",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange /27-subnett får du ved å dele en /22?",
+    "svar": [
+      "32"
+    ],
+    "forklaring": {
+      "steg": [
+        "Du låner 27 − 22 = 5 bit.",
+        "$2^{5} = 32$ subnett."
+      ]
+    }
+  },
+  {
+    "id": "22-026",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Du trenger plass til 50 verter i ett subnett. Hvilket prefiks gir det minste nettet som er stort nok?",
+    "svar": [
+      "26"
+    ],
+    "forklaring": {
+      "steg": [
+        "Finn minste $h$ der $2^h - 2 \\ge 50$: $2^{6} - 2 = 62$.",
+        "$2^{5} - 2 = 30$ er for lite.",
+        "Prefiks = 32 − 6 = /26."
+      ]
+    }
+  },
+  {
+    "id": "22-027",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Du trenger plass til 500 verter i ett subnett. Hvilket prefiks gir det minste nettet som er stort nok?",
+    "svar": [
+      "23"
+    ],
+    "forklaring": {
+      "steg": [
+        "Finn minste $h$ der $2^h - 2 \\ge 500$: $2^{9} - 2 = 510$.",
+        "$2^{8} - 2 = 254$ er for lite.",
+        "Prefiks = 32 − 9 = /23."
+      ]
+    }
+  },
+  {
+    "id": "22-028",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Du trenger plass til 14 verter i ett subnett. Hvilket prefiks gir det minste nettet som er stort nok?",
+    "svar": [
+      "28"
+    ],
+    "forklaring": {
+      "steg": [
+        "Finn minste $h$ der $2^h - 2 \\ge 14$: $2^{4} - 2 = 14$.",
+        "$2^{3} - 2 = 6$ er for lite.",
+        "Prefiks = 32 − 4 = /28."
+      ]
+    }
+  },
+  {
+    "id": "22-029",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hva er blokkstørrelsen (avstanden mellom nettadressene) i den interessante oktetten for /26?",
+    "svar": [
+      "64"
+    ],
+    "forklaring": {
+      "steg": [
+        "/26 gir masken 255.255.255.192.",
+        "256 − 192 = 64."
+      ]
+    }
+  },
+  {
+    "id": "22-030",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hva er blokkstørrelsen (avstanden mellom nettadressene) i den interessante oktetten for /21?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "/21 gir masken 255.255.248.0.",
+        "256 − 248 = 8."
+      ]
+    }
+  },
+  {
+    "id": "22-031",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Er 192.168.1.130/26 og 192.168.1.200/26 i samme subnett?",
+    "alternativer": [
+      "Ja",
+      "Nei"
+    ],
+    "svar": [
+      "Nei"
+    ],
+    "forklaring": {
+      "steg": [
+        "192.168.1.130 ligger i 192.168.1.128/26.",
+        "192.168.1.200 ligger i 192.168.1.192/26.",
+        "Altså forskjellige nett, så trafikken mellom dem må via en ruter."
+      ]
+    }
+  },
+  {
+    "id": "22-032",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Er 10.0.5.17/28 og 10.0.5.30/28 i samme subnett?",
+    "alternativer": [
+      "Ja",
+      "Nei"
+    ],
+    "svar": [
+      "Ja"
+    ],
+    "forklaring": {
+      "steg": [
+        "10.0.5.17 ligger i 10.0.5.16/28.",
+        "10.0.5.30 ligger i 10.0.5.16/28.",
+        "Altså samme nett."
+      ]
+    }
+  },
+  {
+    "id": "22-033",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "192.168.50.0/24 deles i /27-nett. Hva er nett nummer 3 (det første er nummer 1)? Svar med nettadressen.",
+    "svar": [
+      "192.168.50.64",
+      "192.168.50.64/27"
+    ],
+    "forklaring": {
+      "steg": [
+        "Blokkstørrelse for /27: 32.",
+        "Nett nr. 3 starter på (3 − 1) · 32 = 64.",
+        "Svar: 192.168.50.64/27."
+      ]
+    }
+  },
+  {
+    "id": "22-034",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "10.10.0.0/24 deles i /26-nett. Hva er nett nummer 4 (det første er nummer 1)? Svar med nettadressen.",
+    "svar": [
+      "10.10.0.192",
+      "10.10.0.192/26"
+    ],
+    "forklaring": {
+      "steg": [
+        "Blokkstørrelse for /26: 64.",
+        "Nett nr. 4 starter på (4 − 1) · 64 = 192.",
+        "Svar: 10.10.0.192/26."
+      ]
+    }
+  },
+  {
+    "id": "22-035",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du skal dele 192.168.1.0/24 i nøyaktig 8 like store subnett. Hvilken nettmaske får hvert subnett?",
+    "svar": [
+      "255.255.255.224",
+      "/27"
+    ],
+    "forklaring": {
+      "steg": [
+        "8 subnett krever $\\log_2 8 = 3$ lånte bit.",
+        "24 + 3 = /27 = 255.255.255.224."
+      ]
+    }
+  },
+  {
+    "id": "22-036",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange brukbare adresser har et /31-nett på en punkt-til-punkt-lenke (RFC 3021)?",
+    "svar": [
+      "2"
+    ],
+    "forklaring": {
+      "steg": [
+        "På en punkt-til-punkt-lenke trengs ingen egen nett- eller broadcastadresse.",
+        "RFC 3021 tillater derfor at begge adressene i en /31 brukes."
+      ]
+    }
+  }
+]

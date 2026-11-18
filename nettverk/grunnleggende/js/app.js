@@ -368,7 +368,7 @@
     bar.setAttribute('aria-valuenow', String(donePct));
     bar.setAttribute('aria-valuetext', r.idx + ' av ' + r.tasks.length + ' besvart');
     $('task-type').textContent = t.typeLabel + (t.modulKode ? ' · ' + t.modulKode : '');
-    $('task-question').textContent = t.spørsmål;
+    $('task-question').innerHTML = NGRUNN.markdown.renderInline(t.spørsmål);
 
     var choiceBlock = $('choice-block');
     var choiceList = $('choice-list');
@@ -397,9 +397,11 @@
           input.parentNode.classList.add('selected');
           clearAlert();
         });
+        var labelText = doc.createElement('span');
+        labelText.innerHTML = NGRUNN.markdown.renderInline(alt);
         choiceList.appendChild(h('label', { class: 'choice', for: id }, [
           input,
-          h('span', { text: alt })
+          labelText
         ]));
       });
     } else {
@@ -580,7 +582,11 @@
       list.appendChild(h('details', { class: 'card missed', open: i < 3 ? '' : null }, [
         h('summary', null, [
           h('span', { class: 'task-type', text: t.typeLabel }),
-          h('span', { class: 'missed-q', text: t.spørsmål }),
+          (function () {
+            var q = h('span', { class: 'missed-q' });
+            q.innerHTML = NGRUNN.markdown.renderInline(t.spørsmål);
+            return q;
+          })(),
           h('span', { class: 'missed-a' }, (x.skipped ? ['Hoppet over'] : ['Ditt svar: ', h('code', { text: String(x.given).trim() })])
             .concat([' · Fasit: ', h('code', { text: answerDisplay(t) })]))
         ]),

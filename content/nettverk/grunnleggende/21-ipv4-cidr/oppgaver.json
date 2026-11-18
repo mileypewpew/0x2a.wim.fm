@@ -1,0 +1,439 @@
+[
+  {
+    "id": "21-001",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv nettmasken for prefikset /24.",
+    "svar": [
+      "255.255.255.0"
+    ],
+    "forklaring": {
+      "steg": [
+        "24 enere: tre fulle oktetter (255) og én med bare nuller."
+      ]
+    }
+  },
+  {
+    "id": "21-002",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv nettmasken for prefikset /16.",
+    "svar": [
+      "255.255.0.0"
+    ],
+    "forklaring": {
+      "steg": [
+        "16 enere = to fulle oktetter."
+      ]
+    }
+  },
+  {
+    "id": "21-003",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv nettmasken for prefikset /26.",
+    "svar": [
+      "255.255.255.192"
+    ],
+    "forklaring": {
+      "steg": [
+        "24 + 2 bit: siste oktett er `11000000` = 128 + 64 = 192."
+      ]
+    }
+  },
+  {
+    "id": "21-004",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv nettmasken for prefikset /20.",
+    "svar": [
+      "255.255.240.0"
+    ],
+    "forklaring": {
+      "steg": [
+        "16 + 4 bit: tredje oktett er `11110000` = 240, og fjerde er 0."
+      ]
+    }
+  },
+  {
+    "id": "21-005",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv nettmasken for prefikset /30.",
+    "svar": [
+      "255.255.255.252"
+    ],
+    "forklaring": {
+      "steg": [
+        "Siste oktett er `11111100` = 252. Da er det 2 vertsbit igjen."
+      ]
+    }
+  },
+  {
+    "id": "21-006",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilken prefikslengde har nettmasken 255.255.255.224?",
+    "svar": [
+      "27"
+    ],
+    "forklaring": {
+      "steg": [
+        "224 = `11100000` gir 3 enere.",
+        "24 + 3 = /27."
+      ]
+    }
+  },
+  {
+    "id": "21-007",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilken prefikslengde har nettmasken 255.255.252.0?",
+    "svar": [
+      "22"
+    ],
+    "forklaring": {
+      "steg": [
+        "252 = `11111100` gir 6 enere i tredje oktett.",
+        "16 + 6 = /22."
+      ]
+    }
+  },
+  {
+    "id": "21-008",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilken prefikslengde har nettmasken 255.255.255.248?",
+    "svar": [
+      "29"
+    ],
+    "forklaring": {
+      "steg": [
+        "248 = `11111000` gir 5 enere.",
+        "24 + 5 = /29."
+      ]
+    }
+  },
+  {
+    "id": "21-009",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hva er den binære oktetten 11000000 i desimal?",
+    "svar": [
+      "192"
+    ],
+    "forklaring": {
+      "steg": [
+        "128 + 64 = 192."
+      ]
+    }
+  },
+  {
+    "id": "21-010",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange vertsbit har et /20-nett?",
+    "svar": [
+      "12"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vertsbit = 32 − prefiks = 32 − 20 = 12."
+      ]
+    }
+  },
+  {
+    "id": "21-011",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken historisk klasse tilhører 10.1.2.3?",
+    "alternativer": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "svar": [
+      "A"
+    ],
+    "forklaring": {
+      "steg": [
+        "Første oktett 10 ligger i 1–126, altså klasse A (standard /8)."
+      ]
+    }
+  },
+  {
+    "id": "21-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken historisk klasse tilhører 172.20.1.1?",
+    "alternativer": [
+      "B",
+      "A",
+      "C",
+      "E"
+    ],
+    "svar": [
+      "B"
+    ],
+    "forklaring": {
+      "steg": [
+        "Første oktett 172 ligger i 128–191, altså klasse B (standard /16)."
+      ]
+    }
+  },
+  {
+    "id": "21-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken historisk klasse tilhører 192.168.5.5?",
+    "alternativer": [
+      "C",
+      "B",
+      "A",
+      "D"
+    ],
+    "svar": [
+      "C"
+    ],
+    "forklaring": {
+      "steg": [
+        "Første oktett 192 ligger i 192–223, altså klasse C (standard /24)."
+      ]
+    }
+  },
+  {
+    "id": "21-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes adresser i klasse D (224–239) til?",
+    "alternativer": [
+      "Multicast",
+      "Private nett",
+      "Loopback",
+      "Dokumentasjon"
+    ],
+    "svar": [
+      "Multicast"
+    ],
+    "forklaring": {
+      "steg": [
+        "224.0.0.0/4 er multicast: én avsender, mange mottakere som har meldt seg på en gruppe."
+      ]
+    }
+  },
+  {
+    "id": "21-015",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor erstattet CIDR adresseklassene?",
+    "alternativer": [
+      "Klassene sløste med adresser og ga store rutetabeller. CIDR tillater hvilken som helst prefikslengde og sammenslåing av ruter",
+      "Klassene støttet ikke privat adressering",
+      "CIDR ga IPv4 flere bit",
+      "Klassene virket bare med IPv6"
+    ],
+    "svar": [
+      "Klassene sløste med adresser og ga store rutetabeller. CIDR tillater hvilken som helst prefikslengde og sammenslåing av ruter"
+    ],
+    "forklaring": {
+      "steg": [
+        "En organisasjon med 500 verter måtte før få en hel klasse B (65 534 adresser).",
+        "Med CIDR kan den få f.eks. en /23, og leverandøren kan annonsere mange nett som én rute."
+      ]
+    }
+  },
+  {
+    "id": "21-016",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken adresse er loopback?",
+    "alternativer": [
+      "127.0.0.1",
+      "169.254.0.1",
+      "10.0.0.1",
+      "192.0.2.1"
+    ],
+    "svar": [
+      "127.0.0.1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hele 127.0.0.0/8 er loopback. Trafikken forlater aldri maskinen."
+      ]
+    }
+  },
+  {
+    "id": "21-017",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange adresser har loopback-blokken 127.0.0.0/8?",
+    "svar": [
+      "16777216"
+    ],
+    "forklaring": {
+      "steg": [
+        "En /8 har 24 vertsbit: $2^{24} = 16\\,777\\,216$ adresser."
+      ]
+    }
+  },
+  {
+    "id": "21-018",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En PC får ikke svar fra DHCP og gir seg selv en adresse automatisk (APIPA). Hvilket område kommer adressen fra?",
+    "alternativer": [
+      "169.254.0.0/16",
+      "127.0.0.0/8",
+      "192.168.0.0/16",
+      "100.64.0.0/10"
+    ],
+    "svar": [
+      "169.254.0.0/16"
+    ],
+    "forklaring": {
+      "steg": [
+        "169.254.0.0/16 er link-local (RFC 3927).",
+        "En slik adresse er et tydelig tegn på at DHCP ikke virket."
+      ]
+    }
+  },
+  {
+    "id": "21-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er 100.64.0.0/10 satt av til?",
+    "alternativer": [
+      "Delt adresserom for operatør-NAT (CGNAT)",
+      "Private hjemmenett",
+      "Multicast",
+      "Dokumentasjon"
+    ],
+    "svar": [
+      "Delt adresserom for operatør-NAT (CGNAT)"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 6598 satte av 100.64.0.0/10 til nettet mellom kundens ruter og operatørens NAT.",
+        "Ser ruteren din en WAN-adresse her, står du bak CGNAT."
+      ]
+    }
+  },
+  {
+    "id": "21-020",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken adresse er IKKE privat etter RFC 1918?",
+    "alternativer": [
+      "172.15.0.1",
+      "10.255.0.1",
+      "172.31.200.1",
+      "192.168.200.1"
+    ],
+    "svar": [
+      "172.15.0.1"
+    ],
+    "forklaring": {
+      "steg": [
+        "172.16.0.0/12 dekker bare 172.16.0.0–172.31.255.255.",
+        "172.15.x.x ligger rett utenfor og er en offentlig adresse."
+      ]
+    }
+  },
+  {
+    "id": "21-021",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr adressen 255.255.255.255?",
+    "alternativer": [
+      "Begrenset kringkasting til alle i eget nett. Den rutes ikke videre",
+      "Standardruten",
+      "Loopback",
+      "Kringkasting til hele internett"
+    ],
+    "svar": [
+      "Begrenset kringkasting til alle i eget nett. Den rutes ikke videre"
+    ],
+    "forklaring": {
+      "steg": [
+        "Rutere sender ikke 255.255.255.255 videre.",
+        "DHCP Discover sendes hit."
+      ]
+    }
+  },
+  {
+    "id": "21-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr 0.0.0.0/0 i en rutetabell?",
+    "alternativer": [
+      "Standardruten: alle mål som ikke har en mer spesifikk rute",
+      "Ingen rute",
+      "Loopback",
+      "Kringkasting"
+    ],
+    "svar": [
+      "Standardruten: alle mål som ikke har en mer spesifikk rute"
+    ],
+    "forklaring": {
+      "steg": [
+        "Prefiks /0 matcher alle adresser, men er det minst spesifikke, så den brukes bare når ingen annen rute passer."
+      ]
+    }
+  },
+  {
+    "id": "21-023",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket område er satt av til dokumentasjon og eksempler (RFC 5737)?",
+    "alternativer": [
+      "192.0.2.0/24",
+      "192.168.0.0/24",
+      "10.0.0.0/24",
+      "172.16.0.0/24"
+    ],
+    "svar": [
+      "192.0.2.0/24"
+    ],
+    "forklaring": {
+      "steg": [
+        "TEST-NET-1 (192.0.2.0/24), TEST-NET-2 (198.51.100.0/24) og TEST-NET-3 (203.0.113.0/24) skal brukes i eksempler."
+      ]
+    }
+  },
+  {
+    "id": "21-024",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange IPv4-adresser finnes totalt?",
+    "svar": [
+      "4294967296"
+    ],
+    "forklaring": {
+      "steg": [
+        "32 bit gir $2^{32} = 4\\,294\\,967\\,296$ adresser."
+      ]
+    }
+  },
+  {
+    "id": "21-025",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken adresse er ugyldig?",
+    "alternativer": [
+      "10.0.256.1",
+      "10.0.255.1",
+      "172.16.0.0",
+      "192.168.0.255"
+    ],
+    "svar": [
+      "10.0.256.1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver oktett er 8 bit og kan bare være 0–255.",
+        "256 får ikke plass i én oktett."
+      ]
+    }
+  }
+]

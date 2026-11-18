@@ -1,0 +1,419 @@
+[
+  {
+    "id": "26-001",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva lærer en switch fra hver ramme som kommer inn?",
+    "alternativer": [
+      "Kilde-MAC-adressen og porten den kom inn på",
+      "Mål-IP-adressen",
+      "DNS-navnet til avsenderen",
+      "Kildeporten i TCP"
+    ],
+    "svar": [
+      "Kilde-MAC-adressen og porten den kom inn på"
+    ],
+    "forklaring": {
+      "steg": [
+        "Switchen lærer av *kilde*-adressen.",
+        "Senere rammer til denne MAC-adressen sendes bare ut på den porten."
+      ]
+    }
+  },
+  {
+    "id": "26-002",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør en switch med en ramme til en ukjent unicast-MAC?",
+    "alternativer": [
+      "Flømmer den ut på alle porter i VLAN-et unntatt porten den kom inn på",
+      "Forkaster den",
+      "Sender den til ruteren",
+      "Sender den tilbake"
+    ],
+    "svar": [
+      "Flømmer den ut på alle porter i VLAN-et unntatt porten den kom inn på"
+    ],
+    "forklaring": {
+      "steg": [
+        "Når mottakeren svarer, lærer switchen hvor den er."
+      ]
+    }
+  },
+  {
+    "id": "26-003",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva skiller kringkastingsdomener fra hverandre?",
+    "alternativer": [
+      "En ruter (eller VLAN)",
+      "En switch",
+      "En hub",
+      "En repeater"
+    ],
+    "svar": [
+      "En ruter (eller VLAN)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Rutere sender ikke lag 2-kringkasting videre.",
+        "VLAN deler en switch i flere kringkastingsdomener."
+      ]
+    }
+  },
+  {
+    "id": "26-004",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "En switch har 8 porter i bruk, alle i samme VLAN. Hvor mange kollisjonsdomener er det?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver switchport er sitt eget kollisjonsdomene.",
+        "Med full dupleks oppstår det i praksis ingen kollisjoner."
+      ]
+    }
+  },
+  {
+    "id": "26-005",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "En switch har 8 porter i bruk, alle i samme VLAN. Hvor mange kringkastingsdomener er det?",
+    "svar": [
+      "1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Alle porter i samme VLAN deler kringkastingsdomene."
+      ]
+    }
+  },
+  {
+    "id": "26-006",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "En switch har porter fordelt på 3 VLAN. Hvor mange kringkastingsdomener er det?",
+    "svar": [
+      "3"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hvert VLAN er ett kringkastingsdomene."
+      ]
+    }
+  },
+  {
+    "id": "26-007",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Fire PC-er er koblet til en hub. Hvor mange kollisjonsdomener er det?",
+    "svar": [
+      "1"
+    ],
+    "forklaring": {
+      "steg": [
+        "En hub deler samme medium på alle porter.",
+        "Alle porter er derfor i ett kollisjonsdomene."
+      ]
+    }
+  },
+  {
+    "id": "26-008",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange byte legger en 802.1Q-tagg til i Ethernet-rammen?",
+    "svar": [
+      "4"
+    ],
+    "forklaring": {
+      "steg": [
+        "TPID (2 byte) + PCP, DEI og VID (2 byte) = 4 byte."
+      ]
+    }
+  },
+  {
+    "id": "26-009",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er VLAN-ID-feltet (VID)?",
+    "svar": [
+      "12"
+    ],
+    "forklaring": {
+      "steg": [
+        "12 bit gir $2^{12} = 4096$ verdier (0–4095)."
+      ]
+    }
+  },
+  {
+    "id": "26-010",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hva er den høyeste VLAN-ID-en som kan brukes?",
+    "svar": [
+      "4094"
+    ],
+    "forklaring": {
+      "steg": [
+        "VID 0 og 4095 er reservert.",
+        "Brukbare VLAN-ID-er er derfor 1–4094."
+      ]
+    }
+  },
+  {
+    "id": "26-011",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilken TPID-verdi (i heks) viser at en Ethernet-ramme har en 802.1Q-tagg?",
+    "svar": [
+      "0x8100",
+      "8100",
+      "8100h"
+    ],
+    "forklaring": {
+      "steg": [
+        "TPID står der EtherType normalt står.",
+        "Verdien 0x8100 betyr at en 802.1Q-tagg følger."
+      ]
+    }
+  },
+  {
+    "id": "26-012",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er prioritetsfeltet (PCP) i 802.1Q-taggen?",
+    "svar": [
+      "3"
+    ],
+    "forklaring": {
+      "steg": [
+        "3 bit gir prioritetene 0–7 (QoS-klasser)."
+      ]
+    }
+  },
+  {
+    "id": "26-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva kjennetegner en access-port?",
+    "alternativer": [
+      "Den tilhører ett VLAN og sender rammer uten tagg",
+      "Den fører mange VLAN med tagg",
+      "Den har ingen MAC-tabell",
+      "Den brukes bare mellom rutere"
+    ],
+    "svar": [
+      "Den tilhører ett VLAN og sender rammer uten tagg"
+    ],
+    "forklaring": {
+      "steg": [
+        "Vanlige enheter som PC-er vet ikke noe om VLAN.",
+        "Switchen legger på og tar av VLAN-tilhørigheten for dem."
+      ]
+    }
+  },
+  {
+    "id": "26-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva kjennetegner en trunk-port?",
+    "alternativer": [
+      "Den fører flere VLAN, med 802.1Q-tagg som viser VLAN-ID",
+      "Den tilhører bare ett VLAN",
+      "Den er alltid ukryptert fiber",
+      "Den blokkerer kringkasting"
+    ],
+    "svar": [
+      "Den fører flere VLAN, med 802.1Q-tagg som viser VLAN-ID"
+    ],
+    "forklaring": {
+      "steg": [
+        "Trunker brukes mellom switcher og mot rutere, brannmurer og hypervisorer."
+      ]
+    }
+  },
+  {
+    "id": "26-015",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er native VLAN på en trunk?",
+    "alternativer": [
+      "VLAN-et som sendes uten tagg på trunken",
+      "VLAN med høyest ID",
+      "Et VLAN bare for IPv6",
+      "Administrasjons-VLAN-et alltid"
+    ],
+    "svar": [
+      "VLAN-et som sendes uten tagg på trunken"
+    ],
+    "forklaring": {
+      "steg": [
+        "Native VLAN må være likt i begge ender.",
+        "Er det ulikt, havner trafikken i feil VLAN."
+      ]
+    }
+  },
+  {
+    "id": "26-016",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvordan kommuniserer to PC-er i hvert sitt VLAN?",
+    "alternativer": [
+      "Via en ruter eller lag 3-switch (inter-VLAN-ruting)",
+      "Direkte via switchen uten ruting",
+      "Via ARP-kringkasting",
+      "Det er umulig"
+    ],
+    "svar": [
+      "Via en ruter eller lag 3-switch (inter-VLAN-ruting)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hvert VLAN er eget nett, ofte eget subnett.",
+        "Trafikk mellom nett må rutes, og der kan en brannmur filtrere den."
+      ]
+    }
+  },
+  {
+    "id": "26-017",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr «ruter på en pinne» (router on a stick)?",
+    "alternativer": [
+      "Ruteren har én trunk-lenke til switchen og ett virtuelt grensesnitt per VLAN",
+      "Ruteren har én port per VLAN",
+      "Ruteren er koblet med USB",
+      "Ruteren ruter uten IP"
+    ],
+    "svar": [
+      "Ruteren har én trunk-lenke til switchen og ett virtuelt grensesnitt per VLAN"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hvert VLAN-grensesnitt har sin egen gatewayadresse, f.eks. 10.0.10.1 for VLAN 10."
+      ]
+    }
+  },
+  {
+    "id": "26-018",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva skjer hvis du kobler to kabler mellom de samme to switchene uten Spanning Tree?",
+    "alternativer": [
+      "En lag 2-løkke gir kringkastingsstorm og nettet stopper",
+      "Båndbredden dobles automatisk",
+      "Ingenting",
+      "Switchene får ny IP-adresse"
+    ],
+    "svar": [
+      "En lag 2-løkke gir kringkastingsstorm og nettet stopper"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ethernet-rammer har ingen TTL, så kringkastinger går i ring for alltid.",
+        "STP blokkerer en av lenkene. Lenkeaggregering (LACP) kan bruke begge."
+      ]
+    }
+  },
+  {
+    "id": "26-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor er VLAN nyttig i et hjemmenett med IoT-enheter?",
+    "alternativer": [
+      "IoT-enhetene kan isoleres i eget nett, slik at brannmuren styrer hva de får nå",
+      "VLAN gjør Wi-Fi raskere",
+      "VLAN erstatter DHCP",
+      "VLAN krypterer trafikken"
+    ],
+    "svar": [
+      "IoT-enhetene kan isoleres i eget nett, slik at brannmuren styrer hva de får nå"
+    ],
+    "forklaring": {
+      "steg": [
+        "Eget kringkastingsdomene og subnett for IoT.",
+        "Trafikk til andre nett må da gjennom brannmuren og dens regler."
+      ]
+    }
+  },
+  {
+    "id": "26-020",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En PC er koblet til en access-port i VLAN 20, men skulle vært i VLAN 30. Hva skjer typisk?",
+    "alternativer": [
+      "Den får adresse i (eller prøver å nå) VLAN 20-nettet og når ikke tjenestene i VLAN 30 direkte",
+      "Ingenting, VLAN har ingen betydning",
+      "Den får to IP-adresser",
+      "Switchen retter det automatisk"
+    ],
+    "svar": [
+      "Den får adresse i (eller prøver å nå) VLAN 20-nettet og når ikke tjenestene i VLAN 30 direkte"
+    ],
+    "forklaring": {
+      "steg": [
+        "Porten bestemmer hvilket lag 2-nett PC-en er i.",
+        "DHCP i VLAN 20 gir en adresse fra det nettets subnett."
+      ]
+    }
+  },
+  {
+    "id": "26-021",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hva er maks størrelse i byte på en vanlig Ethernet-ramme med 802.1Q-tagg (uten jumbo), når en vanlig ramme er maks 1518 byte?",
+    "svar": [
+      "1522"
+    ],
+    "forklaring": {
+      "steg": [
+        "En vanlig ramme er maks 1518 byte inkludert header og FCS.",
+        "Taggen legger til 4 byte: 1518 + 4 = 1522."
+      ]
+    }
+  },
+  {
+    "id": "26-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor kan feil VLAN-tagging på LAN-grensesnittet til en virtualisert brannmur stenge deg ute?",
+    "alternativer": [
+      "Administrasjonstrafikken havner i feil VLAN eller blir forkastet, så du ikke når brannmuren over nettet",
+      "Taggen sletter konfigurasjonen",
+      "VLAN slår av strømmen",
+      "DNS slutter å virke for alltid"
+    ],
+    "svar": [
+      "Administrasjonstrafikken havner i feil VLAN eller blir forkastet, så du ikke når brannmuren over nettet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Når tagging endres i begge ender i feil rekkefølge, forsvinner forbindelsen du styrer med.",
+        "Derfor er det lurt å ha konsolltilgang og en plan for å rulle tilbake."
+      ]
+    }
+  },
+  {
+    "id": "26-023",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva skjer med en MAC-oppføring som ikke har vært brukt på lenge?",
+    "alternativer": [
+      "Den fjernes etter aldringstiden, ofte 300 sekunder",
+      "Den blir permanent",
+      "Den flyttes til DNS",
+      "Den blokkerer porten"
+    ],
+    "svar": [
+      "Den fjernes etter aldringstiden, ofte 300 sekunder"
+    ],
+    "forklaring": {
+      "steg": [
+        "Aldring holder tabellen oppdatert når enheter flyttes eller kobles fra.",
+        "Standardverdien varierer mellom produsenter. 300 sekunder er vanlig."
+      ]
+    }
+  }
+]
