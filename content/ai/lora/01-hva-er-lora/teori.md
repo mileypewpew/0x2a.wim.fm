@@ -11,6 +11,8 @@ kilder:
     url: "https://arxiv.org/abs/2305.14314"
   - tittel: "Kalajdzievski (2023): A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA (rsLoRA)"
     url: "https://arxiv.org/abs/2312.03732"
+  - tittel: "Kingma & Ba (2014): Adam: A Method for Stochastic Optimization"
+    url: "https://arxiv.org/abs/1412.6980"
   - tittel: "Hugging Face PEFT: dokumentasjon"
     url: "https://huggingface.co/docs/peft/index"
   - tittel: "Hugging Face PEFT: LoRA (konseptguide)"
@@ -40,7 +42,9 @@ Et nevralt nettverk består i hovedsak av store vektmatriser. Et lineært lag re
 
 - selve vekten,
 - gradienten (hvilken vei vekten skal justeres),
-- optimizer-tilstand (Adam lagrer to tall per parameter: et glidende snitt av gradienten og av gradienten i andre).
+- optimizer-tilstand.
+
+**Adam** (*Adaptive Moment Estimation*, Kingma & Ba 2014) er en optimeringsalgoritme. Den lagrer to glidende snitt per parameter, ett av gradienten og ett av den kvadrerte gradienten. Det er derfor den bruker 8 byte per parameter i fp32 (2 × 4 byte).
 
 Med vanlig blandet presisjon og Adam blir dette omtrent **16 byte per parameter**: 2 (vekt i bf16) + 2 (gradient) + 4 (fp32-hovedkopi av vekten) + 8 (Adams to tilstander i fp32). For en modell med 7 milliarder parametre blir det $7 \cdot 10^9 \cdot 16 \approx 112$ GB, før aktiveringer er tatt med. Det får du ikke inn på et forbrukerkort.
 
