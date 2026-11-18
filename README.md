@@ -12,6 +12,7 @@ Nettstedet er ren statisk HTML, CSS og JS uten byggesteg. Repo-roten tilsvarer s
 - `assets/` — felles ressurser (blant annet `portal.css`)
 - `nettverk/` — nettverksseksjonen (`nettverk/index.html`)
 - `nettverk/ipv6/` — IPv6-treneren, med `css/`, `js/` og `js/modules/`
+- `content/nettverk/ipv6/ipv6-hvorfor/` — statisk modul 0, «Hvorfor IPv6». Versjon i `<meta name="ipv6-innhold-versjon">`
 - `nettverk/grunnleggende/` — treneren Nettverk grunnleggende
 - `content/nettverk/grunnleggende/` — temaene til den treneren, pluss manifestet `index.json`
 - `ai/` — AI-seksjonen (`ai/index.html`)
@@ -33,7 +34,7 @@ Nettstedet deployes fra `main`. Serveren henter `main` automatisk omtrent hvert 
 
 Selvtestene ligger i `tests/` og kjøres lokalt. Det finnes ingen `package.json` i repo-roten. jsdom er en devDependency i `tests/package.json` og brukes bare av DOM-røyktesten.
 
-IPv6-treneren dekkes av `tests/ipv6/test.js`. Den er verifisert med Node.js 22.23.4. Skriptet leser `nettverk/ipv6/` ut fra sin egen plassering (`path.resolve(__dirname, '../../nettverk/ipv6')`), så arbeidsmappen du starter Node fra spiller ingen rolle. Nettverk grunnleggende dekkes av `tests/grunnleggende/test.js`. `npm test` kjører begge.
+IPv6-treneren dekkes av `tests/ipv6/test.js`. Den er verifisert med Node.js 22.23.4. Skriptet leser `nettverk/ipv6/` ut fra sin egen plassering (`path.resolve(__dirname, '../../nettverk/ipv6')`), så arbeidsmappen du starter Node fra spiller ingen rolle. Modul 0 leser `teori.md` og `oppgaver.json` og bruker YAML, retting og markdown fra `nettverk/grunnleggende/js/`. Fremgangen der lagres i `ipv6t.hvorfor.stats.v1`, ikke i `ipv6t.stats.v1`. Nettverk grunnleggende dekkes av `tests/grunnleggende/test.js`. `npm test` kjører begge.
 
 ```bash
 cd tests

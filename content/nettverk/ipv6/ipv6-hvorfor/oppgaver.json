@@ -1,0 +1,545 @@
+[
+  {
+    "id": "hvorfor-001",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva var det viktigste problemet som gjorde at IPv6 ble utviklet?",
+    "alternativer": [
+      "IPv4 har bare 32-bits adresser, og rommet på omtrent 4,3 milliarder ble for lite",
+      "IPv4 kunne ikke overføre TCP, bare UDP",
+      "IPv4-headeren var alltid for stor til å gå over Ethernet",
+      "DNS virket ikke sammen med IPv4"
+    ],
+    "svar": [
+      "IPv4 har bare 32-bits adresser, og rommet på omtrent 4,3 milliarder ble for lite"
+    ],
+    "forklaring": {
+      "steg": [
+        "IPv4 (RFC 791) bruker 32-bits adresser: $2^{32} = 4\\,294\\,967\\,296$, altså like over 4,3 milliarder.",
+        "Internettet vokste langt forbi det tallet. IPv6 utvider adressen til 128 bit (RFC 8200)."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-002",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange adresser gir en 32-bits IPv4-adresse i teorien? Skriv hele tallet ($2^{32}$).",
+    "svar": [
+      "4294967296"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver bit har to verdier, så $n$ bit gir $2^{n}$ kombinasjoner.",
+        "$2^{32} = 4\\,294\\,967\\,296$. I dagligtale rundes det av til omtrent 4,3 milliarder."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-003",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit har en IPv4-adresse?",
+    "svar": [
+      "32"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 791 sier at IPv4-adresser har fast lengde på fire oktetter, altså 32 bit."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-004",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit har en IPv6-adresse?",
+    "svar": [
+      "128"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 8200 definerer kilde- og destinasjonsadresse som 128-bits felt.",
+        "Det gir $2^{128}$ mulige adresser, i størrelsesorden $3,4 \\times 10^{38}$."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-005",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er hovedjobben til NAT (Network Address Translation)?",
+    "alternativer": [
+      "Å la mange maskiner med private adresser dele én eller noen få offentlige IPv4-adresser",
+      "Å kryptere all trafikk mellom klient og server",
+      "Å oversette domenenavn til IP-adresser",
+      "Å dele et nett inn i VLAN"
+    ],
+    "svar": [
+      "Å la mange maskiner med private adresser dele én eller noen få offentlige IPv4-adresser"
+    ],
+    "forklaring": {
+      "steg": [
+        "NAT skriver om adresser (og ofte porter) i pakkene og husker oversettelsen i en NAT-tabell.",
+        "Slik kan et helt hjemmenett dele én offentlig IPv4-adresse. Det er en plasterløsning på at IPv4-adresser tok slutt, ikke en brannmur."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-006",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva står forkortelsen NAT for?",
+    "svar": [
+      "Network Address Translation",
+      "Nettverksadresseoversetting",
+      "Nettverksadresseoversettelse",
+      "Network Address Translator"
+    ],
+    "forklaring": {
+      "steg": [
+        "NAT = Network Address Translation (på norsk ofte nettverksadresseoversetting).",
+        "Ruteren oversetter mellom private adresser inne i nettet og én eller flere offentlige adresser ut mot internett."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-007",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilke IPv4-blokker er private adresser ifølge RFC 1918?",
+    "alternativer": [
+      "`10.0.0.0/8`, `172.16.0.0/12` og `192.168.0.0/16`",
+      "`100.64.0.0/10` og `192.168.0.0/16`",
+      "`127.0.0.0/8` og `169.254.0.0/16`",
+      "`8.8.8.0/24` og `1.1.1.0/24`"
+    ],
+    "svar": [
+      "`10.0.0.0/8`, `172.16.0.0/12` og `192.168.0.0/16`"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 1918 reserverer tre blokker til bruk inne i et hjem eller et firma: `10/8`, `172.16/12` og `192.168/16`.",
+        "`100.64.0.0/10` er delt adresseområde for CGNAT (RFC 6598), ikke RFC 1918. `127.0.0.0/8` er loopback."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-008",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes adressenettet `100.64.0.0/10` til?",
+    "alternativer": [
+      "Delt adresseområde mellom operatør og kunde ved CGNAT (RFC 6598)",
+      "Private adresser i hjemmenett, definert i RFC 1918",
+      "Offentlige adresser som IANA deler ut fritt i dag",
+      "Bare multicast i IPv4"
+    ],
+    "svar": [
+      "Delt adresseområde mellom operatør og kunde ved CGNAT (RFC 6598)"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 6598 (april 2012) reserverer `100.64.0.0/10` som *Shared Address Space* til bruk mellom CGNAT-utstyr og kundens ruter.",
+        "Det ligner private adresser, men er ment for operatør-NAT, ikke for vanlige hjemmenett."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-009",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva blir typisk vanskelig når du sitter bak CGNAT?",
+    "alternativer": [
+      "Å ta imot innkommende tilkoblinger og sette opp portvideresending selv",
+      "Å sende utgående HTTPS til nettsteder",
+      "Å få en IPv4-adresse i det hele tatt",
+      "Å bruke DNS"
+    ],
+    "svar": [
+      "Å ta imot innkommende tilkoblinger og sette opp portvideresending selv"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ved CGNAT deler mange kunder samme offentlige IPv4-adresse. Du styrer ikke operatørens NAT-tabell.",
+        "Derfor virker ikke portvideresending som hjemme, og P2P eller en egen server bak ruteren blir vanskelig. Utgående surfing virker som før."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-010",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva sier Starlinks egne dokumenter om IP-adresser på vanlige abonnement?",
+    "alternativer": [
+      "IPv4 er CGNAT, og IPv6 er tilgjengelig",
+      "Alle kunder får en statisk, offentlig IPv4-adresse og ingen IPv6",
+      "Nettverket er IPv4-only, uten NAT",
+      "Kundene får bare adresser i `192.168.0.0/16` ut mot internett"
+    ],
+    "svar": [
+      "IPv4 er CGNAT, og IPv6 er tilgjengelig"
+    ],
+    "forklaring": {
+      "steg": [
+        "I Starlinks offisielle tariffdokumenter er IPv4-typen på vanlige abonnement oppgitt som CGNAT, og IPv6 er tilgjengelig.",
+        "Når IPv4 går gjennom CGNAT, er det IPv6 som gir ende-til-ende-adressering."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-011",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva står forkortelsen CIDR for?",
+    "svar": [
+      "Classless Inter-Domain Routing",
+      "Classless Interdomain Routing",
+      "Klassefri interdomeneruting",
+      "Klassefri inter-domene-ruting",
+      "Klassefri inter-domain routing"
+    ],
+    "forklaring": {
+      "steg": [
+        "CIDR = Classless Inter-Domain Routing (RFC 1519, 1993).",
+        "Prefikslengden velges fritt i stedet for faste A-, B- og C-klasser, slik at adressene brukes mer effektivt."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-012",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva var hovedmålet med CIDR da det ble innført i 1993?",
+    "alternativer": [
+      "Å bruke IPv4-adresser mer effektivt og bremse veksten i rutetabellene",
+      "Å erstatte IPv4 med IPv6 med en gang",
+      "Å innføre private adresser i `192.168.0.0/16`",
+      "Å kryptere rutingprotokoller"
+    ],
+    "svar": [
+      "Å bruke IPv4-adresser mer effektivt og bremse veksten i rutetabellene"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 1519 beskriver CIDR som en strategi for å spare IPv4-adresser og aggregere ruter, slik at rutetabellene ikke vokste like raskt.",
+        "Det var en plasterløsning. IPv6 løser det underliggende plassproblemet."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-013",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange byte er IPv4-headeren minst? (RFC 791)",
+    "svar": [
+      "20"
+    ],
+    "forklaring": {
+      "steg": [
+        "Feltet IHL (Internet Header Length) måles i 32-bits ord, og minimum for en gyldig header er 5 (RFC 791).",
+        "$5 \\times 4 = 20$ byte. Options kan gjøre headeren lenger."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-014",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange byte er den faste IPv6-headeren? (RFC 8200)",
+    "svar": [
+      "40"
+    ],
+    "forklaring": {
+      "steg": [
+        "Feltbreddene i RFC 8200 §3 summerer til $4+8+20+16+8+8+128+128 = 320$ bit.",
+        "$320 / 8 = 40$ byte. Tillegg ligger i egne utvidelseshoder, ikke i selve basisheaderen."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-015",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvor ligger tilleggsinformasjon (det IPv4 kaller options) i IPv6?",
+    "alternativer": [
+      "I egne utvidelseshoder (extension headers) mellom IPv6-headeren og transportheaderen",
+      "Alltid i de siste 20 bytene av den faste IPv6-headeren",
+      "Bare i Ethernet-rammen, aldri i IP",
+      "I TTL-feltet"
+    ],
+    "svar": [
+      "I egne utvidelseshoder (extension headers) mellom IPv6-headeren og transportheaderen"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 8200 holder IPv6-headeren fast på 40 byte. Valgfri informasjon kodes i utvidelseshoder.",
+        "Det forenkler vanlig videresending: ruterne trenger i hovedsak bare den faste headeren."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-016",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva står forkortelsen SLAAC for?",
+    "svar": [
+      "Stateless Address Autoconfiguration",
+      "Stateless Address Auto-Configuration",
+      "Stateless Address Auto Configuration",
+      "Tilstandsløs adresseautokonfigurasjon",
+      "Tilstandsløs adresseautokonfigurering"
+    ],
+    "forklaring": {
+      "steg": [
+        "SLAAC = Stateless Address Autoconfiguration, beskrevet i RFC 4862.",
+        "Enheten kan sette IPv6-adressen sin selv ut fra ruterannonser, uten å vente på en DHCP-lease."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-017",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør SLAAC i IPv6?",
+    "alternativer": [
+      "Lar en enhet konfigurere IPv6-adressen sin selv ut fra ruterannonser",
+      "Oversetter private IPv6-adresser til én offentlig adresse, som NAT",
+      "Krypterer all IPv6-trafikk automatisk",
+      "Deler et `/64`-nett i 256 VLAN"
+    ],
+    "svar": [
+      "Lar en enhet konfigurere IPv6-adressen sin selv ut fra ruterannonser"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med SLAAC (RFC 4862) leser verten et prefiks i ruterannonser og bygger en egen adresse.",
+        "Det er en av grunnene til at IPv6-nett ofte kommer opp uten at du setter inn en DHCPv6-server. DHCPv6 finnes likevel og dekkes senere i kurset."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-018",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva bruker IPv6 i stedet for broadcast?",
+    "alternativer": [
+      "Multicast",
+      "Bare unicast til `255.255.255.255`",
+      "Anycast til alle naboer samtidig",
+      "NAT-tabellen på ruteren"
+    ],
+    "svar": [
+      "Multicast"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 sier rett ut at IPv6 ikke har broadcast-adresser; funksjonen er overtatt av multicast.",
+        "En pakke sendes da til en definert gruppe, ikke til «alle på linken» som i IPv4-broadcast."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-019",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett rommer en `/48`? Skriv hele tallet.",
+    "svar": [
+      "65536"
+    ],
+    "forklaring": {
+      "steg": [
+        "Forskjellen i prefikslengde er $64 - 48 = 16$ bit til å nummerere subnett.",
+        "$2^{16} = 65\\,536$. En enkelt `/48` har altså 65 536 nett av typen som ofte brukes til ett LAN."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-020",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva skjedde 3. februar 2011?",
+    "alternativer": [
+      "IANA tildelte de siste fem IPv4-`/8`-blokkene til RIR-ene, og den sentrale IPv4-reserven var tom",
+      "RIPE NCC tømte helt sin egen IPv4-pool",
+      "RFC 8200 ble Internett-standard",
+      "World IPv6 Launch slo på IPv6 for godt"
+    ],
+    "svar": [
+      "IANA tildelte de siste fem IPv4-`/8`-blokkene til RIR-ene, og den sentrale IPv4-reserven var tom"
+    ],
+    "forklaring": {
+      "steg": [
+        "3. februar 2011 tildelte IANA de siste fem `/8`-blokkene, én til hvert regionalt register (NRO/RIPE NCC).",
+        "RIPE NCC hadde da fortsatt egne reserver og tømte den tilgjengelige poolen først 25. november 2019. RFC 8200 kom i 2017, World IPv6 Launch i 2012."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-021",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva kunngjorde RIPE NCC 25. november 2019?",
+    "alternativer": [
+      "At de hadde tildelt den siste `/22` fra den tilgjengelige IPv4-poolen",
+      "At IANA nettopp hadde tømt den sentrale IPv4-reserven",
+      "At IPv4 ble slått av i Europa samme dag",
+      "At RFC 1918 ble trukket tilbake"
+    ],
+    "svar": [
+      "At de hadde tildelt den siste `/22` fra den tilgjengelige IPv4-poolen"
+    ],
+    "forklaring": {
+      "steg": [
+        "25. november 2019 kl. 15.35 norsk tid tildelte RIPE NCC den siste `/22` fra den tilgjengelige poolen.",
+        "De kan fortsatt dele ut gjenbrukte adresser fra en venteliste, men den vanlige frie beholdningen var tom. IANA-reserven tok slutt allerede i 2011."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-022",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er forskjellen på World IPv6 Day og World IPv6 Launch?",
+    "alternativer": [
+      "Day (8. juni 2011) var en 24-timers test; Launch (6. juni 2012) lot IPv6 stå på for godt hos deltakerne",
+      "Begge var 24-timers tester, bare i ulike år",
+      "Launch kom i 2011, Day i 2012",
+      "Day innførte RFC 8200 som Internett-standard"
+    ],
+    "svar": [
+      "Day (8. juni 2011) var en 24-timers test; Launch (6. juni 2012) lot IPv6 stå på for godt hos deltakerne"
+    ],
+    "forklaring": {
+      "steg": [
+        "World IPv6 Day 8. juni 2011 var en ett-dags test der store tjenester slo på IPv6.",
+        "World IPv6 Launch 6. juni 2012 var forpliktelsen til å la IPv6 bli værende på. RFC 8200 kom fem år senere, i 2017."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-023",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er RFC 8200 (juli 2017)?",
+    "alternativer": [
+      "Gjeldende IPv6-spesifikasjon, og en Internett-standard (STD 86)",
+      "Den første IPv6-spesifikasjonen fra 1995",
+      "Standarden for private IPv4-adresser",
+      "Reglene for CGNAT-adressen `100.64.0.0/10`"
+    ],
+    "svar": [
+      "Gjeldende IPv6-spesifikasjon, og en Internett-standard (STD 86)"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 8200 avløser RFC 2460 og er STD 86, altså Internett-standard.",
+        "Den første spesifikasjonen var RFC 1883 (1995). RFC 1918 og RFC 6598 handler om IPv4-adresser, ikke IPv6-protokollen."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-024",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor er påstanden «NAT gir sikkerhet» misvisende?",
+    "alternativer": [
+      "NAT skriver om adresser; det er brannmurregler som faktisk tillater eller stanser trafikk",
+      "NAT krypterer all innkommende trafikk, og det er mer enn nok",
+      "NAT er en fullverdig brannmur så lenge du bruker RFC 1918",
+      "NAT er bare nødvendig i IPv6, ikke i IPv4"
+    ],
+    "svar": [
+      "NAT skriver om adresser; det er brannmurregler som faktisk tillater eller stanser trafikk"
+    ],
+    "forklaring": {
+      "steg": [
+        "At uønsket innkommende trafikk ofte stopper bak NAT, er en bivirkning: det finnes ingen oversettelse i tabellen.",
+        "Sikkerhetspolicyen ligger i brannmuren. I IPv6 bruker du brannmur uten å trenge NAT."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-025",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr dual stack i overgangen til IPv6?",
+    "alternativer": [
+      "At IPv4 og IPv6 kjører side om side på samme nett og samme enheter",
+      "At IPv4 slås av den dagen IPv6 slås på",
+      "At to NAT-rutere står etter hverandre",
+      "At en adresse er både unicast og multicast samtidig"
+    ],
+    "svar": [
+      "At IPv4 og IPv6 kjører side om side på samme nett og samme enheter"
+    ],
+    "forklaring": {
+      "steg": [
+        "Dual stack er den vanlige overgangsstrategien: begge protokoller er i bruk samtidig.",
+        "En klient kan prøve IPv6 først og falle tilbake til IPv4. IPv4 blir værende lenge ennå."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-026",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er det beste svaret på påstanden «IPv6 kommer aldri / er allerede ferdig og glemt»?",
+    "alternativer": [
+      "IPv6 er Internett-standard og i daglig bruk hos en stor del av brukerne, men IPv4 lever videre via dual stack",
+      "IPv6 ble skrinlagt da IANA tømte IPv4-reserven i 2011",
+      "IPv6 brukes bare i laboratorier, ikke i operatørnett",
+      "IPv6 erstattet IPv4 fullstendig i 2019, da RIPE NCC gikk tom"
+    ],
+    "svar": [
+      "IPv6 er Internett-standard og i daglig bruk hos en stor del av brukerne, men IPv4 lever videre via dual stack"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 8200 gjorde IPv6 til Internett-standard i 2017. Målinger fra Google og APNIC viser at IPv6 allerede er i vanlig bruk.",
+        "Samtidig er IPv4 ikke slått av. Dual stack er normalen, ikke at den ene protokollen «vant ferdig» på én dato."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-027",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er en presis måte å snakke om «fremtidens internett» i dette kurset?",
+    "alternativer": [
+      "IPv6 er en viktig del, men ikke alt; blant annet QUIC, HTTP/3 og IoT hører også med. Web3 er utenfor kurset.",
+      "Fremtidens internett er bare IPv6, alt annet er utdatert",
+      "Fremtidens internett er det samme som Web3, og IPv6 er en del av det",
+      "Når IPv6 er innført, trengs ikke nye transportprotokoller"
+    ],
+    "svar": [
+      "IPv6 er en viktig del, men ikke alt; blant annet QUIC, HTTP/3 og IoT hører også med. Web3 er utenfor kurset."
+    ],
+    "forklaring": {
+      "steg": [
+        "IPv6 løser adresse- og ende-til-ende-problemet etter IPv4. Det er hovedtemaet her.",
+        "Samtidig utvikles også transport og applikasjon (QUIC/HTTP3), og IoT gir enda flere enheter som trenger adresser. Web3 ligger utenfor dette pensumet."
+      ]
+    }
+  },
+  {
+    "id": "hvorfor-028",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva kalles det når IPv4 og IPv6 kjører samtidig på samme nett?",
+    "svar": [
+      "dual stack",
+      "dualstack",
+      "dual-stack",
+      "dobbel stakk",
+      "dobbelstack",
+      "dobbel-stakk"
+    ],
+    "forklaring": {
+      "steg": [
+        "Dette kalles dual stack (på norsk også dobbel stakk).",
+        "Begge protokoller er aktive side om side, slik at tjenester og klienter kan bruke den som fungerer."
+      ]
+    }
+  }
+]

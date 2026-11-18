@@ -4,10 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Øvingsoppgaver i IPv6: heksadesimalt tallsystem, adressenotasjon, subnetting og mer.">
+  <meta name="description" content="Øvingsoppgaver i IPv6: hvorfor IPv6, heksadesimalt tallsystem, adressenotasjon, subnetting og mer.">
+  <meta name="ipv6-innhold-versjon" content="20261118a">
   <title>IPv6-trening</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232563eb'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' text-anchor='middle' fill='white'%3E:%3A%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/style.css?v=20261117b">
+  <link rel="stylesheet" href="../../ai/lora/vendor/katex/katex.min.css?v=20261118a">
+  <link rel="stylesheet" href="css/style.css?v=20261118a">
 </head>
 <body>
   <header class="topbar">
@@ -36,10 +38,11 @@
 
       <form id="setup-form" class="card setup">
         <h2 class="section-title">2. Innstillinger</h2>
-        <fieldset>
+        <fieldset id="level-fieldset">
           <legend>Vanskelighetsgrad</legend>
           <div id="level-choices" class="segmented"></div>
         </fieldset>
+        <p id="load-note" class="muted" hidden></p>
         <div class="row">
           <label>Antall oppgaver
             <input id="count-input" type="number" min="1" max="100" value="10" inputmode="numeric">
@@ -68,6 +71,10 @@
         <p class="task-question" id="task-question"></p>
         <div class="task-subject" id="task-subject"></div>
         <form id="answer-form" autocomplete="off">
+          <fieldset id="choice-block" class="choices" hidden>
+            <legend>Velg ett alternativ</legend>
+            <div id="choice-list"></div>
+          </fieldset>
           <input id="answer-input" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="go" aria-label="Svar">
           <button type="submit" class="btn primary" id="answer-btn">Svar</button>
         </form>
@@ -119,11 +126,17 @@
     Egne øvingsoppgaver til RIPE NCC Academy – IPv6 Fundamentals. Statistikken lagres bare i nettleseren din. Del av <a href="../../">0x2a Lab</a>.
   </footer>
 
+  <script src="../../ai/lora/vendor/katex/katex.min.js?v=20261118a"></script>
+  <script src="../../ai/lora/vendor/marked/marked.min.js?v=20261118a"></script>
+  <script src="../grunnleggende/js/yaml.js?v=20261118a"></script>
+  <script src="../grunnleggende/js/grade.js?v=20261118a"></script>
+  <script src="../grunnleggende/js/markdown.js?v=20261118c"></script>
   <script src="js/registry.js?v=20261117b"></script>
   <script src="js/modules/hex.js?v=20261117b"></script>
   <script src="js/modules/planned.js?v=20261117b"></script>
-  <script src="js/stats.js?v=20261117b"></script>
+  <script src="js/modules/hvorfor.js?v=20261118a"></script>
+  <script src="js/stats.js?v=20261118a"></script>
   <script src="js/charts.js?v=20261117b"></script>
-  <script src="js/app.js?v=20261117b"></script>
+  <script src="js/app.js?v=20261118a"></script>
 </body>
 </html>

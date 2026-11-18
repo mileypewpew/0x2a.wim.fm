@@ -14,6 +14,7 @@ if (!fs.existsSync(path.join(dir, 'index.html'))) {
 require(path.join(dir, 'js/registry.js'));
 require(path.join(dir, 'js/modules/hex.js'));
 require(path.join(dir, 'js/modules/planned.js'));
+require(path.join(dir, 'js/modules/hvorfor.js'));
 require(path.join(dir, 'js/stats.js'));
 require(path.join(dir, 'js/charts.js'));
 var IPV6T = globalThis.IPV6T, U = IPV6T.util;
@@ -33,9 +34,10 @@ function rngFrom(seed) {
 
 console.log('1) Register');
 var mods = IPV6T.registry.list();
-ok(mods.length === 5, 'forventer 5 moduler, fikk ' + mods.length);
-ok(IPV6T.registry.active().length === 1 && IPV6T.registry.active()[0].id === 'hex', 'hex er eneste aktive modul');
-ok(mods[0].id === 'hex', 'hex sorteres først');
+ok(mods.length === 6, 'forventer 6 moduler, fikk ' + mods.length);
+ok(IPV6T.registry.active().length === 2, 'to aktive moduler');
+ok(mods[0].id === 'ipv6-hvorfor' && mods[0].code === '0' && mods[0].statsKey === 'ipv6t.hvorfor.stats.v1', 'modul 0 ligger først og har egen statistikk-nøkkel');
+ok(mods[1].id === 'hex' && mods[1].code === '1', 'hex beholder kode 1');
 var threw = false; try { IPV6T.registry.register({ id: 'hex', title: 'x' }); } catch (e) { threw = true; }
 ok(threw, 'duplikat-id avvises');
 
@@ -145,7 +147,58 @@ console.log('5) Statistikk');
   ok(!mem[IPV6T.Stats.KEY] && Object.keys(S2.data.modules).length === 0, 'nullstill');
 })();
 
-console.log('6) DOM-røyktest (jsdom)');
+console.log('6) Hvorfor IPv6');
+(function () {
+  var content = path.resolve(__dirname, '..', '..', 'content', 'nettverk', 'ipv6', 'ipv6-hvorfor');
+  require(path.resolve(__dirname, '..', '..', 'nettverk', 'grunnleggende', 'js', 'yaml.js'));
+  require(path.resolve(__dirname, '..', '..', 'nettverk', 'grunnleggende', 'js', 'grade.js'));
+  require(path.resolve(__dirname, '..', '..', 'nettverk', 'grunnleggende', 'js', 'markdown.js'));
+  var teori = fs.readFileSync(path.join(content, 'teori.md'), 'utf8');
+  var tasks = JSON.parse(fs.readFileSync(path.join(content, 'oppgaver.json'), 'utf8'));
+  IPV6T.hvorfor.install(teori, tasks);
+  ok(IPV6T.hvorfor.count() === 28, '28 oppgaver, fikk ' + IPV6T.hvorfor.count());
+  var types = { flervalg: 0, tall: 0, tekst: 0 };
+  var G = globalThis.NGRUNN.grade;
+  IPV6T.hvorfor.tasks().forEach(function (raw) {
+    types[raw.type]++;
+    ok(raw.id.indexOf('hvorfor-') === 0 && raw['nivå'] === 1, raw.id + ' id og nivå');
+    raw.svar.forEach(function (s) { ok(G.check(raw, s), raw.id + ' godtar «' + s + '»'); });
+    if (raw.type === 'tall') ok(!G.check(raw, String(Number(raw.svar[0]) + 1)), raw.id + ' avviser annet tall');
+    if (raw.type === 'tekst') ok(!G.check(raw, 'zz-feil'), raw.id + ' avviser tull');
+    if (raw.type === 'flervalg') {
+      var other = raw.alternativer.filter(function (a) { return raw.svar.indexOf(a) < 0; })[0];
+      ok(other && !G.check(raw, other), raw.id + ' avviser et annet alternativ');
+      if (raw.svar[0].indexOf('`') >= 0) ok(!G.check(raw, raw.svar[0].replace(/`/g, '')), raw.id + ' krever baktegnene i svaret');
+    }
+  });
+  ok(types.flervalg === 18 && types.tall === 6 && types.tekst === 4, 'fordeling ' + JSON.stringify(types));
+  var shown = globalThis.NGRUNN.markdown.renderInline(IPV6T.hvorfor.tasks().filter(function (t) { return t.id === 'hvorfor-007'; })[0].alternativer[0]);
+  ok(shown.indexOf('<code>') >= 0 && shown.indexOf('`') < 0 && shown.indexOf('<script') < 0, 'alternativ rendres som kode: ' + shown);
+  var math = globalThis.NGRUNN.markdown.renderInline('Skriv hele tallet ($2^{32}$).');
+  ok(math.indexOf('katex') >= 0 && math.indexOf('$') < 0, 'inline-matte i spørsmål: ' + math.slice(0, 80));
+  var banned = ['46,77', '46.77', '35,96', '35.96', '59,2', '59.2', '51,5', '51.5', '44,6', '44.6', '41,0', '41.0', '48,01', '48.01', '50,10'];
+  var sources = [
+    fs.readFileSync(path.join(content, 'oppgaver.json'), 'utf8'),
+    fs.readFileSync(path.join(dir, 'js/modules/hvorfor.js'), 'utf8'),
+    fs.readFileSync(path.join(dir, 'js/app.js'), 'utf8')
+  ].join('\n');
+  banned.forEach(function (n) { ok(sources.indexOf(n) < 0, 'adopsjonstall står ikke i oppgaver eller JS: ' + n); });
+  ok(teori.indexOf('46,77 %') >= 0 && teori.indexOf('18. november 2026') >= 0, 'adopsjonstallene står i teorien, med dato');
+  var mem = {};
+  var store = { getItem: function (k) { return mem[k] || null; }, setItem: function (k, v) { mem[k] = String(v); }, removeItem: function (k) { delete mem[k]; } };
+  var blob = JSON.stringify({ version: 1, marker: 'behold', modules: { hex: { attempts: 9, correct: 4 } }, streak: { days: 3, best: 3, lastDay: '2026-11-01' }, run: { current: 2, best: 5 } });
+  mem[IPV6T.Stats.KEY] = blob;
+  var hv = new IPV6T.Stats(store, 'ipv6t.hvorfor.stats.v1');
+  hv.recordAnswer('ipv6-hvorfor', 'flervalg', true, new Date(2026, 10, 18));
+  hv.recordRound('ipv6-hvorfor', { level: 'alle', correct: 1, total: 1, timeMs: 1000 });
+  ok(mem[IPV6T.Stats.KEY] === blob, 'ferdig utfylt IPv6-statistikk er uendret');
+  ok(JSON.parse(mem['ipv6t.hvorfor.stats.v1']).modules['ipv6-hvorfor'].attempts === 1, 'hvorfor skriver til egen nøkkel');
+  ok(mem['ipv6t.hvorfor.stats.v1'].indexOf('hvorfor-001') < 0, 'oppgave-id kolliderer ikke med statistikk-nøkkelen');
+  var drawn = IPV6T.registry.get('ipv6-hvorfor').draw({ count: 28 });
+  ok(drawn.length === 28 && drawn.every(function (t) { return t.validate(t.answers[0]); }), 'en hel runde godtar egen fasit');
+})();
+
+console.log('7) DOM-røyktest (jsdom)');
 var JSDOM = null;
 try { JSDOM = require('jsdom').JSDOM; } catch (e) { /* ikke installert */ }
 if (!JSDOM) {
@@ -158,19 +211,50 @@ if (!JSDOM) {
   vc.on('jsdomError', function (e) { errors.push(String(e && (e.stack || e.message) || e)); });
   vc.on('error', function (e) { errors.push(String(e)); });
   var dom = new JSDOM(html, {
-    url: 'http://localhost/', runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: vc
+    url: 'http://localhost/nettverk/ipv6/', runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: vc
   });
   var w = dom.window;
   w.confirm = function () { return true; };
   w.scrollTo = function () {}; // ikke implementert i jsdom
   w.onerror = function (msg) { errors.push(String(msg)); };
-  ['js/registry.js', 'js/modules/hex.js', 'js/modules/planned.js', 'js/stats.js', 'js/charts.js', 'js/app.js'].forEach(function (f) {
-    ok(html.indexOf('src="' + f + '"') >= 0 || html.indexOf('src="' + f + '?v=') >= 0, 'index.html laster ' + f);
-    try { w.eval(fs.readFileSync(path.join(dir, f), 'utf8')); } catch (e) { errors.push(f + ': ' + e.stack); }
+  var repo = path.resolve(__dirname, '..', '..');
+  w.fetch = function (url) {
+    var u = new w.URL(String(url), w.location.href);
+    var file = path.join(repo, decodeURIComponent(u.pathname));
+    if (!fs.existsSync(file) || !fs.statSync(file).isFile()) {
+      return Promise.resolve({ ok: false, status: 404, text: function () { return Promise.resolve(''); }, json: function () { return Promise.resolve(null); } });
+    }
+    var text = fs.readFileSync(file, 'utf8');
+    return Promise.resolve({
+      ok: true, status: 200,
+      text: function () { return Promise.resolve(text); },
+      json: function () { return Promise.resolve(JSON.parse(text)); }
+    });
+  };
+  var vendor = path.join(repo, 'ai', 'lora', 'vendor');
+  var shared = path.join(repo, 'nettverk', 'grunnleggende', 'js');
+  [path.join(vendor, 'katex/katex.min.js'), path.join(vendor, 'marked/marked.min.js'), path.join(shared, 'yaml.js'), path.join(shared, 'grade.js'), path.join(shared, 'markdown.js'), path.join(dir, 'js/registry.js'), path.join(dir, 'js/modules/hex.js'), path.join(dir, 'js/modules/planned.js'), path.join(dir, 'js/modules/hvorfor.js'), path.join(dir, 'js/stats.js'), path.join(dir, 'js/charts.js'), path.join(dir, 'js/app.js')].forEach(function (abs) {
+    var rel = abs.indexOf(dir + path.sep) === 0 ? abs.slice(dir.length + 1) : path.relative(path.join(dir, '..'), abs).split(path.sep).join('/');
+    if (abs.indexOf(vendor) === 0) rel = '../../ai/lora/vendor/' + path.relative(vendor, abs).split(path.sep).join('/');
+    if (abs.indexOf(shared) === 0) rel = '../grunnleggende/js/' + path.basename(abs);
+    ok(html.indexOf(rel) >= 0, 'index.html laster ' + rel);
+    try { w.eval(fs.readFileSync(abs, 'utf8')); } catch (e) { errors.push(rel + ': ' + e.stack); }
   });
   var d = w.document;
-  ok(d.querySelectorAll('.module-card').length === 5, 'startsiden viser 5 modulkort');
+  function clickModule(title) {
+    var found = null;
+    Array.prototype.forEach.call(d.querySelectorAll('.module-card'), function (c) {
+      var el = c.querySelector('.module-title');
+      if (el && el.textContent === title) found = c;
+    });
+    ok(!!found && !found.disabled, 'modulknapp ' + title);
+    if (found) found.click();
+  }
+  ok(d.querySelectorAll('.module-card').length === 6, 'startsiden viser 6 modulkort');
   ok(d.querySelectorAll('.module-card.soon').length === 4, '4 «Kommer snart»-kort');
+  ok(d.getElementById('level-fieldset').hidden, 'modul 0 har ingen vanskelighetsgrad');
+  clickModule('Heksadesimalt tallsystem');
+  ok(!d.getElementById('level-fieldset').hidden && d.getElementById('lvl-middels'), 'hex har vanskelighetsgrad');
   ok(d.querySelectorAll('.module-card.soon .badge')[0].textContent === 'Kommer snart', 'badge-tekst');
   // Start runde med 5 oppgaver på middels
   d.getElementById('lvl-middels').click();
@@ -211,10 +295,41 @@ if (!JSDOM) {
   ok(d.querySelectorAll('#stats-content .stats-table').length === 3, 'tre statistikktabeller');
   var saved = JSON.parse(w.localStorage.getItem('ipv6t.stats.v1'));
   ok(saved.modules.hex.attempts === 6 && saved.modules.hex.rounds.length === 1, 'localStorage: 6 svar, 1 fullført runde');
-  d.getElementById('reset-stats-btn').click();
-  ok(w.localStorage.getItem('ipv6t.stats.v1') === null, 'nullstilling sletter lagret statistikk');
-  ok(errors.length === 0, 'ingen JS-feil: ' + errors.join('\n'));
-  setTimeout(function () { w.close(); finish(); }, 50);
+  var snapshot = w.localStorage.getItem('ipv6t.stats.v1');
+  setTimeout(function () {
+    ok(w.IPV6T.hvorfor.ready(), 'modulen er lastet i nettleseren');
+    clickModule('Hvorfor IPv6: historie og fremtid');
+    var task = w.IPV6T.hvorfor.taskById('hvorfor-007');
+    w.IPV6T.app.startRound([task], false);
+    var qHtml = d.getElementById('task-question').innerHTML;
+    ok(qHtml.indexOf('<code>') < 0 || qHtml.indexOf('`') < 0, 'spørsmålet har ikke rå baktegn');
+    var radios = d.querySelectorAll('#choice-list input');
+    var rawHit = false, coded = false;
+    Array.prototype.forEach.call(radios, function (el) {
+      if (el.value === task.answers[0]) rawHit = true;
+      var span = el.parentNode.querySelector('span');
+      if (span && span.querySelector('code') && span.innerHTML.indexOf('`') < 0) coded = true;
+    });
+    ok(radios.length === task.choices.length && rawHit && coded, 'alternativet er kode og verdien er rå tekst');
+    Array.prototype.forEach.call(radios, function (el) { if (el.value === task.answers[0]) el.click(); });
+    d.getElementById('answer-form').dispatchEvent(new w.Event('submit', { cancelable: true }));
+    ok(d.querySelector('#feedback .verdict').textContent.indexOf('Riktig') >= 0, 'rå alternativtekst rettes som riktig');
+    d.getElementById('answer-form').dispatchEvent(new w.Event('submit', { cancelable: true }));
+    ok(w.localStorage.getItem('ipv6t.stats.v1') === snapshot, 'IPv6-statistikken er uendret etter hvorfor-oppgaven');
+    var own = JSON.parse(w.localStorage.getItem('ipv6t.hvorfor.stats.v1'));
+    ok(own && own.modules['ipv6-hvorfor'].attempts === 1 && JSON.stringify(own).indexOf('hvorfor-007') < 0, 'hvorfor-statistikken er egen og uten oppgave-id');
+    d.querySelector('.nav [data-nav="teori"]').click();
+    var theory = d.getElementById('theory-content');
+    ok(theory.textContent.indexOf('Problemet med IPv4') >= 0 && theory.textContent.indexOf('46,77') >= 0, 'teorien viser historien og adopsjonstallet');
+    ok(!!theory.querySelector('table') && !!theory.querySelector('code') && !theory.querySelector('script'), 'teorien har tabell og kode, ikke script');
+    ok(!theory.querySelector('.katex-error'), 'ingen KaTeX-feil');
+    d.getElementById('reset-stats-btn').click();
+    ok(w.localStorage.getItem('ipv6t.stats.v1') === null, 'nullstilling sletter lagret statistikk');
+    ok(w.localStorage.getItem('ipv6t.hvorfor.stats.v1') === null, 'nullstilling sletter også hvorfor-nøkkelen');
+    ok(errors.length === 0, 'ingen JS-feil: ' + errors.join('\n'));
+    w.close();
+    finish();
+  }, 50);
 }
 
 function finish() {
