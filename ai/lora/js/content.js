@@ -274,7 +274,7 @@
       try { data = JSON.parse(text); }
       catch (err) { throw new Error('index.json er ikke gyldig JSON.'); }
       if (!data || !Array.isArray(data.moduler)) {
-        throw new Error('Manifestet må være en liste med mappenavn: {"moduler": ["00-eksempel"]}.');
+        throw new Error('Manifestet må være en liste med mappenavn: {"moduler": ["01-hva-er-lora"]}.');
       }
       var folders = [];
       var seen = {};

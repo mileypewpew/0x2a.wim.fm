@@ -67,14 +67,12 @@ Siden `ai/lora/` leser modulene når den åpnes. Det er ingen byggesteg. En stat
 3. Legg mappenavnet til i `content/ai/lora/index.json`. Rekkefølgen er visningsrekkefølgen. Manifestet har bare mappenavn. Tittel, nivåer og kilder leses fra frontmatter:
 
 ```json
-{"moduler": ["00-eksempel", "01-hva-er-lora"]}
+{"moduler": ["01-hva-er-lora"]}
 ```
 
 4. Øk `lora-innhold-versjon` i `ai/lora/index.html`, så Cloudflare ikke beholder gammelt manifest eller gamle modulfiler.
 5. Legg gjerne til et punkt under LoRA-kortet i `ai/index.html`, på samme måte som modulene er listet i `nettverk/index.html`. Treneren virker uten det punktet, men kategorisiden oppdateres ikke av seg selv.
 6. Åpne en pull request. Ikke push til `main`.
-
-`00-eksempel` er testinnhold. Det viser filformatet, og skal ikke brukes som fagtekst.
 
 ### teori.md
 
