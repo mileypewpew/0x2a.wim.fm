@@ -1,6 +1,6 @@
 # 0x2a.wim.fm
 
-0x2a.wim.fm: statisk studieportal. Nettverksinnhold kommer fra DOELad, LoRA-innhold fra LoraLad. Endringer via PR, deploy fra main.
+0x2a Lab (0x2a.wim.fm) er et statisk nettsted. Nettverksinnhold kommer fra DOELad, LoRA-innhold fra LoraLad. Endringer via PR, deploy fra main.
 
 ## Om nettstedet
 
@@ -15,8 +15,9 @@ Nettstedet er ren statisk HTML, CSS og JS uten byggesteg. Repo-roten tilsvarer s
 - `ai/` — AI-seksjonen (`ai/index.html`)
 - `ai/lora/` — LoRA-treneren (side, stil, skript og vendored biblioteker)
 - `content/ai/lora/` — LoRA-modulene som tekst, pluss manifestet `index.json`
+- `tests/` — selvtester som kjøres med Node. Mappen deployes ikke. Se [Tester](#tester).
 
-`.gitignore` i roten utelater `*.bak*` og vanlig støy som `.DS_Store`. Sikkerhetskopier og nøkler skal ikke inn i repoet.
+`.gitignore` i roten utelater `*.bak*` og vanlig støy som `.DS_Store`. Sikkerhetskopier og nøkler skal ikke inn i repoet. `tests/.gitignore` utelater `tests/node_modules`.
 
 ### Innhold og pull requests
 
@@ -24,7 +25,21 @@ DOELad og LoraLad legger til nytt innhold via en egen branch og en pull request.
 
 ### Deploy
 
-Deploy skjer fra `main`. I dag gjør HomeLad det manuelt etter at Wim har sagt ja i chatten. Automatisering kommer senere. Det ligger ingen GitHub Actions-workflows, deploy-konfigurasjon eller nøkler i dette repoet.
+Deploy skjer fra `main`. I dag gjør HomeLad det manuelt etter at Wim har sagt ja i chatten. Automatisering kommer senere. Det ligger ingen GitHub Actions-workflows, deploy-konfigurasjon eller nøkler i dette repoet. `tests/` er ikke en del av nettstedet og blir ikke deployet.
+
+## Tester
+
+Selvtestene ligger i `tests/` og kjøres lokalt. Det finnes ingen `package.json` i repo-roten. jsdom er en devDependency i `tests/package.json` og brukes bare av DOM-røyktesten.
+
+IPv6-treneren dekkes av `tests/ipv6/test.js`. Den er verifisert med Node.js 22.23.4. Skriptet leser `nettverk/ipv6/` ut fra sin egen plassering (`path.resolve(__dirname, '../../nettverk/ipv6')`), så arbeidsmappen du starter Node fra spiller ingen rolle.
+
+```bash
+cd tests
+npm ci
+npm test
+```
+
+Utskriften er på norsk. Siste linje er `N/N sjekker OK` når alle sjekkene passerer. En feil gir exit-kode 1.
 
 ### Cache-busting
 
