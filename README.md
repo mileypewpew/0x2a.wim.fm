@@ -1,6 +1,6 @@
 # 0x2a.wim.fm
 
-0x2a.wim.fm: statisk studieportal. Nettverksinnhold kommer fra DOELad, LoRA-innhold fra LoraLad. Endringer via PR, deploy fra main.
+0x2a Lab (0x2a.wim.fm) er et statisk nettsted. Nettverksinnhold kommer fra DOELad, LoRA-innhold fra LoraLad. Endringer via PR, deploy fra main.
 
 ## Om nettstedet
 
