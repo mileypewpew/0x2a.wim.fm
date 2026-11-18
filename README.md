@@ -12,6 +12,8 @@ Nettstedet er ren statisk HTML, CSS og JS uten byggesteg. Repo-roten tilsvarer s
 - `assets/` — felles ressurser (blant annet `portal.css`)
 - `nettverk/` — nettverksseksjonen (`nettverk/index.html`)
 - `nettverk/ipv6/` — IPv6-treneren, med `css/`, `js/` og `js/modules/`
+- `nettverk/grunnleggende/` — treneren Nettverk grunnleggende
+- `content/nettverk/grunnleggende/` — temaene til den treneren, pluss manifestet `index.json`
 - `ai/` — AI-seksjonen (`ai/index.html`)
 - `ai/lora/` — LoRA-treneren (side, stil, skript og vendored biblioteker)
 - `content/ai/lora/` — LoRA-modulene som tekst, pluss manifestet `index.json`
@@ -31,7 +33,7 @@ Nettstedet deployes fra `main`. Serveren henter `main` automatisk omtrent hvert 
 
 Selvtestene ligger i `tests/` og kjøres lokalt. Det finnes ingen `package.json` i repo-roten. jsdom er en devDependency i `tests/package.json` og brukes bare av DOM-røyktesten.
 
-IPv6-treneren dekkes av `tests/ipv6/test.js`. Den er verifisert med Node.js 22.23.4. Skriptet leser `nettverk/ipv6/` ut fra sin egen plassering (`path.resolve(__dirname, '../../nettverk/ipv6')`), så arbeidsmappen du starter Node fra spiller ingen rolle.
+IPv6-treneren dekkes av `tests/ipv6/test.js`. Den er verifisert med Node.js 22.23.4. Skriptet leser `nettverk/ipv6/` ut fra sin egen plassering (`path.resolve(__dirname, '../../nettverk/ipv6')`), så arbeidsmappen du starter Node fra spiller ingen rolle. Nettverk grunnleggende dekkes av `tests/grunnleggende/test.js`. `npm test` kjører begge.
 
 ```bash
 cd tests
@@ -146,3 +148,13 @@ En JSON-liste. Hvert element ser slik ut:
 En runde trekker tilfeldig blant oppgavene som passer til valgt nivå og type, uten å gjenta en oppgave i samme runde. Finnes det færre enn antallet du ber om, brukes alle.
 
 Statistikken lagres i nettleseren under nøkkelen `lora.stats.v1`, atskilt fra IPv6-trenerens `ipv6t.stats.v1`.
+
+## Nettverk grunnleggende
+
+Siden `nettverk/grunnleggende/` leser temaene fra `content/nettverk/grunnleggende/`. Manifestet er en ordnet liste med mappenavn:
+
+```json
+{"moduler": ["11-osi-tcpip"]}
+```
+
+Hvert tema har `teori.md` (YAML-frontmatter med heltall `nivå` 1, 2 eller 3, `kilder` som `{tittel, url}`, sitert `oppdatert`) og `oppgaver.json` (`flervalg`, `tall`, `tekst`). Rettingen er den samme som for LoRA. Nivå 2 og 3 vises som «Kommer snart» og kan ikke velges. Statistikken ligger i `ngrunn.stats.v1`. Ved endring av innhold, øk `<meta name="ngrunn-innhold-versjon">` i `nettverk/grunnleggende/index.html`. Nivå 1 er temaene `11-osi-tcpip` til `15-mac-ip-arp-dns-dhcp`.

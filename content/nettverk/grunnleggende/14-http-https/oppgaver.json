@@ -1,0 +1,453 @@
+[
+  {
+    "id": "14-001",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes HTTP-metoden GET til?",
+    "alternativer": [
+      "Å hente en ressurs",
+      "Å slette en ressurs",
+      "Å sende et skjema som oppretter noe",
+      "Å kryptere tilkoblingen"
+    ],
+    "svar": [
+      "Å hente en ressurs"
+    ],
+    "forklaring": {
+      "steg": [
+        "GET ber om en ressurs og skal ikke endre noe på serveren."
+      ]
+    }
+  },
+  {
+    "id": "14-002",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken metode brukes vanligvis for å sende inn et skjema som oppretter noe nytt?",
+    "alternativer": [
+      "POST",
+      "GET",
+      "HEAD",
+      "OPTIONS"
+    ],
+    "svar": [
+      "POST"
+    ],
+    "forklaring": {
+      "steg": [
+        "POST sender data i body til serveren, som behandler dem, f.eks. ved å opprette en ressurs."
+      ]
+    }
+  },
+  {
+    "id": "14-003",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken statuskode betyr «Not Found»?",
+    "svar": [
+      "404"
+    ],
+    "forklaring": {
+      "steg": [
+        "404 betyr at serveren ikke fant ressursen du spurte etter."
+      ]
+    }
+  },
+  {
+    "id": "14-004",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken statuskode betyr at forespørselen gikk bra («OK»)?",
+    "svar": [
+      "200"
+    ],
+    "forklaring": {
+      "steg": [
+        "200 OK er standardsvaret når alt gikk bra."
+      ]
+    }
+  },
+  {
+    "id": "14-005",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr statuskode 301?",
+    "alternativer": [
+      "Ressursen er flyttet permanent",
+      "Ressursen er midlertidig utilgjengelig",
+      "Du mangler tilgang",
+      "Serverfeil"
+    ],
+    "svar": [
+      "Ressursen er flyttet permanent"
+    ],
+    "forklaring": {
+      "steg": [
+        "301 Moved Permanently: den nye adressen står i `Location`-headeren.",
+        "Nettlesere og søkemotorer husker flyttingen."
+      ]
+    }
+  },
+  {
+    "id": "14-006",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr en statuskode i 5xx-klassen?",
+    "alternativer": [
+      "Feil på serveren",
+      "Feil i forespørselen fra klienten",
+      "Omdirigering",
+      "Vellykket"
+    ],
+    "svar": [
+      "Feil på serveren"
+    ],
+    "forklaring": {
+      "steg": [
+        "5xx betyr at serveren ikke klarte å behandle en ellers gyldig forespørsel."
+      ]
+    }
+  },
+  {
+    "id": "14-007",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr en statuskode i 4xx-klassen?",
+    "alternativer": [
+      "Feil hos klienten (i forespørselen)",
+      "Feil på serveren",
+      "Informasjon",
+      "Omdirigering"
+    ],
+    "svar": [
+      "Feil hos klienten (i forespørselen)"
+    ],
+    "forklaring": {
+      "steg": [
+        "4xx betyr at noe er galt med selve forespørselen, f.eks. feil adresse (404) eller manglende tilgang (403)."
+      ]
+    }
+  },
+  {
+    "id": "14-008",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr statuskode 401?",
+    "alternativer": [
+      "Ikke autentisert: pålogging mangler eller er ugyldig",
+      "Forbudt selv om du er pålogget",
+      "Serveren er overbelastet",
+      "Ressursen er flyttet"
+    ],
+    "svar": [
+      "Ikke autentisert: pålogging mangler eller er ugyldig"
+    ],
+    "forklaring": {
+      "steg": [
+        "401 Unauthorized betyr i praksis «ikke autentisert».",
+        "403 Forbidden betyr at serveren vet hvem du er, men nekter tilgang."
+      ]
+    }
+  },
+  {
+    "id": "14-009",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilken header forteller serveren hvilket domene forespørselen gjelder?",
+    "svar": [
+      "Host",
+      "Host:",
+      "Host-headeren"
+    ],
+    "forklaring": {
+      "steg": [
+        "`Host` er påkrevd i HTTP/1.1. Den gjør at én server kan ha mange nettsteder på samme IP-adresse."
+      ]
+    }
+  },
+  {
+    "id": "14-010",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilken header gir den nye adressen ved en omdirigering (3xx)?",
+    "svar": [
+      "Location",
+      "Location:",
+      "Location-headeren"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ved 301 og 302 står den nye URL-en i `Location`, og nettleseren følger den."
+      ]
+    }
+  },
+  {
+    "id": "14-011",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "HTTPS er HTTP over hvilken protokoll?",
+    "alternativer": [
+      "TLS",
+      "SSH",
+      "IPsec",
+      "UDP"
+    ],
+    "svar": [
+      "TLS"
+    ],
+    "forklaring": {
+      "steg": [
+        "HTTPS er HTTP inni en TLS-kryptert tilkobling, normalt på port 443."
+      ]
+    }
+  },
+  {
+    "id": "14-012",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva gir TLS i HTTPS?",
+    "alternativer": [
+      "Konfidensialitet, integritet og autentisering av serveren",
+      "Bare raskere lasting",
+      "Bare komprimering",
+      "En fast IP-adresse"
+    ],
+    "svar": [
+      "Konfidensialitet, integritet og autentisering av serveren"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kryptering skjuler innholdet, og integritetskontroll oppdager endringer.",
+        "Sertifikatet beviser at du snakker med riktig server."
+      ]
+    }
+  },
+  {
+    "id": "14-013",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvem signerer sertifikatet til en offentlig nettside?",
+    "alternativer": [
+      "En sertifikatutsteder (CA), f.eks. Let's Encrypt",
+      "Nettleseren",
+      "DNS-serveren",
+      "Ruteren din"
+    ],
+    "svar": [
+      "En sertifikatutsteder (CA), f.eks. Let's Encrypt"
+    ],
+    "forklaring": {
+      "steg": [
+        "Nettleseren stoler på et sett rot-CA-er.",
+        "Sertifikatet er gyldig når det er signert i en kjede tilbake til en av disse."
+      ]
+    }
+  },
+  {
+    "id": "14-014",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva kjører HTTP/3 over?",
+    "alternativer": [
+      "QUIC over UDP",
+      "TCP",
+      "TLS over TCP",
+      "SCTP"
+    ],
+    "svar": [
+      "QUIC over UDP"
+    ],
+    "forklaring": {
+      "steg": [
+        "HTTP/3 (RFC 9114) bruker QUIC, som går over UDP og har TLS 1.3 innebygd."
+      ]
+    }
+  },
+  {
+    "id": "14-015",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva er den viktigste forbedringen i HTTP/2 sammenlignet med HTTP/1.1?",
+    "alternativer": [
+      "Multipleksing av mange forespørsler over én tilkobling",
+      "Den bruker UDP",
+      "Den er tekstbasert",
+      "Den fjerner behovet for TLS"
+    ],
+    "svar": [
+      "Multipleksing av mange forespørsler over én tilkobling"
+    ],
+    "forklaring": {
+      "steg": [
+        "HTTP/2 er binær og deler én TCP-tilkobling i mange strømmer samtidig."
+      ]
+    }
+  },
+  {
+    "id": "14-016",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr det at HTTP er tilstandsløs?",
+    "alternativer": [
+      "Hver forespørsel står for seg selv, og serveren husker ikke tidligere forespørsler av seg selv",
+      "Den kan ikke sende filer",
+      "Den bruker ikke TCP",
+      "Den har ingen statuskoder"
+    ],
+    "svar": [
+      "Hver forespørsel står for seg selv, og serveren husker ikke tidligere forespørsler av seg selv"
+    ],
+    "forklaring": {
+      "steg": [
+        "Tilstand, som innlogging, holdes med f.eks. cookies eller tokens som sendes med hver forespørsel."
+      ]
+    }
+  },
+  {
+    "id": "14-017",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilken statuskode betyr «Service Unavailable»?",
+    "svar": [
+      "503"
+    ],
+    "forklaring": {
+      "steg": [
+        "503 betyr at serveren midlertidig ikke kan ta imot forespørsler, f.eks. ved vedlikehold eller overbelastning."
+      ]
+    }
+  },
+  {
+    "id": "14-018",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Caddy svarer «502 Bad Gateway». Hva er den mest sannsynlige årsaken?",
+    "alternativer": [
+      "Tjenesten bak proxyen svarer ikke eller svarer ugyldig",
+      "Brukeren skrev feil passord",
+      "Siden finnes ikke",
+      "Sertifikatet er gyldig"
+    ],
+    "svar": [
+      "Tjenesten bak proxyen svarer ikke eller svarer ugyldig"
+    ],
+    "forklaring": {
+      "steg": [
+        "En omvendt proxy sender forespørselen videre til en tjeneste bak seg.",
+        "Hvis tjenesten er nede eller svarer feil, gir proxyen 502."
+      ]
+    }
+  },
+  {
+    "id": "14-019",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør HTTP-metoden HEAD?",
+    "alternativer": [
+      "Som GET, men serveren sender bare headere uten body",
+      "Sletter en ressurs",
+      "Oppretter en ressurs",
+      "Krypterer forespørselen"
+    ],
+    "svar": [
+      "Som GET, men serveren sender bare headere uten body"
+    ],
+    "forklaring": {
+      "steg": [
+        "HEAD brukes til å sjekke f.eks. størrelse eller endringstid uten å laste ned innholdet."
+      ]
+    }
+  },
+  {
+    "id": "14-020",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør HSTS (Strict-Transport-Security)?",
+    "alternativer": [
+      "Ber nettleseren alltid bruke HTTPS mot domenet",
+      "Komprimerer siden",
+      "Blokkerer annonser",
+      "Gir domenet en fast IP-adresse"
+    ],
+    "svar": [
+      "Ber nettleseren alltid bruke HTTPS mot domenet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Etter første besøk nekter nettleseren å bruke ukryptert HTTP mot domenet i den angitte tiden."
+      ]
+    }
+  },
+  {
+    "id": "14-021",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes SNI (Server Name Indication) til i TLS?",
+    "alternativer": [
+      "Klienten forteller hvilket vertsnavn den vil nå, så én IP kan ha mange sertifikater",
+      "Å finne MAC-adressen til serveren",
+      "Å velge HTTP-metode",
+      "Å komprimere sertifikatet"
+    ],
+    "svar": [
+      "Klienten forteller hvilket vertsnavn den vil nå, så én IP kan ha mange sertifikater"
+    ],
+    "forklaring": {
+      "steg": [
+        "SNI sendes tidlig i TLS-håndtrykket, før serveren velger sertifikat."
+      ]
+    }
+  },
+  {
+    "id": "14-022",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilken header forteller hvilket format innholdet i body har (f.eks. text/html)?",
+    "svar": [
+      "Content-Type",
+      "Content-Type:",
+      "Content Type"
+    ],
+    "forklaring": {
+      "steg": [
+        "`Content-Type` oppgir medietypen, f.eks. `text/html; charset=utf-8` eller `application/json`."
+      ]
+    }
+  },
+  {
+    "id": "14-023",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken TLS-versjon er den nyeste standarden?",
+    "alternativer": [
+      "TLS 1.3",
+      "TLS 1.2",
+      "SSL 3.0",
+      "TLS 1.0"
+    ],
+    "svar": [
+      "TLS 1.3"
+    ],
+    "forklaring": {
+      "steg": [
+        "TLS 1.3 kom i 2018 (RFC 8446).",
+        "SSL 3.0, TLS 1.0 og TLS 1.1 regnes som utdaterte."
+      ]
+    }
+  },
+  {
+    "id": "14-024",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange rundturer (RTT) trenger et fullt TLS 1.3-håndtrykk for en ny tilkobling?",
+    "svar": [
+      "1"
+    ],
+    "forklaring": {
+      "steg": [
+        "TLS 1.3 trenger 1-RTT, mot 2-RTT i TLS 1.2.",
+        "Gjenopptatte økter kan bruke 0-RTT."
+      ]
+    }
+  }
+]

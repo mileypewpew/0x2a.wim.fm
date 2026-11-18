@@ -1,0 +1,425 @@
+[
+  {
+    "id": "12-001",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken protokoll er tilkoblingsorientert?",
+    "alternativer": [
+      "TCP",
+      "UDP",
+      "IP",
+      "ICMP"
+    ],
+    "svar": [
+      "TCP"
+    ],
+    "forklaring": {
+      "steg": [
+        "TCP setter opp en tilkobling med treveis håndtrykk før data sendes.",
+        "UDP sender uten tilkobling."
+      ]
+    }
+  },
+  {
+    "id": "12-002",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange byte er UDP-headeren?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "UDP-headeren har fire felt à 2 byte: kildeport, målport, lengde og sjekksum.",
+        "$4 \\cdot 2 = 8$ byte."
+      ]
+    }
+  },
+  {
+    "id": "12-003",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange byte er en TCP-header minst (uten opsjoner)?",
+    "svar": [
+      "20"
+    ],
+    "forklaring": {
+      "steg": [
+        "Uten opsjoner er TCP-headeren 20 byte. Med opsjoner kan den bli opptil 60 byte."
+      ]
+    }
+  },
+  {
+    "id": "12-004",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken rekkefølge har TCPs treveis håndtrykk?",
+    "alternativer": [
+      "SYN → SYN-ACK → ACK",
+      "SYN → ACK → SYN-ACK",
+      "ACK → SYN → FIN",
+      "SYN → FIN → ACK"
+    ],
+    "svar": [
+      "SYN → SYN-ACK → ACK"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienten sender SYN, serveren svarer SYN-ACK, og klienten bekrefter med ACK."
+      ]
+    }
+  },
+  {
+    "id": "12-005",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange segmenter sendes i TCPs håndtrykk for å opprette en tilkobling?",
+    "svar": [
+      "3"
+    ],
+    "forklaring": {
+      "steg": [
+        "SYN, SYN-ACK og ACK: tre segmenter, derav navnet treveis håndtrykk."
+      ]
+    }
+  },
+  {
+    "id": "12-006",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilket TCP-flagg brukes for å starte en tilkobling?",
+    "svar": [
+      "SYN",
+      "SYN-flagget",
+      "Synchronize"
+    ],
+    "forklaring": {
+      "steg": [
+        "SYN (synchronize) sender det første sekvensnummeret og ber om tilkobling."
+      ]
+    }
+  },
+  {
+    "id": "12-007",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilket TCP-flagg bryter en tilkobling brått?",
+    "svar": [
+      "RST",
+      "Reset",
+      "RST-flagget"
+    ],
+    "forklaring": {
+      "steg": [
+        "RST avbryter tilkoblingen umiddelbart, f.eks. når en port er stengt."
+      ]
+    }
+  },
+  {
+    "id": "12-008",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hvilket TCP-flagg brukes for å avslutte en tilkobling på en ryddig måte?",
+    "svar": [
+      "FIN",
+      "FIN-flagget",
+      "Finish"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver side sender FIN og får ACK tilbake. Det er en ordnet nedkobling."
+      ]
+    }
+  },
+  {
+    "id": "12-009",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken transportprotokoll bruker DHCP for IPv4?",
+    "alternativer": [
+      "UDP",
+      "TCP",
+      "ICMP",
+      "ARP"
+    ],
+    "svar": [
+      "UDP"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienten har ingen IP-adresse ennå og må kringkaste, så DHCP bruker UDP (port 67 og 68)."
+      ]
+    }
+  },
+  {
+    "id": "12-010",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken transportprotokoll bruker SSH?",
+    "alternativer": [
+      "TCP",
+      "UDP",
+      "ICMP",
+      "Ingen"
+    ],
+    "svar": [
+      "TCP"
+    ],
+    "forklaring": {
+      "steg": [
+        "SSH trenger pålitelig levering i riktig rekkefølge og bruker TCP port 22."
+      ]
+    }
+  },
+  {
+    "id": "12-011",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva kjører HTTP/3 over?",
+    "alternativer": [
+      "QUIC over UDP",
+      "TCP",
+      "Direkte over IP",
+      "SCTP"
+    ],
+    "svar": [
+      "QUIC over UDP"
+    ],
+    "forklaring": {
+      "steg": [
+        "HTTP/3 bruker QUIC (RFC 9000), som går over UDP.",
+        "QUIC står selv for pålitelighet og kryptering."
+      ]
+    }
+  },
+  {
+    "id": "12-012",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken protokoll garanterer at data kommer fram i riktig rekkefølge?",
+    "alternativer": [
+      "TCP",
+      "UDP",
+      "Begge",
+      "Ingen av dem"
+    ],
+    "svar": [
+      "TCP"
+    ],
+    "forklaring": {
+      "steg": [
+        "TCP bruker sekvensnumre og ACK-er til å sortere data og sende tapte segmenter på nytt."
+      ]
+    }
+  },
+  {
+    "id": "12-013",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor bruker IP-telefoni (VoIP) gjerne UDP?",
+    "alternativer": [
+      "Lav forsinkelse er viktigere enn at hver eneste pakke kommer fram",
+      "UDP krypterer alltid trafikken",
+      "UDP har større header med mer informasjon",
+      "TCP kan ikke sende lyd"
+    ],
+    "svar": [
+      "Lav forsinkelse er viktigere enn at hver eneste pakke kommer fram"
+    ],
+    "forklaring": {
+      "steg": [
+        "En pakke som sendes på nytt, kommer for sent til å være nyttig i en samtale.",
+        "Litt tap høres bedre ut enn forsinkelse."
+      ]
+    }
+  },
+  {
+    "id": "12-014",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er portfeltet i TCP- og UDP-headeren?",
+    "svar": [
+      "16"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kilde- og målport er 16 bit hver."
+      ]
+    }
+  },
+  {
+    "id": "12-015",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hva er det høyeste portnummeret?",
+    "svar": [
+      "65535"
+    ],
+    "forklaring": {
+      "steg": [
+        "16 bit gir $2^{16} = 65536$ verdier, fra 0 til 65535."
+      ]
+    }
+  },
+  {
+    "id": "12-016",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er sekvensnummeret i TCP-headeren?",
+    "svar": [
+      "32"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sekvens- og kvitteringsnummer er 32 bit hver."
+      ]
+    }
+  },
+  {
+    "id": "12-017",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes TCP-vinduet (receive window) til?",
+    "alternativer": [
+      "Flytkontroll: hvor mye data mottakeren kan ta imot før neste ACK",
+      "Å velge portnummer",
+      "Å kryptere data",
+      "Å finne MAC-adressen"
+    ],
+    "svar": [
+      "Flytkontroll: hvor mye data mottakeren kan ta imot før neste ACK"
+    ],
+    "forklaring": {
+      "steg": [
+        "Mottakeren annonserer vinduet sitt, så avsenderen ikke sender mer enn bufferet tåler."
+      ]
+    }
+  },
+  {
+    "id": "12-018",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hva skjer når et TCP-segment går tapt underveis?",
+    "alternativer": [
+      "Avsenderen sender det på nytt når ACK uteblir eller den får dupliserte ACK-er",
+      "Mottakeren ignorerer tapet",
+      "Hele tilkoblingen starter på nytt",
+      "Ruteren sender det på nytt"
+    ],
+    "svar": [
+      "Avsenderen sender det på nytt når ACK uteblir eller den får dupliserte ACK-er"
+    ],
+    "forklaring": {
+      "steg": [
+        "TCP oppdager tap med tidsavbrudd eller dupliserte ACK-er og sender segmentet på nytt."
+      ]
+    }
+  },
+  {
+    "id": "12-019",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om UDP-sjekksummen stemmer?",
+    "alternativer": [
+      "Den er valgfri i IPv4, men påkrevd i IPv6",
+      "Den er påkrevd i begge",
+      "Den finnes ikke",
+      "Den er valgfri i IPv6, men påkrevd i IPv4"
+    ],
+    "svar": [
+      "Den er valgfri i IPv4, men påkrevd i IPv6"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 768 lar sjekksummen være 0 (av) over IPv4.",
+        "IPv6 har ingen sjekksum i IP-headeren, så UDP-sjekksummen er påkrevd der."
+      ]
+    }
+  },
+  {
+    "id": "12-020",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilket protokollnummer har TCP i IP-headeren?",
+    "svar": [
+      "6"
+    ],
+    "forklaring": {
+      "steg": [
+        "Protokollfeltet i IPv4 (Next Header i IPv6) er 6 for TCP."
+      ]
+    }
+  },
+  {
+    "id": "12-021",
+    "nivå": 1,
+    "type": "tall",
+    "spørsmål": "Hvilket protokollnummer har UDP i IP-headeren?",
+    "svar": [
+      "17"
+    ],
+    "forklaring": {
+      "steg": [
+        "UDP har protokollnummer 17."
+      ]
+    }
+  },
+  {
+    "id": "12-022",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "DNS bruker vanligvis UDP port 53. Når brukes TCP port 53?",
+    "alternativer": [
+      "Når svaret er for stort for UDP, eller ved soneoverføring",
+      "Aldri",
+      "Bare for IPv6-adresser",
+      "Bare for omvendte oppslag"
+    ],
+    "svar": [
+      "Når svaret er for stort for UDP, eller ved soneoverføring"
+    ],
+    "forklaring": {
+      "steg": [
+        "Store svar blir avkortet over UDP, og klienten spør da på nytt over TCP.",
+        "Soneoverføring (AXFR) mellom DNS-servere bruker TCP."
+      ]
+    }
+  },
+  {
+    "id": "12-023",
+    "nivå": 1,
+    "type": "flervalg",
+    "spørsmål": "Hvilke fire verdier identifiserer en TCP-tilkobling?",
+    "alternativer": [
+      "Kilde-IP, kildeport, mål-IP og målport",
+      "Kilde-MAC, mål-MAC, kilde-IP og mål-IP",
+      "Mål-IP, målport, TTL og sekvensnummer",
+      "Kildeport, målport, lengde og sjekksum"
+    ],
+    "svar": [
+      "Kilde-IP, kildeport, mål-IP og målport"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kombinasjonen kalles ofte en 4-tuppel.",
+        "Derfor kan mange klienter bruke samme serverport samtidig."
+      ]
+    }
+  },
+  {
+    "id": "12-024",
+    "nivå": 1,
+    "type": "tekst",
+    "spørsmål": "Hva heter PDU-en til UDP?",
+    "svar": [
+      "Datagram",
+      "UDP-datagram",
+      "Datagrammer"
+    ],
+    "forklaring": {
+      "steg": [
+        "UDP sender datagrammer. TCP sender segmenter."
+      ]
+    }
+  }
+]
