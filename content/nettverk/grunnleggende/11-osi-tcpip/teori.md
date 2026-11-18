@@ -24,7 +24,7 @@ oppdatert: "2026-11-18"
 | 6 | Presentasjon | Format, tegnkoding, kryptering | Data | TLS*, UTF-8, JPEG |
 | 5 | Sesjon | Opprette, holde og avslutte dialoger | Data | RPC, sesjonshåndtering |
 | 4 | Transport | Ende-til-ende mellom prosesser, porter | Segment (TCP) / datagram (UDP) | TCP, UDP |
-| 3 | Nettverk | Logisk adressering og ruting | Pakke | IPv4, IPv6, ICMP |
+| 3 | Nettverk | Logisk adressering og ruting | Pakke (IP-datagram) | IPv4, IPv6, ICMP |
 | 2 | Datalink | Lokal levering, MAC-adresser | Ramme | Ethernet, Wi-Fi (802.11) |
 | 1 | Fysisk | Bit som signaler: spenning, lys, radio | Bit | Kabel, fiber, kontakter |
 

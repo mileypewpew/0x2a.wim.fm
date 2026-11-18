@@ -196,7 +196,7 @@ if (!JSDOM) {
   }
   function runDom() {
     var app = w.NGRUNN.app;
-    ok(d.querySelector('meta[name="ngrunn-innhold-versjon"]').getAttribute('content') === '20261118b', 'innholdsversjon 20261118b');
+    ok(d.querySelector('meta[name="ngrunn-innhold-versjon"]').getAttribute('content') === '20261118c', 'innholdsversjon 20261118c');
     ok(!d.getElementById('setup-form').hidden, 'oppsettet vises når nivå 1 har temaer');
     ok(d.querySelectorAll('#topic-list .module-card:not([disabled])').length === 6, 'Alle temaer pluss fem temaer');
     [2, 3].forEach(function (n) {
