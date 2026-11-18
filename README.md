@@ -154,7 +154,7 @@ Statistikken lagres i nettleseren under nøkkelen `lora.stats.v1`, atskilt fra I
 Siden `nettverk/grunnleggende/` leser temaene fra `content/nettverk/grunnleggende/`. Manifestet er en ordnet liste med mappenavn:
 
 ```json
-{"moduler": ["11-osi-tcpip"]}
+{"moduler": ["11-osi-tcpip", "12-tcp-udp", "13-porter-protokoller", "14-http-https", "15-mac-ip-arp-dns-dhcp", "21-ipv4-cidr", "22-subnetting", "23-nat-pat", "24-dhcp", "25-dns", "26-switching-vlan", "27-ruting", "31-feilsokingsmetodikk", "32-verktoy", "33-scenarioer", "34-brannmur"]}
 ```
 
-Hvert tema har `teori.md` (YAML-frontmatter med heltall `nivå` 1, 2 eller 3, `kilder` som `{tittel, url}`, sitert `oppdatert`) og `oppgaver.json` (`flervalg`, `tall`, `tekst`). Rettingen er den samme som for LoRA. Nivå 2 og 3 vises som «Kommer snart» og kan ikke velges. Statistikken ligger i `ngrunn.stats.v1`. Ved endring av innhold, øk `<meta name="ngrunn-innhold-versjon">` i `nettverk/grunnleggende/index.html`. Nivå 1 er temaene `11-osi-tcpip` til `15-mac-ip-arp-dns-dhcp`.
+Hvert tema har `teori.md` (YAML-frontmatter med heltall `nivå` 1, 2 eller 3, `kilder` som `{tittel, url}`, sitert `oppdatert`) og `oppgaver.json` (`flervalg`, `tall`, `tekst`). Rettingen er den samme som for LoRA. Nivå 1, 2 og 3 kan velges, og oppgavene filtreres på nivå og tema. Statistikken ligger i `ngrunn.stats.v1`. Ved endring av innhold, øk `<meta name="ngrunn-innhold-versjon">` i `nettverk/grunnleggende/index.html`. Manifestet lister temaene fra `11-osi-tcpip` til `34-brannmur`.

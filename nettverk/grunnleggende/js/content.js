@@ -11,8 +11,8 @@
   var FOLDER_OK = /^[A-Za-z0-9][A-Za-z0-9_-]*$/;
   var LEVELS = [
     { id: 1, kode: '1', tittel: 'Grunnleggende', status: 'active', beskrivelse: 'OSI og TCP/IP, porter, HTTP og hva ARP, DNS og DHCP gjør.' },
-    { id: 2, kode: '2', tittel: 'Adressering og oppsett', status: 'soon', beskrivelse: 'Adresser, masker og oppsett.' },
-    { id: 3, kode: '3', tittel: 'Feilsøking og scenarioer', status: 'soon', beskrivelse: 'Feilsøking og scenarioer.' }
+    { id: 2, kode: '2', tittel: 'Adressering og oppsett', status: 'active', beskrivelse: 'IPv4 og CIDR, subnetting, NAT, DHCP, DNS, VLAN og ruting.' },
+    { id: 3, kode: '3', tittel: 'Feilsøking og scenarioer', status: 'active', beskrivelse: 'Feilsøking, verktøy, scenarioer og brannmur.' }
   ];
 
   function asString(value) {

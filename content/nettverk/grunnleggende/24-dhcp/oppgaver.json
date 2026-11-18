@@ -1,0 +1,415 @@
+[
+  {
+    "id": "24-001",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken rekkefølge har meldingene når en klient får en ny adresse?",
+    "alternativer": [
+      "DISCOVER → OFFER → REQUEST → ACK",
+      "REQUEST → OFFER → DISCOVER → ACK",
+      "DISCOVER → REQUEST → OFFER → ACK",
+      "OFFER → DISCOVER → ACK → REQUEST"
+    ],
+    "svar": [
+      "DISCOVER → OFFER → REQUEST → ACK"
+    ],
+    "forklaring": {
+      "steg": [
+        "Huskeord: DORA.",
+        "Klienten leter, serveren tilbyr, klienten ber om adressen og serveren bekrefter."
+      ]
+    }
+  },
+  {
+    "id": "24-002",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken kildeadresse har en DHCPDISCOVER fra en ny klient?",
+    "alternativer": [
+      "0.0.0.0",
+      "255.255.255.255",
+      "127.0.0.1",
+      "169.254.0.1"
+    ],
+    "svar": [
+      "0.0.0.0"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienten har ingen adresse ennå og bruker 0.0.0.0 som kilde.",
+        "Mål er 255.255.255.255."
+      ]
+    }
+  },
+  {
+    "id": "24-003",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor kringkastes DHCPREQUEST i DORA, selv om klienten vet hvilken server som ga tilbudet?",
+    "alternativer": [
+      "Slik at andre DHCP-servere ser at tilbudet deres ble avslått og kan frigi adressen",
+      "Fordi unicast er forbudt i DHCP",
+      "For å finne DNS-serveren",
+      "For å teste kabelen"
+    ],
+    "svar": [
+      "Slik at andre DHCP-servere ser at tilbudet deres ble avslått og kan frigi adressen"
+    ],
+    "forklaring": {
+      "steg": [
+        "REQUEST inneholder serveridentifikatoren (option 54) til den valgte serveren.",
+        "De andre serverne ser at de ikke ble valgt."
+      ]
+    }
+  },
+  {
+    "id": "24-004",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "En klient får en leietid på 24 timer. Etter hvor mange timer prøver den vanligvis å fornye (T1)?",
+    "svar": [
+      "12"
+    ],
+    "forklaring": {
+      "steg": [
+        "T1 er som standard 50 % av leietiden.",
+        "$0{,}5 \\cdot 24 = 12$ timer."
+      ]
+    }
+  },
+  {
+    "id": "24-005",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "En klient får en leietid på 24 timer. Etter hvor mange timer kringkaster den for å fornye hos en hvilken som helst server (T2)?",
+    "svar": [
+      "21"
+    ],
+    "forklaring": {
+      "steg": [
+        "T2 er som standard 87,5 % av leietiden.",
+        "$0{,}875 \\cdot 24 = 21$ timer."
+      ]
+    }
+  },
+  {
+    "id": "24-006",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Leietiden er 8 timer. Etter hvor mange timer er T1?",
+    "svar": [
+      "4"
+    ],
+    "forklaring": {
+      "steg": [
+        "T1 = 50 % av 8 timer = 4 timer."
+      ]
+    }
+  },
+  {
+    "id": "24-007",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilket opsjonsnummer i DHCP gir klienten standard gateway (ruter)?",
+    "svar": [
+      "3"
+    ],
+    "forklaring": {
+      "steg": [
+        "Option 3 (Router) inneholder én eller flere gatewayadresser."
+      ]
+    }
+  },
+  {
+    "id": "24-008",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilket opsjonsnummer i DHCP gir klienten DNS-servere?",
+    "svar": [
+      "6"
+    ],
+    "forklaring": {
+      "steg": [
+        "Option 6 (Domain Name Server) inneholder DNS-serverne klienten skal bruke."
+      ]
+    }
+  },
+  {
+    "id": "24-009",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilket opsjonsnummer i DHCP gir leietiden?",
+    "svar": [
+      "51"
+    ],
+    "forklaring": {
+      "steg": [
+        "Option 51 (IP Address Lease Time) oppgir leietiden i sekunder."
+      ]
+    }
+  },
+  {
+    "id": "24-010",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilket opsjonsnummer i DHCP gir nettmasken?",
+    "svar": [
+      "1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Option 1 (Subnet Mask)."
+      ]
+    }
+  },
+  {
+    "id": "24-011",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilket opsjonsnummer i DHCP gir domenenavnet, f.eks. nermo.farm?",
+    "svar": [
+      "15"
+    ],
+    "forklaring": {
+      "steg": [
+        "Option 15 (Domain Name). Klienten bruker det som søkesuffiks for korte navn."
+      ]
+    }
+  },
+  {
+    "id": "24-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er en DHCP-reservasjon?",
+    "alternativer": [
+      "En bestemt MAC-adresse får alltid samme IP-adresse fra DHCP",
+      "En adresse som aldri kan brukes",
+      "En reserve-DHCP-server",
+      "En ekstra lang leietid"
+    ],
+    "svar": [
+      "En bestemt MAC-adresse får alltid samme IP-adresse fra DHCP"
+    ],
+    "forklaring": {
+      "steg": [
+        "Reservasjoner gir faste adresser til servere og skrivere, men styres fortsatt sentralt fra DHCP."
+      ]
+    }
+  },
+  {
+    "id": "24-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva bør du passe på når du lager reservasjoner?",
+    "alternativer": [
+      "At reserverte adresser ikke samtidig deles ut fra poolen til andre",
+      "At alle reservasjoner har samme MAC",
+      "At leietiden er 0",
+      "At DNS er slått av"
+    ],
+    "svar": [
+      "At reserverte adresser ikke samtidig deles ut fra poolen til andre"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ligger en reservert adresse inne i den dynamiske poolen, kan en annen klient få den og skape IP-konflikt.",
+        "Legg reservasjoner utenfor poolen, eller bruk en server som holder dem unna."
+      ]
+    }
+  },
+  {
+    "id": "24-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor trengs et DHCP-relé når DHCP-serveren står i et annet nett?",
+    "alternativer": [
+      "Rutere sender ikke kringkasting videre, så DISCOVER når ikke fram uten relé",
+      "DHCP virker bare med IPv6",
+      "Releet krypterer DHCP",
+      "Releet gir klienten MAC-adresse"
+    ],
+    "svar": [
+      "Rutere sender ikke kringkasting videre, så DISCOVER når ikke fram uten relé"
+    ],
+    "forklaring": {
+      "steg": [
+        "Releet på ruteren tar imot kringkastingen og sender den som unicast til serveren.",
+        "Serveren svarer via releet."
+      ]
+    }
+  },
+  {
+    "id": "24-015",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva heter feltet der DHCP-releet legger sin egen adresse, slik at serveren vet hvilket nett klienten er i?",
+    "svar": [
+      "giaddr",
+      "gateway IP address"
+    ],
+    "forklaring": {
+      "steg": [
+        "`giaddr` (gateway IP address) settes av releet.",
+        "Serveren velger pool ut fra den."
+      ]
+    }
+  },
+  {
+    "id": "24-016",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr DHCPNAK?",
+    "alternativer": [
+      "Serveren avslår forespørselen, f.eks. fordi klienten ber om en adresse fra feil nett",
+      "Klienten gir fra seg adressen",
+      "Klienten fant adressen i bruk",
+      "Serveren tilbyr en adresse"
+    ],
+    "svar": [
+      "Serveren avslår forespørselen, f.eks. fordi klienten ber om en adresse fra feil nett"
+    ],
+    "forklaring": {
+      "steg": [
+        "Typisk når en bærbar flytter til et nytt nett og ber om sin gamle adresse.",
+        "Klienten starter da på nytt med DISCOVER."
+      ]
+    }
+  },
+  {
+    "id": "24-017",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken melding sender klienten hvis den oppdager (f.eks. med ARP) at den tilbudte adressen allerede er i bruk?",
+    "alternativer": [
+      "DHCPDECLINE",
+      "DHCPRELEASE",
+      "DHCPINFORM",
+      "DHCPNAK"
+    ],
+    "svar": [
+      "DHCPDECLINE"
+    ],
+    "forklaring": {
+      "steg": [
+        "DECLINE forteller serveren at adressen er i bruk, så den merker adressen og tilbyr en annen."
+      ]
+    }
+  },
+  {
+    "id": "24-018",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva skjer når leietiden er helt ute uten at klienten har fått fornyet?",
+    "alternativer": [
+      "Klienten må slutte å bruke adressen og starte på nytt med DISCOVER",
+      "Klienten beholder adressen for alltid",
+      "Ruteren blir DHCP-server",
+      "Klienten får 127.0.0.1"
+    ],
+    "svar": [
+      "Klienten må slutte å bruke adressen og starte på nytt med DISCOVER"
+    ],
+    "forklaring": {
+      "steg": [
+        "Etter utløp har klienten ingen gyldig leie.",
+        "Svarer ingen server, ender mange klienter med en 169.254.x.x-adresse."
+      ]
+    }
+  },
+  {
+    "id": "24-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva kan en falsk (rogue) DHCP-server gjøre?",
+    "alternativer": [
+      "Gi klienter feil gateway eller DNS, slik at trafikk stopper eller ledes via angriperen",
+      "Øke båndbredden",
+      "Kryptere nettet",
+      "Fornye sertifikater"
+    ],
+    "svar": [
+      "Gi klienter feil gateway eller DNS, slik at trafikk stopper eller ledes via angriperen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienter tar gjerne det første tilbudet de får.",
+        "DHCP snooping på switchen blokkerer OFFER fra porter som ikke er klarert."
+      ]
+    }
+  },
+  {
+    "id": "24-020",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilke porter bruker DHCP for IPv4?",
+    "alternativer": [
+      "Server UDP 67, klient UDP 68",
+      "Server TCP 67, klient TCP 68",
+      "UDP 53 begge veier",
+      "Server UDP 547, klient UDP 546"
+    ],
+    "svar": [
+      "Server UDP 67, klient UDP 68"
+    ],
+    "forklaring": {
+      "steg": [
+        "546/547 er for DHCPv6."
+      ]
+    }
+  },
+  {
+    "id": "24-021",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes DHCPINFORM til?",
+    "alternativer": [
+      "En klient med manuelt satt adresse ber om andre innstillinger, f.eks. DNS",
+      "Å frigi adressen",
+      "Å avslå et tilbud",
+      "Å be om ny MAC-adresse"
+    ],
+    "svar": [
+      "En klient med manuelt satt adresse ber om andre innstillinger, f.eks. DNS"
+    ],
+    "forklaring": {
+      "steg": [
+        "Serveren svarer med opsjoner, men gir ingen ny leie."
+      ]
+    }
+  },
+  {
+    "id": "24-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes DHCP-opsjon 66 og 67 til?",
+    "alternativer": [
+      "TFTP-server og oppstartsfil for nettverksoppstart (PXE)",
+      "DNS og NTP",
+      "Leietid og maske",
+      "VLAN-ID"
+    ],
+    "svar": [
+      "TFTP-server og oppstartsfil for nettverksoppstart (PXE)"
+    ],
+    "forklaring": {
+      "steg": [
+        "En maskin som starter fra nettet, får vite hvor den skal hente oppstartsfilen."
+      ]
+    }
+  },
+  {
+    "id": "24-023",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Leietiden i option 51 er 86400. Hvor mange timer er det?",
+    "svar": [
+      "24"
+    ],
+    "forklaring": {
+      "steg": [
+        "Leietiden oppgis i sekunder.",
+        "86 400 / 3600 = 24 timer."
+      ]
+    }
+  }
+]

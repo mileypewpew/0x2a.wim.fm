@@ -1,1 +1,1 @@
-{"moduler": ["11-osi-tcpip", "12-tcp-udp", "13-porter-protokoller", "14-http-https", "15-mac-ip-arp-dns-dhcp"]}
+{"moduler": ["11-osi-tcpip", "12-tcp-udp", "13-porter-protokoller", "14-http-https", "15-mac-ip-arp-dns-dhcp", "21-ipv4-cidr", "22-subnetting", "23-nat-pat", "24-dhcp", "25-dns", "26-switching-vlan", "27-ruting", "31-feilsokingsmetodikk", "32-verktoy", "33-scenarioer", "34-brannmur"]}

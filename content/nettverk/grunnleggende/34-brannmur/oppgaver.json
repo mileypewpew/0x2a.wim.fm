@@ -1,0 +1,453 @@
+[
+  {
+    "id": "34-001",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er forskjellen på en tilstandsfull og en tilstandsløs brannmur?",
+    "alternativer": [
+      "Tilstandsfull husker tilkoblinger og slipper svar automatisk tilbake. Tilstandsløs vurderer hver pakke for seg",
+      "Tilstandsløs er alltid sikrere",
+      "Tilstandsfull virker bare med UDP",
+      "Det er ingen forskjell"
+    ],
+    "svar": [
+      "Tilstandsfull husker tilkoblinger og slipper svar automatisk tilbake. Tilstandsløs vurderer hver pakke for seg"
+    ],
+    "forklaring": {
+      "steg": [
+        "En tilstandsfull brannmur har en tilstandstabell.",
+        "Med tilstandsløs filtrering må du lage egne regler for returtrafikken."
+      ]
+    }
+  },
+  {
+    "id": "34-002",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr «standard nekt» (default deny)?",
+    "alternativer": [
+      "Alt som ikke er uttrykkelig tillatt, blokkeres",
+      "Alt er tillatt til det blokkeres",
+      "Bare DNS blokkeres",
+      "Brannmuren er slått av"
+    ],
+    "svar": [
+      "Alt som ikke er uttrykkelig tillatt, blokkeres"
+    ],
+    "forklaring": {
+      "steg": [
+        "Det er det tryggeste utgangspunktet, spesielt for innkommende trafikk fra internett."
+      ]
+    }
+  },
+  {
+    "id": "34-003",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er forskjellen på block (drop) og reject?",
+    "alternativer": [
+      "Block forkaster stille (avsenderen får tidsavbrudd). Reject sender et avslag (RST eller ICMP)",
+      "Reject forkaster stille, block svarer",
+      "Begge slipper trafikken gjennom",
+      "Block gjelder bare UDP"
+    ],
+    "svar": [
+      "Block forkaster stille (avsenderen får tidsavbrudd). Reject sender et avslag (RST eller ICMP)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Mot internett brukes ofte block, så du ikke avslører noe.",
+        "Internt kan reject gi raskere og tydeligere feilmeldinger."
+      ]
+    }
+  },
+  {
+    "id": "34-004",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr «minste privilegium» for brannmurregler?",
+    "alternativer": [
+      "Åpne bare de portene og kildene som faktisk trengs",
+      "Åpne alt for administratorer",
+      "Bruke færrest mulig regler uansett",
+      "Blokkere alt utgående"
+    ],
+    "svar": [
+      "Åpne bare de portene og kildene som faktisk trengs"
+    ],
+    "forklaring": {
+      "steg": [
+        "Eksempel: SSH bare fra VPN-nettet, ikke fra hele internett."
+      ]
+    }
+  },
+  {
+    "id": "34-005",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En tilstandsfull brannmur blokkerer alt inn på WAN. Hvorfor virker likevel nettsurfing fra LAN?",
+    "alternativer": [
+      "Svarene tilhører tilkoblinger startet fra LAN og slippes inn via tilstandstabellen",
+      "Fordi WAN-regelen ignoreres",
+      "Fordi DNS åpner portene",
+      "Fordi NAT er slått av"
+    ],
+    "svar": [
+      "Svarene tilhører tilkoblinger startet fra LAN og slippes inn via tilstandstabellen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Utgående tilkobling fra LAN lager en tilstand.",
+        "Svaret matcher den tilstanden og slippes inn."
+      ]
+    }
+  },
+  {
+    "id": "34-006",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er utgående filtrering (egress filtering)?",
+    "alternativer": [
+      "Regler som begrenser hva interne enheter får sende ut",
+      "Regler for innkommende trafikk",
+      "NAT for IPv6",
+      "DNS-videresending"
+    ],
+    "svar": [
+      "Regler som begrenser hva interne enheter får sende ut"
+    ],
+    "forklaring": {
+      "steg": [
+        "Nyttig f.eks. for IoT-enheter som bare skal snakke med noen få tjenester."
+      ]
+    }
+  },
+  {
+    "id": "34-007",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Brannmurregler leses ovenfra og ned, og første treff avgjør. Regel 1: blokker alt fra 10.0.0.50. Regel 2: tillat 10.0.0.0/24 til port 443. Hva skjer med trafikk fra 10.0.0.50 til port 443?",
+    "alternativer": [
+      "Den blokkeres, fordi regel 1 treffer først",
+      "Den tillates, fordi regel 2 er mer spesifikk",
+      "Den tillates, fordi port 443 alltid er åpen",
+      "Den logges bare"
+    ],
+    "svar": [
+      "Den blokkeres, fordi regel 1 treffer først"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ved «første treff vinner» betyr rekkefølgen alt.",
+        "Spesifikke unntak må stå over de generelle reglene."
+      ]
+    }
+  },
+  {
+    "id": "34-008",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Samme regler i motsatt rekkefølge. Regel 1: tillat 10.0.0.0/24 til port 443. Regel 2: blokker alt fra 10.0.0.50. Hva skjer med 10.0.0.50 til port 443?",
+    "alternativer": [
+      "Den tillates, fordi regel 1 treffer først",
+      "Den blokkeres",
+      "Brannmuren gir feilmelding",
+      "Den sendes til DNS"
+    ],
+    "svar": [
+      "Den tillates, fordi regel 1 treffer først"
+    ],
+    "forklaring": {
+      "steg": [
+        "10.0.0.50 ligger i 10.0.0.0/24 og treffer regel 1.",
+        "Regel 2 vurderes aldri for denne trafikken."
+      ]
+    }
+  },
+  {
+    "id": "34-009",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Du har satt opp portvideresending WAN:443 → 10.0.0.20:443, men det virker ikke utenfra. Hva bør du sjekke i brannmuren?",
+    "alternativer": [
+      "At det finnes en regel som tillater trafikken på WAN (ofte laget automatisk sammen med NAT-regelen)",
+      "At DHCP-poolen er stor nok",
+      "At DNS-TTL er lav",
+      "At LAN har VLAN"
+    ],
+    "svar": [
+      "At det finnes en regel som tillater trafikken på WAN (ofte laget automatisk sammen med NAT-regelen)"
+    ],
+    "forklaring": {
+      "steg": [
+        "NAT bytter adresse, men filtreringen avgjør om trafikken slippes.",
+        "Sjekk også at du ikke står bak CGNAT."
+      ]
+    }
+  },
+  {
+    "id": "34-010",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilken retning har trafikk fra internett mot en server i hjemmenettet, sett fra WAN-grensesnittet?",
+    "alternativer": [
+      "Inn (inbound) på WAN",
+      "Ut (outbound) på WAN",
+      "Inn på LAN",
+      "Ingen retning"
+    ],
+    "svar": [
+      "Inn (inbound) på WAN"
+    ],
+    "forklaring": {
+      "steg": [
+        "Pakken kommer inn på WAN-grensesnittet.",
+        "Etter NAT går den ut på LAN-grensesnittet mot serveren."
+      ]
+    }
+  },
+  {
+    "id": "34-011",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør `ufw default deny incoming`?",
+    "alternativer": [
+      "Blokkerer all innkommende trafikk som ikke er tillatt av en regel",
+      "Blokkerer all utgående trafikk",
+      "Slår av ufw",
+      "Tillater all trafikk"
+    ],
+    "svar": [
+      "Blokkerer all innkommende trafikk som ikke er tillatt av en regel"
+    ],
+    "forklaring": {
+      "steg": [
+        "Deretter åpner du bare det som trengs, f.eks. `ufw allow 443/tcp`."
+      ]
+    }
+  },
+  {
+    "id": "34-012",
+    "nivå": 3,
+    "type": "tekst",
+    "spørsmål": "Skriv ufw-kommandoen som tillater innkommende HTTPS (TCP 443).",
+    "svar": [
+      "ufw allow 443/tcp",
+      "sudo ufw allow 443/tcp",
+      "ufw allow https"
+    ],
+    "forklaring": {
+      "steg": [
+        "`ufw allow 443/tcp` åpner port 443 for TCP.",
+        "`ufw allow https` gjør det samme via navnet i /etc/services."
+      ]
+    }
+  },
+  {
+    "id": "34-013",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør regelen `ufw allow in on tailscale0 to any port 22 proto tcp`?",
+    "alternativer": [
+      "Tillater SSH bare når trafikken kommer inn via Tailscale-grensesnittet",
+      "Tillater SSH fra hele internett",
+      "Blokkerer Tailscale",
+      "Åpner alle porter på Tailscale"
+    ],
+    "svar": [
+      "Tillater SSH bare når trafikken kommer inn via Tailscale-grensesnittet"
+    ],
+    "forklaring": {
+      "steg": [
+        "`in on tailscale0` begrenser regelen til det grensesnittet.",
+        "Sammen med `default deny incoming` er SSH da stengt mot internett."
+      ]
+    }
+  },
+  {
+    "id": "34-014",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Du låser deg ute fra en VPS etter en brannmurendring. Hva kunne hindret det?",
+    "alternativer": [
+      "Ha en åpen økt mens du tester, og konsolltilgang via leverandøren som reservevei",
+      "Å bruke lengre passord",
+      "Å endre DNS først",
+      "Å slå av IPv6"
+    ],
+    "svar": [
+      "Ha en åpen økt mens du tester, og konsolltilgang via leverandøren som reservevei"
+    ],
+    "forklaring": {
+      "steg": [
+        "Eksisterende tilkoblinger lever ofte videre via tilstandstabellen.",
+        "Test en ny tilkobling før du lukker den gamle."
+      ]
+    }
+  },
+  {
+    "id": "34-015",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor er NAT alene ikke nok som beskyttelse?",
+    "alternativer": [
+      "NAT oversetter adresser, men har ingen regler for hva som er lov. Med IPv6 eller portvideresending må brannmuren styre det",
+      "NAT krypterer ikke DNS",
+      "NAT virker bare med UDP",
+      "NAT er alltid avslått"
+    ],
+    "svar": [
+      "NAT oversetter adresser, men har ingen regler for hva som er lov. Med IPv6 eller portvideresending må brannmuren styre det"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med IPv6 er enhetene direkte adresserbare.",
+        "Uten brannmurregler kan de da nås fra internett."
+      ]
+    }
+  },
+  {
+    "id": "34-016",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er typisk standardregel på LAN-grensesnittet i en hjemmebrannmur som OPNsense?",
+    "alternativer": [
+      "Tillat LAN-nettet ut til alle mål",
+      "Blokker alt",
+      "Tillat bare DNS",
+      "Tillat bare innkommende fra WAN"
+    ],
+    "svar": [
+      "Tillat LAN-nettet ut til alle mål"
+    ],
+    "forklaring": {
+      "steg": [
+        "Standardoppsett gir ofte LAN fri tilgang ut og blokkerer uoppfordret trafikk inn på WAN.",
+        "Strammere regler legges til etter behov."
+      ]
+    }
+  },
+  {
+    "id": "34-017",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor bør brannmurregler for DNS i et internt nett tillate både UDP og TCP 53?",
+    "alternativer": [
+      "DNS bruker TCP for store svar og soneoverføring, ikke bare UDP",
+      "TCP 53 er for DHCP",
+      "UDP 53 er utdatert",
+      "Det trengs ikke"
+    ],
+    "svar": [
+      "DNS bruker TCP for store svar og soneoverføring, ikke bare UDP"
+    ],
+    "forklaring": {
+      "steg": [
+        "Blokkeres TCP 53, kan store svar feile, f.eks. med DNSSEC eller mange poster."
+      ]
+    }
+  },
+  {
+    "id": "34-018",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Du vil at IoT-enheter bare skal kunne bruke den lokale DNS-serveren, ikke 8.8.8.8. Hvilken type regel trengs?",
+    "alternativer": [
+      "Utgående regel som blokkerer DNS (53) til andre mål enn den lokale resolveren",
+      "Innkommende regel på WAN",
+      "En DHCP-reservasjon",
+      "En CNAME-post"
+    ],
+    "svar": [
+      "Utgående regel som blokkerer DNS (53) til andre mål enn den lokale resolveren"
+    ],
+    "forklaring": {
+      "steg": [
+        "Tillat DNS til den lokale resolveren og blokker port 53 til alt annet.",
+        "Merk at DNS over HTTPS (443) ikke stoppes av en slik regel."
+      ]
+    }
+  },
+  {
+    "id": "34-019",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva bør du gjøre før du legger inn en bred «tillat alt»-regel for å feilsøke?",
+    "alternativer": [
+      "Legge den inn midlertidig, logge, og fjerne den så fort testen er ferdig",
+      "Legge den permanent på WAN",
+      "Slette alle andre regler",
+      "Slå av logging"
+    ],
+    "svar": [
+      "Legge den inn midlertidig, logge, og fjerne den så fort testen er ferdig"
+    ],
+    "forklaring": {
+      "steg": [
+        "En bred regel kan bekrefte at brannmuren er årsaken.",
+        "Etterpå lager du en presis regel og fjerner den brede."
+      ]
+    }
+  },
+  {
+    "id": "34-020",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvordan kan du se om brannmuren blokkerer en bestemt tilkobling?",
+    "alternativer": [
+      "Slå på logging for regelen og se i brannmurloggen etter blokkerte pakker",
+      "Kjøre ipconfig /flushdns",
+      "Endre DHCP-leien",
+      "Bytte kabel"
+    ],
+    "svar": [
+      "Slå på logging for regelen og se i brannmurloggen etter blokkerte pakker"
+    ],
+    "forklaring": {
+      "steg": [
+        "I OPNsense: Firewall → Log Files → Live View viser hvilke regler som treffer."
+      ]
+    }
+  },
+  {
+    "id": "34-021",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er en DMZ?",
+    "alternativer": [
+      "Et eget nett for tjenester som skal nås utenfra, skilt fra det interne LAN-et med brannmur",
+      "En type DNS-post",
+      "En VLAN-tagg",
+      "En DHCP-opsjon"
+    ],
+    "svar": [
+      "Et eget nett for tjenester som skal nås utenfra, skilt fra det interne LAN-et med brannmur"
+    ],
+    "forklaring": {
+      "steg": [
+        "Blir en server i DMZ kompromittert, kommer angriperen ikke direkte inn på LAN-et."
+      ]
+    }
+  },
+  {
+    "id": "34-022",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En regel tillater TCP 443 fra «any» til en intern webserver. Hva er en strammere variant hvis bare Cloudflare skal nå serveren?",
+    "alternativer": [
+      "Tillat 443 bare fra Cloudflares IP-områder",
+      "Tillat alle porter fra Cloudflare",
+      "Tillat 443 fra LAN",
+      "Fjerne regelen og bruke NAT"
+    ],
+    "svar": [
+      "Tillat 443 bare fra Cloudflares IP-områder"
+    ],
+    "forklaring": {
+      "steg": [
+        "Begrens kilden når du vet hvem som skal koble til.",
+        "Cloudflare publiserer listen over sine IP-områder."
+      ]
+    }
+  }
+]

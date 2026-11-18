@@ -1,0 +1,448 @@
+[
+  {
+    "id": "23-001",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor ble NAT innført?",
+    "alternativer": [
+      "Det er for få offentlige IPv4-adresser",
+      "For å gjøre trafikken raskere",
+      "For å kryptere trafikken",
+      "For å erstatte DNS"
+    ],
+    "svar": [
+      "Det er for få offentlige IPv4-adresser"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med NAT kan et helt hjemmenett med private adresser dele én offentlig adresse."
+      ]
+    }
+  },
+  {
+    "id": "23-002",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva skiller PAT (NAPT) fra vanlig NAT?",
+    "alternativer": [
+      "Mange interne adresser deler én offentlig adresse, og portnumre skiller tilkoblingene",
+      "Hver intern adresse får sin egen offentlige adresse",
+      "PAT oversetter MAC-adresser",
+      "PAT brukes bare for IPv6"
+    ],
+    "svar": [
+      "Mange interne adresser deler én offentlig adresse, og portnumre skiller tilkoblingene"
+    ],
+    "forklaring": {
+      "steg": [
+        "PAT skriver om både IP-adresse og kildeport.",
+        "NAT-tabellen kobler hver ytre port til riktig intern adresse og port."
+      ]
+    }
+  },
+  {
+    "id": "23-003",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva lagrer en NAT-ruter i NAT-tabellen?",
+    "alternativer": [
+      "Koblingen mellom intern adresse og port og ytre adresse og port for hver økt",
+      "MAC-adressene til alle klienter",
+      "DNS-navn",
+      "Alle passord"
+    ],
+    "svar": [
+      "Koblingen mellom intern adresse og port og ytre adresse og port for hver økt"
+    ],
+    "forklaring": {
+      "steg": [
+        "Når svaret kommer tilbake, slår ruteren opp oppføringen og oversetter tilbake."
+      ]
+    }
+  },
+  {
+    "id": "23-004",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En PC på 10.0.0.15 åpner en nettside. Hvilken kildeadresse ser webserveren på internett?",
+    "alternativer": [
+      "Den offentlige WAN-adressen til ruteren (eller operatørens CGNAT-adresse)",
+      "10.0.0.15",
+      "127.0.0.1",
+      "PC-ens MAC-adresse"
+    ],
+    "svar": [
+      "Den offentlige WAN-adressen til ruteren (eller operatørens CGNAT-adresse)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Private adresser rutes ikke på internett.",
+        "NAT bytter kildeadressen til en offentlig adresse før pakken går ut."
+      ]
+    }
+  },
+  {
+    "id": "23-005",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Du vil at en server på 10.0.0.20 skal kunne nås fra internett på port 443. Hva setter du opp i ruteren?",
+    "alternativer": [
+      "Portvideresending (DNAT) fra WAN:443 til 10.0.0.20:443, med tillatende brannmurregel",
+      "En ny DHCP-reservasjon",
+      "En CNAME-post",
+      "Statisk ARP"
+    ],
+    "svar": [
+      "Portvideresending (DNAT) fra WAN:443 til 10.0.0.20:443, med tillatende brannmurregel"
+    ],
+    "forklaring": {
+      "steg": [
+        "Uten videresending vet ruteren ikke hvilken intern maskin som skal ha innkommende trafikk.",
+        "I de fleste brannmurer, også OPNsense, trengs en regel som slipper trafikken gjennom."
+      ]
+    }
+  },
+  {
+    "id": "23-006",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor kan du vanligvis ikke bruke portvideresending når du står bak CGNAT?",
+    "alternativer": [
+      "Operatøren gjør en ekstra NAT, og du styrer ikke den offentlige adressen",
+      "CGNAT blokkerer alle UDP-pakker",
+      "CGNAT slår av DHCP",
+      "Portvideresending virker bare med IPv6"
+    ],
+    "svar": [
+      "Operatøren gjør en ekstra NAT, og du styrer ikke den offentlige adressen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Din ruter har bare en adresse i operatørens nett, f.eks. i 100.64.0.0/10.",
+        "Innkommende trafikk stopper hos operatørens NAT, der du ikke kan legge inn regler."
+      ]
+    }
+  },
+  {
+    "id": "23-007",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Ruteren din har WAN-adressen 100.79.12.4. Hva forteller det?",
+    "alternativer": [
+      "Du står bak CGNAT hos operatøren",
+      "Du har en offentlig, fast IPv4-adresse",
+      "DHCP har feilet (APIPA)",
+      "Det er en loopback-adresse"
+    ],
+    "svar": [
+      "Du står bak CGNAT hos operatøren"
+    ],
+    "forklaring": {
+      "steg": [
+        "100.64.0.0/10 (100.64.0.0–100.127.255.255) er delt adresserom for CGNAT (RFC 6598).",
+        "100.79.12.4 ligger i dette området."
+      ]
+    }
+  },
+  {
+    "id": "23-008",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Er NAT en brannmur?",
+    "alternativer": [
+      "Nei. NAT oversetter adresser. Tilgangskontroll gjør du med brannmurregler",
+      "Ja, NAT erstatter brannmuren helt",
+      "Ja, men bare for UDP",
+      "Nei, NAT er en DNS-funksjon"
+    ],
+    "svar": [
+      "Nei. NAT oversetter adresser. Tilgangskontroll gjør du med brannmurregler"
+    ],
+    "forklaring": {
+      "steg": [
+        "NAT stopper uoppfordret innkommende trafikk som en bieffekt, men gir ingen regler, logging eller utgående kontroll.",
+        "Det er brannmuren som skal bestemme hva som slippes gjennom."
+      ]
+    }
+  },
+  {
+    "id": "23-009",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er dobbel NAT?",
+    "alternativer": [
+      "To NAT-enheter etter hverandre, f.eks. egen ruter bak operatørens ruter",
+      "NAT for både IPv4 og IPv6",
+      "To WAN-linjer",
+      "NAT med to DNS-servere"
+    ],
+    "svar": [
+      "To NAT-enheter etter hverandre, f.eks. egen ruter bak operatørens ruter"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver NAT trenger egen videresending, så innkommende tilkoblinger blir vanskeligere.",
+        "CGNAT gir i praksis også en form for dobbel NAT."
+      ]
+    }
+  },
+  {
+    "id": "23-010",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvordan kan Tailscale koble sammen maskiner bak NAT uten åpne porter?",
+    "alternativer": [
+      "Med NAT-traversering (UDP-hullstansing), og reléservere når direkte forbindelse ikke går",
+      "Ved å slå av NAT i ruteren",
+      "Ved å bruke port 80",
+      "Ved å endre MAC-adressen"
+    ],
+    "svar": [
+      "Med NAT-traversering (UDP-hullstansing), og reléservere når direkte forbindelse ikke går"
+    ],
+    "forklaring": {
+      "steg": [
+        "Begge sider sender UDP utover samtidig, så NAT-tabellene åpner for svaret.",
+        "Går ikke det, går trafikken kryptert via Tailscales reléservere (DERP)."
+      ]
+    }
+  },
+  {
+    "id": "23-011",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er NAT-hårnål (NAT reflection)?",
+    "alternativer": [
+      "At en intern klient når en intern server via den offentlige adressen",
+      "NAT for multicast",
+      "At NAT-tabellen tømmes",
+      "NAT mellom to VLAN uten ruter"
+    ],
+    "svar": [
+      "At en intern klient når en intern server via den offentlige adressen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Uten NAT-hårnål vil `minside.no` (som peker på WAN-adressen) ofte ikke virke innenfra.",
+        "Alternativet er lokal DNS som peker navnet til den interne adressen (split DNS)."
+      ]
+    }
+  },
+  {
+    "id": "23-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor trengs normalt ikke NAT med IPv6?",
+    "alternativer": [
+      "Det er nok adresser til at alle enheter kan ha globale adresser",
+      "IPv6 har ikke porter",
+      "IPv6 kan ikke rutes",
+      "IPv6 har innebygd DNS"
+    ],
+    "svar": [
+      "Det er nok adresser til at alle enheter kan ha globale adresser"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med IPv6 får hjemmenettet typisk et eget prefiks, f.eks. /56 eller /64.",
+        "Beskyttelsen må da komme fra brannmuren, som standard ved å blokkere uoppfordret innkommende trafikk."
+      ]
+    }
+  },
+  {
+    "id": "23-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva kalles PAT på Linux/iptables og i mange brannmurer?",
+    "alternativer": [
+      "Masquerading",
+      "Bridging",
+      "Tunneling",
+      "Snooping"
+    ],
+    "svar": [
+      "Masquerading"
+    ],
+    "forklaring": {
+      "steg": [
+        "`MASQUERADE` er en form for kilde-NAT (SNAT) der kildeadressen settes til utgående grensesnitts adresse."
+      ]
+    }
+  },
+  {
+    "id": "23-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er forskjellen på SNAT og DNAT?",
+    "alternativer": [
+      "SNAT endrer kildeadressen (utgående), DNAT endrer måladressen (innkommende, f.eks. portvideresending)",
+      "SNAT er for UDP, DNAT for TCP",
+      "SNAT er for IPv6, DNAT for IPv4",
+      "Det er det samme"
+    ],
+    "svar": [
+      "SNAT endrer kildeadressen (utgående), DNAT endrer måladressen (innkommende, f.eks. portvideresending)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Utgående trafikk får ny kildeadresse (SNAT/PAT).",
+        "Portvideresending gir innkommende trafikk ny måladresse (DNAT)."
+      ]
+    }
+  },
+  {
+    "id": "23-015",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Med PAT skilles tilkoblinger med portnumre. Hvor mange ulike portnumre finnes for én protokoll (TCP eller UDP)?",
+    "svar": [
+      "65536"
+    ],
+    "forklaring": {
+      "steg": [
+        "Portfeltet er 16 bit: $2^{16} = 65\\,536$ verdier (0–65535).",
+        "I praksis bruker NAT et høyt utvalg av dem per offentlig adresse."
+      ]
+    }
+  },
+  {
+    "id": "23-016",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket RFC beskriver tradisjonell NAT og NAPT?",
+    "alternativer": [
+      "RFC 3022",
+      "RFC 1918",
+      "RFC 2131",
+      "RFC 826"
+    ],
+    "svar": [
+      "RFC 3022"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 3022 beskriver tradisjonell NAT (Basic NAT og NAPT).",
+        "RFC 1918 definerer de private adresseområdene."
+      ]
+    }
+  },
+  {
+    "id": "23-017",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En NAT-oppføring for en UDP-strøm forsvinner etter en stund uten trafikk. Hvorfor?",
+    "alternativer": [
+      "NAT-oppføringer har tidsavbrudd, og UDP har ingen nedkobling ruteren kan se",
+      "UDP bruker ikke porter",
+      "DNS sletter den",
+      "Switchen tømmer MAC-tabellen"
+    ],
+    "svar": [
+      "NAT-oppføringer har tidsavbrudd, og UDP har ingen nedkobling ruteren kan se"
+    ],
+    "forklaring": {
+      "steg": [
+        "TCP har FIN/RST som viser at økten er slutt. Det har ikke UDP.",
+        "Derfor sender mange UDP-protokoller små «keepalive»-pakker."
+      ]
+    }
+  },
+  {
+    "id": "23-018",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Du har satt opp portvideresending, men står bak CGNAT. Hvilken løsning virker for å nå en hjemmetjeneste utenfra?",
+    "alternativer": [
+      "En tunnel utover, f.eks. Tailscale eller en VPS med omvendt proxy",
+      "Å bytte DNS-server til 8.8.8.8",
+      "Å endre nettmasken",
+      "Å slå av DHCP"
+    ],
+    "svar": [
+      "En tunnel utover, f.eks. Tailscale eller en VPS med omvendt proxy"
+    ],
+    "forklaring": {
+      "steg": [
+        "Tilkoblinger som startes innenfra og ut, går gjennom CGNAT.",
+        "En tunnel til en maskin med offentlig adresse kan da ta imot trafikken og sende den hjem."
+      ]
+    }
+  },
+  {
+    "id": "23-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken adresse ser en tjeneste på internett hvis du bruker en tjeneste bak CGNAT?",
+    "alternativer": [
+      "Operatørens felles offentlige adresse, som også brukes av andre kunder",
+      "Din private LAN-adresse",
+      "100.64.0.1 alltid",
+      "Din MAC-adresse"
+    ],
+    "svar": [
+      "Operatørens felles offentlige adresse, som også brukes av andre kunder"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med CGNAT deler mange kunder samme offentlige IPv4-adresse.",
+        "Derfor kan f.eks. IP-blokkering av én bruker ramme andre."
+      ]
+    }
+  },
+  {
+    "id": "23-020",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er statisk NAT (1:1)?",
+    "alternativer": [
+      "Én intern adresse er alltid knyttet til én bestemt offentlig adresse",
+      "Mange interne adresser deler én offentlig",
+      "NAT som bare virker om natten",
+      "NAT uten tabell"
+    ],
+    "svar": [
+      "Én intern adresse er alltid knyttet til én bestemt offentlig adresse"
+    ],
+    "forklaring": {
+      "steg": [
+        "Statisk NAT brukes når en intern maskin skal ha sin egen offentlige adresse både inn og ut."
+      ]
+    }
+  },
+  {
+    "id": "23-021",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Etter PAT, hvilken kildeport ser serveren på internett?",
+    "alternativer": [
+      "Porten NAT-ruteren valgte, som kan være en annen enn PC-ens kildeport",
+      "Alltid samme port som PC-en brukte",
+      "Alltid port 443",
+      "Ingen port"
+    ],
+    "svar": [
+      "Porten NAT-ruteren valgte, som kan være en annen enn PC-ens kildeport"
+    ],
+    "forklaring": {
+      "steg": [
+        "NAT-ruteren kan bytte kildeport for å holde tilkoblingene fra ulike PC-er fra hverandre.",
+        "Oppføringen i NAT-tabellen kobler den ytre porten tilbake til PC-en."
+      ]
+    }
+  },
+  {
+    "id": "23-022",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange adresser er det i CGNAT-blokken 100.64.0.0/10?",
+    "svar": [
+      "4194304"
+    ],
+    "forklaring": {
+      "steg": [
+        "/10 gir 32 − 10 = 22 vertsbit.",
+        "$2^{22} = 4\\,194\\,304$ adresser."
+      ]
+    }
+  }
+]

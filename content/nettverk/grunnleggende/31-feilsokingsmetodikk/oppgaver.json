@@ -1,0 +1,460 @@
+[
+  {
+    "id": "31-001",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er første steg i en strukturert feilsøking?",
+    "alternativer": [
+      "Beskriv problemet: hva virker ikke, for hvem, og siden når",
+      "Start maskinen på nytt",
+      "Bytt alle kabler",
+      "Installer operativsystemet på nytt"
+    ],
+    "svar": [
+      "Beskriv problemet: hva virker ikke, for hvem, og siden når"
+    ],
+    "forklaring": {
+      "steg": [
+        "Uten en klar beskrivelse vet du ikke hva du tester, eller når feilen er rettet.",
+        "Spør også: hva er endret i det siste?"
+      ]
+    }
+  },
+  {
+    "id": "31-002",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor bør du bare gjøre én endring om gangen?",
+    "alternativer": [
+      "Ellers vet du ikke hvilken endring som løste (eller skapte) problemet",
+      "Fordi utstyret bare tåler én endring",
+      "Det går raskere",
+      "Det er et krav i OSI"
+    ],
+    "svar": [
+      "Ellers vet du ikke hvilken endring som løste (eller skapte) problemet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Test etter hver endring.",
+        "Rull tilbake endringer som ikke hjalp."
+      ]
+    }
+  },
+  {
+    "id": "31-003",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr «nedenfra og opp»-feilsøking?",
+    "alternativer": [
+      "Å starte på det fysiske laget og jobbe seg opp mot applikasjonen",
+      "Å starte med applikasjonen",
+      "Å starte i midten",
+      "Å spørre brukeren først"
+    ],
+    "svar": [
+      "Å starte på det fysiske laget og jobbe seg opp mot applikasjonen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kabel og lys → link → IP → transport → applikasjon.",
+        "Grundig, men kan ta tid."
+      ]
+    }
+  },
+  {
+    "id": "31-004",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr «splitt og hersk» i nettverksfeilsøking?",
+    "alternativer": [
+      "Å starte i midten, f.eks. med ping på lag 3, og gå opp eller ned ut fra resultatet",
+      "Å dele nettet i VLAN",
+      "Å slå av halve nettet",
+      "Å la to personer feilsøke hver sin del"
+    ],
+    "svar": [
+      "Å starte i midten, f.eks. med ping på lag 3, og gå opp eller ned ut fra resultatet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Virker ping, er lag 1–3 trolig i orden, så du går opp.",
+        "Virker ikke ping, går du ned."
+      ]
+    }
+  },
+  {
+    "id": "31-005",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Bare én nettside virker ikke, alt annet virker. Hvilken strategi passer best?",
+    "alternativer": [
+      "Ovenfra og ned, med start i applikasjonen",
+      "Nedenfra og opp, med start ved kabelen",
+      "Bytte switch",
+      "Installere nettverkskortet på nytt"
+    ],
+    "svar": [
+      "Ovenfra og ned, med start i applikasjonen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Når annen trafikk virker, er de nederste lagene sannsynligvis i orden.",
+        "Start med DNS, port og TLS for akkurat den tjenesten."
+      ]
+    }
+  },
+  {
+    "id": "31-006",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ping 1.1.1.1` virker, men `ping wim.fm` gir «Name or service not known». Hvilket område bør du se på?",
+    "alternativer": [
+      "DNS (navneoppslag)",
+      "Kabelen",
+      "Standard gateway",
+      "Switchporten"
+    ],
+    "svar": [
+      "DNS (navneoppslag)"
+    ],
+    "forklaring": {
+      "steg": [
+        "IP-tilkoblingen ut virker, siden ping til en IP-adresse går.",
+        "Feilen er i oversettelsen fra navn til adresse."
+      ]
+    }
+  },
+  {
+    "id": "31-007",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Du når ikke gatewayen med ping, og nettverkskortet viser ingen link. Hvor ligger feilen mest sannsynlig?",
+    "alternativer": [
+      "Lag 1: kabel, port eller nettverkskort",
+      "DNS",
+      "TLS-sertifikatet",
+      "Brannmuren på serveren"
+    ],
+    "svar": [
+      "Lag 1: kabel, port eller nettverkskort"
+    ],
+    "forklaring": {
+      "steg": [
+        "Uten link går ingen rammer i det hele tatt.",
+        "Sjekk kabel, lys på porten og om porten er aktiv."
+      ]
+    }
+  },
+  {
+    "id": "31-008",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er hensikten med å sammenligne med en maskin som virker?",
+    "alternativer": [
+      "Å finne forskjellen som forklarer feilen",
+      "Å kopiere IP-adressen",
+      "Å bevise at nettet er nede",
+      "Å slippe å dokumentere"
+    ],
+    "svar": [
+      "Å finne forskjellen som forklarer feilen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sammenlign IP-oppsett, DNS, gateway, VLAN og port.",
+        "Forskjellen peker ofte rett på årsaken."
+      ]
+    }
+  },
+  {
+    "id": "31-009",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor er det lurt å spørre «hva er endret i det siste?»",
+    "alternativer": [
+      "Mange feil oppstår rett etter en endring i oppsett, programvare eller kabling",
+      "For å finne skyldige",
+      "Det er ikke nyttig",
+      "For å slippe å teste"
+    ],
+    "svar": [
+      "Mange feil oppstår rett etter en endring i oppsett, programvare eller kabling"
+    ],
+    "forklaring": {
+      "steg": [
+        "En nylig endring er ofte den raskeste hypotesen å teste.",
+        "Å rulle tilbake kan da rette feilen."
+      ]
+    }
+  },
+  {
+    "id": "31-010",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilket steg kommer rett etter at du har rettet feilen?",
+    "alternativer": [
+      "Kontrollere at det virker, også for brukeren, og at ingenting annet er ødelagt",
+      "Dokumentere uten å teste",
+      "Gjøre flere endringer",
+      "Starte alt på nytt"
+    ],
+    "svar": [
+      "Kontrollere at det virker, også for brukeren, og at ingenting annet er ødelagt"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kontroller fra brukerens side, ikke bare fra din egen maskin.",
+        "Dokumenter etterpå."
+      ]
+    }
+  },
+  {
+    "id": "31-011",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor dokumenterer du feil og løsning?",
+    "alternativer": [
+      "Neste gang går det raskere, og andre kan forstå hva som ble gjort",
+      "Fordi loggen ellers slettes",
+      "For å slippe testing",
+      "Det er bare for store bedrifter"
+    ],
+    "svar": [
+      "Neste gang går det raskere, og andre kan forstå hva som ble gjort"
+    ],
+    "forklaring": {
+      "steg": [
+        "Skriv årsak, symptomer, tiltak og hvordan du kontrollerte at det virket."
+      ]
+    }
+  },
+  {
+    "id": "31-012",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Du skal endre noe som kan stenge deg ute fra ruteren over nettet. Hva bør du ha på plass først?",
+    "alternativer": [
+      "Backup av konfigurasjonen og en reservevei inn, f.eks. konsoll eller fysisk tilgang",
+      "En ny DNS-post",
+      "Flere VLAN",
+      "Et nytt sertifikat"
+    ],
+    "svar": [
+      "Backup av konfigurasjonen og en reservevei inn, f.eks. konsoll eller fysisk tilgang"
+    ],
+    "forklaring": {
+      "steg": [
+        "Går endringen galt, kan du komme inn og rulle tilbake.",
+        "Uten reservevei må du kanskje fysisk til utstyret."
+      ]
+    }
+  },
+  {
+    "id": "31-013",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilken rekkefølge er mest logisk når «internett ikke virker» på en PC?",
+    "alternativer": [
+      "Link → IP-oppsett → ping gateway → ping IP ute → DNS → tjenesten",
+      "DNS → link → tjenesten → gateway → IP-oppsett",
+      "Tjenesten → link → DNS → IP-oppsett → gateway",
+      "Ping IP ute → link → DNS → gateway → IP-oppsett"
+    ],
+    "svar": [
+      "Link → IP-oppsett → ping gateway → ping IP ute → DNS → tjenesten"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hvert steg bygger på det forrige.",
+        "Feiler et steg, vet du hvilket lag du skal lete på."
+      ]
+    }
+  },
+  {
+    "id": "31-014",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Mange brukere i samme nett er rammet, men bare de. Hva peker det på?",
+    "alternativer": [
+      "Noe felles for nettet, f.eks. switch, gateway, DHCP eller DNS",
+      "Én PC",
+      "Brukerens nettleser",
+      "Tastaturet"
+    ],
+    "svar": [
+      "Noe felles for nettet, f.eks. switch, gateway, DHCP eller DNS"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hvor mange som er rammet, avgrenser feilen.",
+        "Én bruker peker mot klienten. Mange peker mot noe de deler."
+      ]
+    }
+  },
+  {
+    "id": "31-015",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er en god hypotese i feilsøking?",
+    "alternativer": [
+      "En konkret, testbar forklaring basert på fakta du har samlet",
+      "En gjetning uten test",
+      "Å bytte all maskinvare",
+      "Å vente og se"
+    ],
+    "svar": [
+      "En konkret, testbar forklaring basert på fakta du har samlet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Eksempel: «DHCP svarer ikke, fordi klienten har 169.254.x.x». Det kan testes med DHCP-loggen."
+      ]
+    }
+  },
+  {
+    "id": "31-016",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ping 10.0.0.1` (gateway) virker, men `ping 1.1.1.1` gjør det ikke. Hvor bør du lete?",
+    "alternativer": [
+      "På gatewayen og videre ut: WAN, ruting, NAT eller operatøren",
+      "På PC-ens kabel",
+      "I DNS",
+      "I nettleseren"
+    ],
+    "svar": [
+      "På gatewayen og videre ut: WAN, ruting, NAT eller operatøren"
+    ],
+    "forklaring": {
+      "steg": [
+        "Det lokale nettet virker.",
+        "Problemet er fra ruteren og ut."
+      ]
+    }
+  },
+  {
+    "id": "31-017",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva bør du gjøre hvis en endring ikke løste problemet?",
+    "alternativer": [
+      "Rulle den tilbake før du prøver noe annet",
+      "La den stå og legge til flere",
+      "Starte alt på nytt",
+      "Slette loggene"
+    ],
+    "svar": [
+      "Rulle den tilbake før du prøver noe annet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ellers samler det seg endringer som kan skape nye feil.",
+        "Da blir det vanskelig å vite hva som virker."
+      ]
+    }
+  },
+  {
+    "id": "31-018",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvilket verktøy passer best for strategien «følg veien» mot en server på internett?",
+    "alternativer": [
+      "traceroute / tracert",
+      "arp -a",
+      "ipconfig /release",
+      "ss -tulpn"
+    ],
+    "svar": [
+      "traceroute / tracert"
+    ],
+    "forklaring": {
+      "steg": [
+        "traceroute viser hvert hopp på veien, og hvor svarene stopper."
+      ]
+    }
+  },
+  {
+    "id": "31-019",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Feilmeldingen er «Connection refused». Hvilket lag gir den mest informasjon om?",
+    "alternativer": [
+      "Transportlaget: verten svarte, men ingen tjeneste lytter på porten",
+      "Det fysiske laget",
+      "DNS",
+      "DHCP"
+    ],
+    "svar": [
+      "Transportlaget: verten svarte, men ingen tjeneste lytter på porten"
+    ],
+    "forklaring": {
+      "steg": [
+        "Verten svarte med TCP RST.",
+        "Altså virker nettet fram til verten, men tjenesten er nede eller lytter på en annen port."
+      ]
+    }
+  },
+  {
+    "id": "31-020",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor er det nyttig å teste fra flere steder (f.eks. innenfra LAN og fra mobilnett)?",
+    "alternativer": [
+      "For å skille mellom feil i ditt eget nett og feil i tjenesten eller på veien",
+      "For å bruke mer data",
+      "Fordi DNS krever det",
+      "Det er ikke nyttig"
+    ],
+    "svar": [
+      "For å skille mellom feil i ditt eget nett og feil i tjenesten eller på veien"
+    ],
+    "forklaring": {
+      "steg": [
+        "Virker det fra mobilnett, men ikke hjemme, ligger feilen trolig i hjemmenettet eller i lokal DNS."
+      ]
+    }
+  },
+  {
+    "id": "31-021",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva bør du se etter i logger når en tjeneste plutselig slutter å virke?",
+    "alternativer": [
+      "Feilmeldinger rundt tidspunktet feilen startet",
+      "Bare den eldste linjen",
+      "Bare linjer med «OK»",
+      "Ingenting, logger er unyttige"
+    ],
+    "svar": [
+      "Feilmeldinger rundt tidspunktet feilen startet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Finn ut når feilen startet, og se hva som skjedde da.",
+        "På Linux: `journalctl -u tjeneste --since \"1 hour ago\"`."
+      ]
+    }
+  },
+  {
+    "id": "31-022",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er en «rollback-plan»?",
+    "alternativer": [
+      "En beskrivelse av hvordan du kommer tilbake til forrige fungerende tilstand",
+      "En plan for å bytte leverandør",
+      "En liste over brukere",
+      "En DNS-post"
+    ],
+    "svar": [
+      "En beskrivelse av hvordan du kommer tilbake til forrige fungerende tilstand"
+    ],
+    "forklaring": {
+      "steg": [
+        "Typisk: backup av konfigurasjonen og stegene for å gjenopprette den.",
+        "Den bør være klar før endringen."
+      ]
+    }
+  }
+]

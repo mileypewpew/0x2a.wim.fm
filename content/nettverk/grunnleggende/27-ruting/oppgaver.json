@@ -1,0 +1,451 @@
+[
+  {
+    "id": "27-001",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En PC med 10.0.0.15/24 skal sende til 10.0.0.80. Hvor sender den rammen?",
+    "alternativer": [
+      "Direkte til 10.0.0.80, etter å ha funnet MAC-adressen med ARP",
+      "Til standard gateway",
+      "Til DNS-serveren",
+      "Til 255.255.255.255"
+    ],
+    "svar": [
+      "Direkte til 10.0.0.80, etter å ha funnet MAC-adressen med ARP"
+    ],
+    "forklaring": {
+      "steg": [
+        "10.0.0.80 er i samme /24 som PC-en.",
+        "Da trengs ingen ruter."
+      ]
+    }
+  },
+  {
+    "id": "27-002",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En PC med 10.0.0.15/24 skal sende til 8.8.8.8. Hvilken MAC-adresse står som mål i Ethernet-rammen?",
+    "alternativer": [
+      "MAC-adressen til standard gateway",
+      "MAC-adressen til 8.8.8.8",
+      "ff:ff:ff:ff:ff:ff",
+      "PC-ens egen MAC"
+    ],
+    "svar": [
+      "MAC-adressen til standard gateway"
+    ],
+    "forklaring": {
+      "steg": [
+        "8.8.8.8 er utenfor eget subnett, så rammen går til gatewayen.",
+        "IP-pakken har fortsatt 8.8.8.8 som mål."
+      ]
+    }
+  },
+  {
+    "id": "27-003",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket krav må standard gateway oppfylle?",
+    "alternativer": [
+      "Den må ligge i samme subnett som verten",
+      "Den må være i et annet subnett",
+      "Den må ha adresse .254",
+      "Den må være en DNS-server"
+    ],
+    "svar": [
+      "Den må ligge i samme subnett som verten"
+    ],
+    "forklaring": {
+      "steg": [
+        "Verten må nå gatewayen direkte på lag 2 for å kunne sende pakker til den.",
+        ".1 og .254 er bare vanlige valg, ikke krav."
+      ]
+    }
+  },
+  {
+    "id": "27-004",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En PC mangler standard gateway. Hva virker fortsatt?",
+    "alternativer": [
+      "Kommunikasjon med maskiner i eget subnett",
+      "Internett",
+      "Alle andre subnett",
+      "Ingenting"
+    ],
+    "svar": [
+      "Kommunikasjon med maskiner i eget subnett"
+    ],
+    "forklaring": {
+      "steg": [
+        "Uten gateway vet ikke PC-en hvor pakker til andre nett skal."
+      ]
+    }
+  },
+  {
+    "id": "27-005",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr `default via 10.0.0.1 dev eth0` i `ip route`?",
+    "alternativer": [
+      "Alle mål uten mer spesifikk rute sendes til ruteren 10.0.0.1 via eth0",
+      "10.0.0.1 er DNS-serveren",
+      "eth0 er slått av",
+      "Bare 10.0.0.1 kan nås"
+    ],
+    "svar": [
+      "Alle mål uten mer spesifikk rute sendes til ruteren 10.0.0.1 via eth0"
+    ],
+    "forklaring": {
+      "steg": [
+        "`default` = 0.0.0.0/0, altså standardruten."
+      ]
+    }
+  },
+  {
+    "id": "27-006",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor har ruten `10.0.0.0/24 dev eth0 scope link` ingen `via`?",
+    "alternativer": [
+      "Nettet er direkte tilkoblet grensesnittet, så pakker sendes direkte uten neste hopp",
+      "Ruten er feil",
+      "Den er en standardrute",
+      "Den brukes bare for IPv6"
+    ],
+    "svar": [
+      "Nettet er direkte tilkoblet grensesnittet, så pakker sendes direkte uten neste hopp"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kjernen lager ruten automatisk når eth0 får en adresse i 10.0.0.0/24."
+      ]
+    }
+  },
+  {
+    "id": "27-007",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Rutetabell: 0.0.0.0/0 via A, 10.0.0.0/8 via B, 10.1.0.0/16 via C, 10.1.3.0/24 via D. Hvor sendes en pakke til 10.1.2.3?",
+    "alternativer": [
+      "C",
+      "A",
+      "B",
+      "D"
+    ],
+    "svar": [
+      "C"
+    ],
+    "forklaring": {
+      "steg": [
+        "10.1.2.3 matcher /0, /8 og /16, men ikke 10.1.3.0/24.",
+        "Lengste matchende prefiks er /16, altså C."
+      ]
+    }
+  },
+  {
+    "id": "27-008",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Samme tabell: 0.0.0.0/0 via A, 10.0.0.0/8 via B, 10.1.0.0/16 via C, 10.1.3.0/24 via D. Hvor sendes en pakke til 10.1.3.77?",
+    "alternativer": [
+      "D",
+      "C",
+      "B",
+      "A"
+    ],
+    "svar": [
+      "D"
+    ],
+    "forklaring": {
+      "steg": [
+        "10.1.3.77 matcher alle fire.",
+        "/24 er lengst, altså D."
+      ]
+    }
+  },
+  {
+    "id": "27-009",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Samme tabell: 0.0.0.0/0 via A, 10.0.0.0/8 via B, 10.1.0.0/16 via C, 10.1.3.0/24 via D. Hvor sendes en pakke til 10.200.0.1?",
+    "alternativer": [
+      "B",
+      "A",
+      "C",
+      "D"
+    ],
+    "svar": [
+      "B"
+    ],
+    "forklaring": {
+      "steg": [
+        "10.200.0.1 matcher /0 og 10.0.0.0/8.",
+        "/8 er lengst, altså B."
+      ]
+    }
+  },
+  {
+    "id": "27-010",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Samme tabell: 0.0.0.0/0 via A, 10.0.0.0/8 via B, 10.1.0.0/16 via C, 10.1.3.0/24 via D. Hvor sendes en pakke til 1.1.1.1?",
+    "alternativer": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "svar": [
+      "A"
+    ],
+    "forklaring": {
+      "steg": [
+        "Bare standardruten 0.0.0.0/0 matcher.",
+        "Den brukes når ingenting annet passer."
+      ]
+    }
+  },
+  {
+    "id": "27-011",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er hovedforskjellen på statisk og dynamisk ruting?",
+    "alternativer": [
+      "Statiske ruter legges inn manuelt. Dynamiske læres og oppdateres av en rutingprotokoll",
+      "Statisk er bare for IPv6",
+      "Dynamisk ruting bruker ikke IP",
+      "Statiske ruter endrer seg automatisk ved feil"
+    ],
+    "svar": [
+      "Statiske ruter legges inn manuelt. Dynamiske læres og oppdateres av en rutingprotokoll"
+    ],
+    "forklaring": {
+      "steg": [
+        "Statisk er enkelt og forutsigbart i små nett.",
+        "Dynamisk tilpasser seg når lenker går ned."
+      ]
+    }
+  },
+  {
+    "id": "27-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken rutingprotokoll brukes mellom operatører på internett?",
+    "alternativer": [
+      "BGP",
+      "RIP",
+      "OSPF",
+      "ARP"
+    ],
+    "svar": [
+      "BGP"
+    ],
+    "forklaring": {
+      "steg": [
+        "BGP utveksler ruter mellom autonome systemer (AS) etter policy."
+      ]
+    }
+  },
+  {
+    "id": "27-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken metrikk bruker RIP?",
+    "alternativer": [
+      "Antall hopp (maks 15)",
+      "Båndbredde",
+      "Forsinkelse i ms",
+      "Kostnad satt av BGP"
+    ],
+    "svar": [
+      "Antall hopp (maks 15)"
+    ],
+    "forklaring": {
+      "steg": [
+        "16 hopp betyr «uendelig», altså at nettet ikke kan nås.",
+        "Det gjør RIP uegnet for store nett."
+      ]
+    }
+  },
+  {
+    "id": "27-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva slags rutingprotokoll er OSPF?",
+    "alternativer": [
+      "Lenketilstandsprotokoll som regner korteste vei ut fra kostnad",
+      "Avstandsvektor med hopptall",
+      "Protokoll mellom autonome systemer",
+      "Lag 2-protokoll"
+    ],
+    "svar": [
+      "Lenketilstandsprotokoll som regner korteste vei ut fra kostnad"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver OSPF-ruter har et kart over nettet og bruker Dijkstras algoritme.",
+        "Kostnaden bygger vanligvis på båndbredde."
+      ]
+    }
+  },
+  {
+    "id": "27-015",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hos Cisco: hvilken administrativ avstand har en statisk rute som standard?",
+    "svar": [
+      "1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Direkte tilkoblet = 0, statisk = 1, OSPF = 110, RIP = 120.",
+        "Lavest vinner når samme nett er lært fra flere kilder."
+      ]
+    }
+  },
+  {
+    "id": "27-016",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hos Cisco: hvilken administrativ avstand har OSPF som standard?",
+    "svar": [
+      "110"
+    ],
+    "forklaring": {
+      "steg": [
+        "OSPF = 110, RIP = 120, eBGP = 20, statisk = 1."
+      ]
+    }
+  },
+  {
+    "id": "27-017",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva gjør en ruter med TTL-feltet i en IPv4-pakke den videresender?",
+    "alternativer": [
+      "Trekker fra 1. Når TTL blir 0, kastes pakken og ICMP Time Exceeded sendes tilbake",
+      "Legger til 1",
+      "Setter det til 64",
+      "Ingenting"
+    ],
+    "svar": [
+      "Trekker fra 1. Når TTL blir 0, kastes pakken og ICMP Time Exceeded sendes tilbake"
+    ],
+    "forklaring": {
+      "steg": [
+        "TTL hindrer at pakker går i ring for alltid ved ruteløkker.",
+        "traceroute bruker dette til å finne hver ruter langs veien."
+      ]
+    }
+  },
+  {
+    "id": "27-018",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "En pakke starter med TTL 64 og passerer 5 rutere. Hvilken TTL har den når den kommer fram?",
+    "svar": [
+      "59"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver ruter trekker fra 1: 64 − 5 = 59."
+      ]
+    }
+  },
+  {
+    "id": "27-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva betyr metrikken i rutetabellen?",
+    "alternativer": [
+      "Kostnaden for ruten. Lavest vinner blant ellers like ruter",
+      "Prefikslengden",
+      "Antall verter i nettet",
+      "TTL"
+    ],
+    "svar": [
+      "Kostnaden for ruten. Lavest vinner blant ellers like ruter"
+    ],
+    "forklaring": {
+      "steg": [
+        "En PC med både kabel og Wi-Fi har ofte to standardruter med ulik metrikk. Kabelen får lavest."
+      ]
+    }
+  },
+  {
+    "id": "27-020",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilken Linux-kommando legger til en statisk rute til 192.168.50.0/24 via 10.0.0.2?",
+    "svar": [
+      "ip route add 192.168.50.0/24 via 10.0.0.2",
+      "sudo ip route add 192.168.50.0/24 via 10.0.0.2",
+      "ip r add 192.168.50.0/24 via 10.0.0.2"
+    ],
+    "forklaring": {
+      "steg": [
+        "`ip route add <prefiks> via <neste hopp>`.",
+        "Ruten forsvinner ved omstart hvis den ikke lagres i nettverksoppsettet."
+      ]
+    }
+  },
+  {
+    "id": "27-021",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva må være på plass for at svaret skal komme tilbake når du legger til en statisk rute til et annet nett?",
+    "alternativer": [
+      "Det andre nettet må også ha en rute tilbake til ditt nett",
+      "Ingenting, ruter er alltid toveis",
+      "En DNS-post",
+      "En DHCP-reservasjon"
+    ],
+    "svar": [
+      "Det andre nettet må også ha en rute tilbake til ditt nett"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ruting er enveis per retning.",
+        "Mangler returruten, kommer pakkene fram, men svarene finner ikke tilbake."
+      ]
+    }
+  },
+  {
+    "id": "27-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er en ruteløkke?",
+    "alternativer": [
+      "Rutere peker på hverandre for samme mål, så pakker går i ring til TTL går ut",
+      "En kabel som er koblet i begge ender",
+      "En rute med lav metrikk",
+      "En DNS-feil"
+    ],
+    "svar": [
+      "Rutere peker på hverandre for samme mål, så pakker går i ring til TTL går ut"
+    ],
+    "forklaring": {
+      "steg": [
+        "I traceroute ser du de samme hoppene gjentas.",
+        "Det skyldes ofte feil statiske ruter."
+      ]
+    }
+  },
+  {
+    "id": "27-023",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva heter standardruten skrevet som IPv4-prefiks?",
+    "svar": [
+      "0.0.0.0/0",
+      "default",
+      "0/0"
+    ],
+    "forklaring": {
+      "steg": [
+        "0.0.0.0/0 matcher alle adresser. I Linux kalles den `default`."
+      ]
+    }
+  }
+]

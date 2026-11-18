@@ -1,0 +1,505 @@
+[
+  {
+    "id": "33-001",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En PC får adressen 169.254.23.7. Hva er galt?",
+    "alternativer": [
+      "PC-en fikk ikke svar fra DHCP og ga seg selv en link-local-adresse",
+      "DNS-serveren er feil",
+      "Sertifikatet er utløpt",
+      "Alt er i orden"
+    ],
+    "svar": [
+      "PC-en fikk ikke svar fra DHCP og ga seg selv en link-local-adresse"
+    ],
+    "forklaring": {
+      "steg": [
+        "169.254.0.0/16 er APIPA (RFC 3927).",
+        "Sjekk link, VLAN, om DHCP-tjenesten kjører og om poolen er full."
+      ]
+    }
+  },
+  {
+    "id": "33-002",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Flere PC-er i samme nett får plutselig 169.254.x.x. Hva sjekker du først?",
+    "alternativer": [
+      "DHCP-serveren: kjører tjenesten, og er poolen full?",
+      "Nettleseren på hver PC",
+      "DNS-postene på internett",
+      "TLS-sertifikatet"
+    ],
+    "svar": [
+      "DHCP-serveren: kjører tjenesten, og er poolen full?"
+    ],
+    "forklaring": {
+      "steg": [
+        "Når mange er rammet samtidig, ligger feilen i noe felles.",
+        "Det er sjelden noe på hver enkelt PC."
+      ]
+    }
+  },
+  {
+    "id": "33-003",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Du kan pinge 1.1.1.1, men ikke åpne wim.fm. `dig wim.fm` gir tidsavbrudd. Hva er mest sannsynlig?",
+    "alternativer": [
+      "DNS-serveren klienten bruker, svarer ikke",
+      "Kabelen er ødelagt",
+      "Gatewayen mangler",
+      "Port 443 er stengt"
+    ],
+    "svar": [
+      "DNS-serveren klienten bruker, svarer ikke"
+    ],
+    "forklaring": {
+      "steg": [
+        "IP-tilkoblingen virker.",
+        "Test `dig @1.1.1.1 wim.fm`. Virker det, er det den lokale resolveren som feiler."
+      ]
+    }
+  },
+  {
+    "id": "33-004",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En PC har 10.0.0.30 med maske 255.255.0.0, mens resten av nettet er 10.0.0.0/24. Hva er typisk symptom?",
+    "alternativer": [
+      "Den tror adresser som 10.0.5.9 er lokale og prøver ARP i stedet for å sende til gatewayen",
+      "Ingenting merkes",
+      "Den får 169.254-adresse",
+      "DNS slutter å virke"
+    ],
+    "svar": [
+      "Den tror adresser som 10.0.5.9 er lokale og prøver ARP i stedet for å sende til gatewayen"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med /16 regnes hele 10.0.x.x som eget nett.",
+        "Mål utenfor 10.0.0.0/24 sendes da ikke til ruteren og når aldri fram."
+      ]
+    }
+  },
+  {
+    "id": "33-005",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En PC har 10.0.0.30/25 i et nett som egentlig er 10.0.0.0/24. Hvilke maskiner når den ikke direkte?",
+    "alternativer": [
+      "Maskiner i 10.0.0.128–10.0.0.255",
+      "Maskiner i 10.0.0.1–10.0.0.126",
+      "Ingen",
+      "Bare gatewayen"
+    ],
+    "svar": [
+      "Maskiner i 10.0.0.128–10.0.0.255"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med /25 tror PC-en at nettet bare er 10.0.0.0–10.0.0.127.",
+        "Adresser fra .128 og oppover sendes til gatewayen i stedet for direkte."
+      ]
+    }
+  },
+  {
+    "id": "33-006",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "To maskiner har fått samme IP-adresse. Hvilket symptom er typisk?",
+    "alternativer": [
+      "Tilkoblingen faller ut av og til, og ARP-tabellen viser skiftende MAC for samme IP",
+      "Begge får dobbel hastighet",
+      "Begge får 169.254-adresse",
+      "Ingenting merkes"
+    ],
+    "svar": [
+      "Tilkoblingen faller ut av og til, og ARP-tabellen viser skiftende MAC for samme IP"
+    ],
+    "forklaring": {
+      "steg": [
+        "Andre maskiner oppdaterer ARP-tabellen hver gang en av dem svarer.",
+        "Trafikken havner da vekselvis hos den ene og den andre."
+      ]
+    }
+  },
+  {
+    "id": "33-007",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hvordan unngår du dupliserte IP-adresser når noen enheter har fast adresse?",
+    "alternativer": [
+      "Gi faste adresser utenfor DHCP-poolen, eller bruk DHCP-reservasjoner",
+      "Bruk samme adresse på alle",
+      "Slå av ARP",
+      "Bruk lengre leietid"
+    ],
+    "svar": [
+      "Gi faste adresser utenfor DHCP-poolen, eller bruk DHCP-reservasjoner"
+    ],
+    "forklaring": {
+      "steg": [
+        "Da deler DHCP aldri ut en adresse som allerede er brukt manuelt."
+      ]
+    }
+  },
+  {
+    "id": "33-008",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En PC når skriveren i eget nett, men ikke internett. `ip route` viser bare `10.0.0.0/24 dev eth0`. Hva mangler?",
+    "alternativer": [
+      "Standardrute (default gateway)",
+      "DNS-server",
+      "MAC-adresse",
+      "VLAN-tagg"
+    ],
+    "svar": [
+      "Standardrute (default gateway)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Uten `default via …` vet ikke PC-en hvor pakker til andre nett skal.",
+        "Sjekk at DHCP gir option 3 (Router), eller sett gateway manuelt."
+      ]
+    }
+  },
+  {
+    "id": "33-009",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ping wim.fm` virker, men `curl -v https://wim.fm` henger på «Trying 203.0.113.10:443…» til tidsavbrudd. Hva er mest sannsynlig?",
+    "alternativer": [
+      "En brannmur forkaster trafikk til TCP 443",
+      "DNS er feil",
+      "Sertifikatet er utløpt",
+      "Kabelen er ødelagt"
+    ],
+    "svar": [
+      "En brannmur forkaster trafikk til TCP 443"
+    ],
+    "forklaring": {
+      "steg": [
+        "DNS og ICMP virker, men TCP-tilkoblingen får ikke svar.",
+        "Det tyder på at pakker forkastes (drop) underveis eller på serveren."
+      ]
+    }
+  },
+  {
+    "id": "33-010",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`curl -v http://10.0.0.20:8080` gir straks «Connection refused». Hva betyr det?",
+    "alternativer": [
+      "Verten svarte, men ingen tjeneste lytter på port 8080",
+      "Verten finnes ikke",
+      "DNS-feil",
+      "Brannmuren forkaster pakkene stille"
+    ],
+    "svar": [
+      "Verten svarte, men ingen tjeneste lytter på port 8080"
+    ],
+    "forklaring": {
+      "steg": [
+        "Et raskt avslag betyr at verten sendte TCP RST.",
+        "Sjekk med `ss -tulpn` på serveren om tjenesten kjører og hvilken adresse og port den lytter på."
+      ]
+    }
+  },
+  {
+    "id": "33-011",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Hva er forskjellen på tidsavbrudd og «Connection refused» når du kobler til en port?",
+    "alternativer": [
+      "Tidsavbrudd: ingen svar, ofte brannmur som forkaster. Refused: verten svarte at porten er stengt",
+      "Det er det samme",
+      "Refused betyr DNS-feil",
+      "Tidsavbrudd betyr at porten er åpen"
+    ],
+    "svar": [
+      "Tidsavbrudd: ingen svar, ofte brannmur som forkaster. Refused: verten svarte at porten er stengt"
+    ],
+    "forklaring": {
+      "steg": [
+        "Refused viser at nettet fram til verten virker.",
+        "Tidsavbrudd viser bare at noe stoppet pakkene."
+      ]
+    }
+  },
+  {
+    "id": "33-012",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Etter en flytting til ny server peker `dig +short wim.fm` fortsatt til den gamle IP-adressen hos noen. Hva er sannsynlig?",
+    "alternativer": [
+      "Resolvere har det gamle svaret bufret til TTL-en går ut",
+      "Nettleseren er feil",
+      "Den nye serveren er nede",
+      "DHCP-feil"
+    ],
+    "svar": [
+      "Resolvere har det gamle svaret bufret til TTL-en går ut"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sjekk den autoritative serveren direkte, f.eks. `dig @ns1… wim.fm`.",
+        "Gir den riktig svar, er det bare å vente til TTL-en er ute, eller tømme lokale buffere."
+      ]
+    }
+  },
+  {
+    "id": "33-013",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Nettsiden åpner en gammel versjon for noen brukere. `dig wim.fm A` gir ny IP, men `dig wim.fm AAAA` gir en gammel IPv6-adresse. Hva er galt?",
+    "alternativer": [
+      "AAAA-posten ble ikke oppdatert, så klienter med IPv6 går til den gamle serveren",
+      "A-posten er feil",
+      "DNS virker ikke",
+      "Sertifikatet er utløpt"
+    ],
+    "svar": [
+      "AAAA-posten ble ikke oppdatert, så klienter med IPv6 går til den gamle serveren"
+    ],
+    "forklaring": {
+      "steg": [
+        "Klienter med IPv6 foretrekker vanligvis AAAA.",
+        "Husk å oppdatere begge posttypene."
+      ]
+    }
+  },
+  {
+    "id": "33-014",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`curl -v https://wim.fm` gir «SSL certificate problem: certificate has expired». Hva gjør du?",
+    "alternativer": [
+      "Fornyer sertifikatet og finner ut hvorfor den automatiske fornyingen feilet",
+      "Bytter DNS-server",
+      "Åpner port 80 på klienten",
+      "Bruker `curl -k` for alltid"
+    ],
+    "svar": [
+      "Fornyer sertifikatet og finner ut hvorfor den automatiske fornyingen feilet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Let's Encrypt-sertifikater varer i 90 dager, eller kortere med nyere sertifikatprofiler.",
+        "Caddy fornyer automatisk. Sjekk loggen for hvorfor det feilet, f.eks. DNS eller blokkert port 80/443."
+      ]
+    }
+  },
+  {
+    "id": "33-015",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Nettleseren sier at sertifikatet for `cv.wim.fm` gjelder `wim.fm`. Hva er problemet?",
+    "alternativer": [
+      "Navnet stemmer ikke: sertifikatet dekker ikke `cv.wim.fm`",
+      "Sertifikatet er utløpt",
+      "DNS er feil",
+      "Porten er stengt"
+    ],
+    "svar": [
+      "Navnet stemmer ikke: sertifikatet dekker ikke `cv.wim.fm`"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sertifikatet må inneholde navnet i SAN-feltet (Subject Alternative Name).",
+        "Eventuelt må det være et jokertegnsertifikat, `*.wim.fm`."
+      ]
+    }
+  },
+  {
+    "id": "33-016",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Mange sertifikater ser plutselig ugyldige ut på én PC, men ikke på andre. Hva bør du sjekke?",
+    "alternativer": [
+      "Klokken og datoen på PC-en",
+      "DNS-postene",
+      "Switchporten",
+      "MTU"
+    ],
+    "svar": [
+      "Klokken og datoen på PC-en"
+    ],
+    "forklaring": {
+      "steg": [
+        "Gyldighet sjekkes mot lokal klokke.",
+        "Feil dato gjør at sertifikater ser utløpte eller ennå ikke gyldige ut. Sjekk NTP."
+      ]
+    }
+  },
+  {
+    "id": "33-017",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En PC er koblet til en switchport som er satt i feil VLAN. Hva er typisk symptom?",
+    "alternativer": [
+      "PC-en får adresse fra et annet subnett enn forventet, eller ingen adresse hvis VLAN-et mangler DHCP",
+      "PC-en får dobbel hastighet",
+      "DNS svarer med NXDOMAIN på alt",
+      "Ingen symptom"
+    ],
+    "svar": [
+      "PC-en får adresse fra et annet subnett enn forventet, eller ingen adresse hvis VLAN-et mangler DHCP"
+    ],
+    "forklaring": {
+      "steg": [
+        "VLAN bestemmer hvilket lag 2-nett PC-en er i.",
+        "Sjekk porttype og VLAN på switchen."
+      ]
+    }
+  },
+  {
+    "id": "33-018",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En trunk mellom to switcher har native VLAN 1 i den ene enden og native VLAN 99 i den andre. Hva skjer?",
+    "alternativer": [
+      "Utagget trafikk havner i feil VLAN på andre siden",
+      "Ingenting",
+      "Trunken blir raskere",
+      "All trafikk krypteres"
+    ],
+    "svar": [
+      "Utagget trafikk havner i feil VLAN på andre siden"
+    ],
+    "forklaring": {
+      "steg": [
+        "Utaggede rammer plasseres i native VLAN.",
+        "Ulike native VLAN i hver ende lekker trafikk mellom VLAN. Mange switcher varsler om dette."
+      ]
+    }
+  },
+  {
+    "id": "33-019",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En nettside gir «ERR_TOO_MANY_REDIRECTS». Hva er en vanlig årsak?",
+    "alternativer": [
+      "Omdirigeringsløkke, f.eks. at proxyen sender HTTP til serveren mens serveren omdirigerer til HTTPS",
+      "Utløpt sertifikat",
+      "Feil MAC-adresse",
+      "Full DHCP-pool"
+    ],
+    "svar": [
+      "Omdirigeringsløkke, f.eks. at proxyen sender HTTP til serveren mens serveren omdirigerer til HTTPS"
+    ],
+    "forklaring": {
+      "steg": [
+        "Følg omdirigeringene med `curl -IL`.",
+        "Se hvor løkken oppstår."
+      ]
+    }
+  },
+  {
+    "id": "33-020",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "Ping til gatewayen virker, ping til 1.1.1.1 virker, `dig` virker, men én bestemt nettside feiler. Hvor leter du?",
+    "alternativer": [
+      "Hos tjenesten: port, TLS, DNS-post for akkurat det navnet, eller serveren selv",
+      "Kabelen",
+      "DHCP",
+      "Switchen"
+    ],
+    "svar": [
+      "Hos tjenesten: port, TLS, DNS-post for akkurat det navnet, eller serveren selv"
+    ],
+    "forklaring": {
+      "steg": [
+        "Lag 1–3 og generell DNS virker.",
+        "Bruk `curl -v` mot nettsiden for å se om det stopper på DNS, TCP, TLS eller HTTP."
+      ]
+    }
+  },
+  {
+    "id": "33-021",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En bærbar virker på kabel, men ikke på Wi-Fi i samme hus. Hva er mest sannsynlig?",
+    "alternativer": [
+      "Noe med Wi-Fi-tilkoblingen: feil nett, VLAN eller DHCP på aksesspunktet",
+      "DNS på internett",
+      "Sertifikatet på serveren",
+      "BGP"
+    ],
+    "svar": [
+      "Noe med Wi-Fi-tilkoblingen: feil nett, VLAN eller DHCP på aksesspunktet"
+    ],
+    "forklaring": {
+      "steg": [
+        "Sammenlign `ip addr` og `ip route` på kabel og Wi-Fi.",
+        "Forskjellen viser hvor feilen ligger."
+      ]
+    }
+  },
+  {
+    "id": "33-022",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`ping 10.0.0.1` gir svar med `time=` på 900–2000 ms og 30 % pakketap på kablet LAN. Hva peker det på?",
+    "alternativer": [
+      "Overbelastning eller fysisk feil, f.eks. dårlig kabel, dupleksfeil eller en løkke",
+      "Feil DNS",
+      "Utløpt sertifikat",
+      "Manglende standardrute"
+    ],
+    "svar": [
+      "Overbelastning eller fysisk feil, f.eks. dårlig kabel, dupleksfeil eller en løkke"
+    ],
+    "forklaring": {
+      "steg": [
+        "På et kablet LAN skal svartiden normalt være under 1 ms.",
+        "Høy forsinkelse og tap peker mot lag 1–2."
+      ]
+    }
+  },
+  {
+    "id": "33-023",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "En ny server er satt opp med fast IP 10.0.0.120, og nå mister en annen enhet nettet av og til. Hva sjekker du?",
+    "alternativer": [
+      "Om 10.0.0.120 ligger i DHCP-poolen og allerede er delt ut",
+      "TLS-versjonen",
+      "DNS-TTL",
+      "Antall VLAN"
+    ],
+    "svar": [
+      "Om 10.0.0.120 ligger i DHCP-poolen og allerede er delt ut"
+    ],
+    "forklaring": {
+      "steg": [
+        "Typisk duplisert IP.",
+        "Flytt serveren utenfor poolen, eller lag en reservasjon."
+      ]
+    }
+  },
+  {
+    "id": "33-024",
+    "nivå": 3,
+    "type": "flervalg",
+    "spørsmål": "`curl -v https://10.0.0.20` gir «no alternative certificate subject name matches target host name '10.0.0.20'». Hvorfor?",
+    "alternativer": [
+      "Sertifikatet er utstedt for et navn, ikke for IP-adressen du brukte",
+      "Serveren er nede",
+      "Porten er stengt",
+      "DNS-feil"
+    ],
+    "svar": [
+      "Sertifikatet er utstedt for et navn, ikke for IP-adressen du brukte"
+    ],
+    "forklaring": {
+      "steg": [
+        "Koble til med navnet sertifikatet gjelder.",
+        "Eller test med `curl --resolve navn:443:10.0.0.20 https://navn`."
+      ]
+    }
+  }
+]
