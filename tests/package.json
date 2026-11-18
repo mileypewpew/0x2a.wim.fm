@@ -1,0 +1,11 @@
+{
+  "name": "0x2a-tests",
+  "private": true,
+  "description": "Selvtester for 0x2a.wim.fm. Denne mappen deployes ikke.",
+  "scripts": {
+    "test": "node ipv6/test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^31.0.1"
+  }
+}
