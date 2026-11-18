@@ -7,6 +7,12 @@
   var storage = null;
   try { storage = g.localStorage; storage.getItem('x'); } catch (e) { storage = null; }
   var stats = new IPV6T.Stats(storage);
+  var extraStats = {};
+  function storeFor(mod) {
+    if (!mod || !mod.statsKey) return stats;
+    if (!extraStats[mod.statsKey]) extraStats[mod.statsKey] = new IPV6T.Stats(storage, mod.statsKey);
+    return extraStats[mod.statsKey];
+  }
 
   var state = {
     moduleId: (R.active()[0] || {}).id,
@@ -108,7 +114,9 @@
         active ? null : h('span', { class: 'badge', text: 'Kommer snart' })
       ]);
       if (active) card.addEventListener('click', function () {
-        state.moduleId = m.id; state.type = ''; renderStart();
+        state.moduleId = m.id; state.type = '';
+        if (m.levels && m.levels.length && m.levels.indexOf(state.level) < 0) state.level = m.levels[0];
+        renderStart();
         var go = function () { scrollToEl($('setup-form'), true); };
         if (g.requestAnimationFrame) g.requestAnimationFrame(go); else go();
       });
@@ -118,8 +126,12 @@
 
     var mod = R.get(state.moduleId);
     var lc = $('level-choices');
+    var levelBox = $('level-fieldset');
+    var useLevels = mod && mod.levels && mod.levels.length;
+    if (levelBox) levelBox.hidden = !useLevels;
     lc.textContent = '';
-    IPV6T.LEVELS.forEach(function (l) {
+    if (useLevels && mod.levels.indexOf(state.level) < 0) state.level = mod.levels[0];
+    (useLevels ? IPV6T.LEVELS.filter(function (l) { return mod.levels.indexOf(l.id) >= 0; }) : []).forEach(function (l) {
       var id = 'lvl-' + l.id;
       var inp = h('input', { type: 'radio', name: 'level', id: id, value: l.id });
       inp.checked = l.id === state.level;
@@ -127,6 +139,14 @@
       lc.appendChild(inp);
       lc.appendChild(h('label', { for: id, text: l.label }));
     });
+    var note = $('load-note');
+    var pending = mod && typeof mod.ready === 'function' && !mod.ready();
+    if (note) {
+      note.hidden = !pending;
+      if (pending) note.textContent = 'Laster oppgaver …';
+    }
+    var startBtn = doc.querySelector('#setup-form button[type="submit"]');
+    if (startBtn) startBtn.disabled = !!pending;
     var sel = $('type-select');
     sel.textContent = '';
     sel.appendChild(h('option', { value: '', text: 'Blandet (anbefalt)' }));
@@ -146,7 +166,9 @@
   });
 
   function makeTasks(moduleId, level, count, type) {
-    var mod = R.get(moduleId), tasks = [], seen = {};
+    var mod = R.get(moduleId);
+    if (mod && typeof mod.draw === 'function') return mod.draw({ level: level, type: type || null, count: count });
+    var tasks = [], seen = {};
     for (var i = 0; i < count; i++) {
       var t, tries = 0;
       do { t = mod.generate({ level: level, type: type || null }); t.key = t.key || (t.type + '|' + t.question + '|' + t.subject); tries++; } while (seen[t.key] && tries < 25);
@@ -158,14 +180,16 @@
 
   // ---------- runde ----------
   function startRound(tasks, replay) {
+    var mod = R.get(state.moduleId);
+    var roundLevel = (mod && mod.levels && mod.levels.length) ? state.level : 'alle';
     state.round = {
-      moduleId: state.moduleId, level: state.level, tasks: tasks, idx: 0, results: [],
+      moduleId: state.moduleId, level: roundLevel, tasks: tasks, idx: 0, results: [],
       start: Date.now(), answered: false, finished: false, replay: replay
     };
     show('round');
     $('round-theory').hidden = true;
     $('theory-toggle').textContent = 'Vis teori';
-    $('round-level').textContent = levelLabel(state.level) + (replay ? ' · Øv på feilene' : '');
+    $('round-level').textContent = (roundLevel === 'alle' ? '' : levelLabel(roundLevel)) + (replay ? ((roundLevel === 'alle' ? '' : ' · ') + 'Øv på feilene') : '');
     startTimer();
     renderTask();
   }
@@ -186,9 +210,10 @@
     $('round-score').textContent = right + ' riktige';
     $('round-bar').style.width = (100 * r.idx / r.tasks.length) + '%';
     $('task-type').textContent = t.typeLabel;
-    $('task-question').textContent = t.question;
+    $('task-question').innerHTML = rich(t.question);
     $('task-subject').textContent = t.subject || '';
     $('task-subject').hidden = !t.subject;
+    renderChoices(t);
     var inp = $('answer-input');
     inp.value = '';
     inp.readOnly = false;
@@ -201,6 +226,40 @@
     $('feedback').textContent = '';
     scrollToEl($('view-round'));
     try { inp.focus(); } catch (e) { /* ignorer */ }
+  }
+
+  function rich(text) {
+    if (g.NGRUNN && g.NGRUNN.markdown) return g.NGRUNN.markdown.renderInline(text);
+    return U.escapeHtml(text);
+  }
+  function renderChoices(t) {
+    var block = $('choice-block');
+    var list = $('choice-list');
+    var inp = $('answer-input');
+    if (!block || !list) return;
+    list.textContent = '';
+    var choice = t.inputKind === 'choice' && t.choices && t.choices.length;
+    block.hidden = !choice;
+    if (inp) inp.hidden = !!choice;
+    if (!choice) return;
+    t.choices.forEach(function (alt, i) {
+      var id = 'valg-' + i;
+      var input = h('input', { type: 'radio', name: 'ipv6-valg', id: id, value: alt });
+      input.addEventListener('change', function () {
+        list.querySelectorAll('.choice').forEach(function (lab) { lab.classList.remove('selected'); });
+        input.parentNode.classList.add('selected');
+      });
+      var labelText = doc.createElement('span');
+      labelText.innerHTML = rich(alt);
+      list.appendChild(h('label', { class: 'choice', for: id }, [input, labelText]));
+    });
+  }
+  function answerNode(text) {
+    var html = rich(text);
+    var node = h('span');
+    if (html.indexOf('<code>') >= 0 || html.indexOf('katex') >= 0) node.innerHTML = html;
+    else node.appendChild(h('code', { text: text }));
+    return node;
   }
 
   function renderExplanation(container, t) {
@@ -219,13 +278,26 @@
     }
   }
 
+  function givenAnswer(t) {
+    if (t.inputKind === 'choice') {
+      var sel = doc.querySelector('#choice-list input:checked');
+      return sel ? sel.value : '';
+    }
+    return $('answer-input').value;
+  }
   function submitAnswer(given, skipped) {
     var r = state.round, t = r.tasks[r.idx];
-    if (!skipped && U.clean(given) === '') { $('answer-input').classList.add('shake'); return; }
+    if (!skipped && t.inputKind === 'choice') given = givenAnswer(t);
+    else if (given == null) given = givenAnswer(t);
+    if (!skipped && U.clean(given) === '') {
+      if (t.inputKind === 'choice' && $('choice-block')) $('choice-block').classList.add('shake');
+      else $('answer-input').classList.add('shake');
+      return;
+    }
     var ok = !skipped && t.validate(given);
     r.answered = true;
     r.results.push({ task: t, given: skipped ? '' : given, correct: ok, skipped: !!skipped });
-    stats.recordAnswer(r.moduleId, t.type, ok);
+    storeFor(R.get(r.moduleId)).recordAnswer(r.moduleId, t.type, ok);
 
     var inp = $('answer-input');
     inp.readOnly = true;
@@ -235,8 +307,8 @@
     fb.textContent = '';
     fb.className = 'feedback ' + (ok ? 'right' : 'wrong');
     fb.appendChild(h('div', { class: 'verdict', text: ok ? '✓ Riktig!' : (skipped ? 'Fasit' : '✗ Feil') }));
-    if (!ok && !skipped) fb.appendChild(h('div', { class: 'given' }, ['Du svarte: ', h('code', { text: given.trim() })]));
-    fb.appendChild(h('div', { class: 'answer' }, ['Riktig svar: ', h('code', { text: t.answerDisplay })]));
+    if (!ok && !skipped) fb.appendChild(h('div', { class: 'given' }, ['Du svarte: ', answerNode(given.trim())]));
+    fb.appendChild(h('div', { class: 'answer' }, ['Riktig svar: ', answerNode(t.answerDisplay)]));
     var hint = ok && t.hint ? t.hint(given) : null;
     if (hint) fb.appendChild(h('div', { class: 'hint', text: hint }));
     fb.appendChild(h('div', { class: 'ex-title', text: 'Forklaring' }));
@@ -278,7 +350,7 @@
     var timeMs = Date.now() - r.start;
     var correct = r.results.filter(function (x) { return x.correct; }).length;
     var total = r.results.length;
-    stats.recordRound(r.moduleId, { level: r.level, correct: correct, total: total, timeMs: timeMs, replay: r.replay });
+    storeFor(R.get(r.moduleId)).recordRound(r.moduleId, { level: r.level, correct: correct, total: total, timeMs: timeMs, replay: r.replay });
     state.lastResult = { round: r, correct: correct, total: total, timeMs: timeMs };
     renderResult();
     show('result');
@@ -288,10 +360,11 @@
     var res = state.lastResult, p = pct(res.correct, res.total);
     $('result-title').textContent = p === 100 ? 'Perfekt! 🎉' : p >= 80 ? 'Veldig bra!' : p >= 50 ? 'Bra jobbet!' : 'Fortsett å øve!';
     $('result-score').textContent = res.correct + ' / ' + res.total + ' (' + p + ' %)';
-    var m = stats.mod(res.round.moduleId);
+    var m = storeFor(R.get(res.round.moduleId)).mod(res.round.moduleId);
     var best = m.bestByLevel[res.round.level];
-    $('result-meta').textContent = 'Tid brukt: ' + fmtTime(res.timeMs) + ' · ' + levelLabel(res.round.level) +
-      (res.round.replay ? ' · Øv på feilene' : (best ? ' · Beste på dette nivået: ' + best.pct + ' %' : ''));
+    var levelBit = res.round.level === 'alle' ? '' : (' · ' + levelLabel(res.round.level));
+    $('result-meta').textContent = 'Tid brukt: ' + fmtTime(res.timeMs) + levelBit +
+      (res.round.replay ? ' · Øv på feilene' : (best && res.round.level !== 'alle' ? ' · Beste på dette nivået: ' + best.pct + ' %' : ''));
     var missed = res.round.results.filter(function (x) { return !x.correct; });
     $('replay-btn').hidden = missed.length === 0;
     var list = $('missed-list');
@@ -304,7 +377,14 @@
       list.appendChild(h('details', { class: 'card missed', open: i < 3 ? '' : null }, [
         h('summary', null, [
           h('span', { class: 'task-type', text: t.typeLabel }),
-          h('span', { class: 'missed-q' }, [t.question + ' ', t.subject ? h('code', { text: t.subject }) : null]),
+          (function () {
+            var q = h('span', { class: 'missed-q' });
+            var qt = h('span');
+            qt.innerHTML = rich(t.question);
+            q.appendChild(qt);
+            if (t.subject) q.appendChild(h('code', { text: t.subject }));
+            return q;
+          })(),
           h('span', { class: 'missed-a' }, (x.skipped ? ['Hoppet over'] : ['Ditt svar: ', h('code', { text: x.given.trim() })])
             .concat([' · Fasit: ', h('code', { text: t.answerDisplay })]))
         ]),
@@ -352,7 +432,8 @@
       statTile('Flest riktige på rad', String(s.run.best || 0))
     ]));
     R.active().forEach(function (mod) {
-      var m = s.modules[mod.id];
+      var bucket = storeFor(mod);
+      var m = bucket.data.modules[mod.id];
       var sec = h('section', { class: 'card stats-mod' }, [h('h2', { text: mod.code + ' ' + mod.title })]);
       if (!m || !m.attempts) {
         sec.appendChild(h('p', { class: 'muted', text: 'Ingen oppgaver løst ennå. Start en runde fra startsiden.' }));
@@ -368,7 +449,8 @@
         statTile('Runder', String(m.rounds.length))
       ]));
 
-      // Per nivå
+      // Per nivå. Statiske moduler har ingen vanskelighetsgrad.
+      if (mod.levels && mod.levels.length) {
       var lv = h('table', { class: 'stats-table' }, [
         h('thead', null, [h('tr', null, ['Nivå', 'Runder', 'Snitt', 'Beste', 'Beste tid'].map(function (c) { return h('th', { text: c }); }))])
       ]);
@@ -382,6 +464,7 @@
       lv.appendChild(lvb);
       sec.appendChild(h('h3', { text: 'Per vanskelighetsgrad' }));
       sec.appendChild(h('div', { class: 'table-wrap' }, [lv]));
+      }
 
       // Per oppgavetype
       sec.appendChild(h('h3', { text: 'Per oppgavetype' }));
@@ -410,7 +493,7 @@
       var hist = h('table', { class: 'stats-table' }, [
         h('thead', null, [h('tr', null, ['Dato', 'Nivå', 'Score', 'Tid'].map(function (c) { return h('th', { text: c }); }))]),
         h('tbody', null, m.rounds.slice(-20).reverse().map(function (r) {
-          return h('tr', null, [fmtDate(r.date), levelLabel(r.level) + (r.replay ? ' (feil)' : ''), r.correct + '/' + r.total + ' (' + r.pct + ' %)', fmtTime(r.timeMs)].map(function (c) { return h('td', { text: c }); }));
+          return h('tr', null, [fmtDate(r.date), (r.level === 'alle' ? '–' : levelLabel(r.level)) + (r.replay ? ' (feil)' : ''), r.correct + '/' + r.total + ' (' + r.pct + ' %)', fmtTime(r.timeMs)].map(function (c) { return h('td', { text: c }); }));
         }))
       ]);
       sec.appendChild(h('div', { class: 'table-wrap' }, [hist]));
@@ -419,10 +502,29 @@
     $('reset-stats-btn').hidden = !any;
   }
   $('reset-stats-btn').addEventListener('click', function () {
-    if (g.confirm('Er du sikker på at du vil slette all statistikk? Dette kan ikke angres.')) { stats.reset(); renderStats(); }
+    if (g.confirm('Er du sikker på at du vil slette all statistikk? Dette kan ikke angres.')) {
+      stats.reset();
+      Object.keys(extraStats).forEach(function (k) { extraStats[k].reset(); });
+      renderStats();
+    }
   });
 
+  function boot() {
+    show('start');
+    var jobs = R.list().filter(function (m) { return typeof m.load === 'function'; });
+    if (!jobs.length) return;
+    Promise.all(jobs.map(function (m) { return m.load(); })).then(function () {
+      if ($('view-start') && !$('view-start').hidden) renderStart();
+    }).catch(function (err) {
+      var note = $('load-note');
+      if (note) {
+        note.hidden = false;
+        note.textContent = 'Kunne ikke laste oppgavene. ' + (err && err.message ? err.message : '');
+      }
+    });
+  }
+
   // til testing
-  IPV6T.app = { state: state, stats: stats, show: show, makeTasks: makeTasks, startRound: startRound };
-  show('start');
+  IPV6T.app = { state: state, stats: stats, show: show, makeTasks: makeTasks, startRound: startRound, storeFor: storeFor };
+  boot();
 })(window);

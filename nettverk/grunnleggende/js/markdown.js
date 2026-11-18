@@ -158,16 +158,21 @@
     }
   }
 
-  /* Bare `kode` i løpende tekst. Alt annet escapes, så spørsmål ikke kan bære HTML. */
+  /* `kode` og inline-matte i løpende tekst. Alt annet escapes, så spørsmål ikke kan bære HTML. */
   function renderInline(text) {
-    var s = String(text == null ? '' : text);
+    var shielded = shieldMath(text);
+    var s = shielded.md;
     var out = '';
-    var re = /`([^`\n]+)`/g;
+    var re = /`([^`\n]+)`|LORAMATH(\d+)END/g;
     var last = 0;
     var m;
     while ((m = re.exec(s))) {
       out += escapeHtml(s.slice(last, m.index));
-      out += '<code>' + escapeHtml(m[1]) + '</code>';
+      if (m[1] != null) out += '<code>' + escapeHtml(m[1]) + '</code>';
+      else {
+        var item = shielded.math[+m[2]];
+        out += item ? renderKatex(item.tex, item.display) : '';
+      }
       last = re.lastIndex;
     }
     out += escapeHtml(s.slice(last));

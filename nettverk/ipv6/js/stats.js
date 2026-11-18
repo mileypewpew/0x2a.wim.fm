@@ -15,13 +15,14 @@
     return Math.round((Date.UTC(pb[0], pb[1] - 1, pb[2]) - Date.UTC(pa[0], pa[1] - 1, pa[2])) / 86400000);
   }
 
-  function Stats(storage) {
+  function Stats(storage, key) {
     this.storage = storage || null;
+    this.key = key || KEY;
     this.data = this.load();
   }
   Stats.prototype.load = function () {
     try {
-      var raw = this.storage && this.storage.getItem(KEY);
+      var raw = this.storage && this.storage.getItem(this.key);
       if (raw) {
         var d = JSON.parse(raw);
         if (d && d.version === 1) {
@@ -34,7 +35,7 @@
     return empty();
   };
   Stats.prototype.save = function () {
-    try { if (this.storage) this.storage.setItem(KEY, JSON.stringify(this.data)); } catch (err) { /* privat modus e.l. */ }
+    try { if (this.storage) this.storage.setItem(this.key, JSON.stringify(this.data)); } catch (err) { /* privat modus e.l. */ }
   };
   Stats.prototype.mod = function (id) {
     var m = this.data.modules[id];
@@ -77,7 +78,7 @@
   };
   Stats.prototype.reset = function () {
     this.data = empty();
-    try { if (this.storage) this.storage.removeItem(KEY); } catch (err) { /* ignorer */ }
+    try { if (this.storage) this.storage.removeItem(this.key); } catch (err) { /* ignorer */ }
   };
   Stats.KEY = KEY;
   Stats._dayStr = dayStr;
