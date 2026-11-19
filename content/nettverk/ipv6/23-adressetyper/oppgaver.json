@@ -1,0 +1,638 @@
+[
+  {
+    "id": "23-001",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilke tre bruksformer for IPv6-adresser definerer RFC 4291?",
+    "svar": [
+      "Unicast, multicast og anycast"
+    ],
+    "forklaring": {
+      "steg": [
+        "Unicast går til én destinasjon, multicast til en gruppe, anycast til nærmeste av flere som har samme unicast-adresse.",
+        "Broadcast finnes ikke i IPv6."
+      ]
+    },
+    "alternativer": [
+      "Unicast, multicast og anycast",
+      "Unicast, broadcast og multicast",
+      "Public, private og APIPA",
+      "GUA, NAT og DHCP"
+    ]
+  },
+  {
+    "id": "23-002",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes i IPv6 i stedet for broadcast?",
+    "svar": [
+      "Multicast"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 sier at IPv6 ikke har broadcast-adresser; funksjonen er overtatt av multicast.",
+        "For eksempel er `ff02::1` «alle noder på linken»."
+      ]
+    },
+    "alternativer": [
+      "Multicast",
+      "Anycast til `255.255.255.255`",
+      "Subnet-router anycast alene",
+      "En egen broadcast-header"
+    ]
+  },
+  {
+    "id": "23-003",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er IPv6-loopback-adressen? Skriv adressen i kanonisk form, uten `/lengde`.",
+    "svar": [
+      "::1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Loopback er `::1`, tilsvarende `127.0.0.1` i IPv4.",
+        "Full form er `0000:0000:0000:0000:0000:0000:0000:0001`."
+      ]
+    }
+  },
+  {
+    "id": "23-004",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er den uspesifiserte IPv6-adressen? Skriv adressen i kanonisk form, uten `/lengde`.",
+    "svar": [
+      "::"
+    ],
+    "forklaring": {
+      "steg": [
+        "Alle bit er 0. Kanonisk form er `::`.",
+        "Den brukes blant annet når en vert ennå ikke har en adresse."
+      ]
+    }
+  },
+  {
+    "id": "23-005",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilket prefiks definerer link-lokale unicast-adresser i RFC 4291? Skriv kanonisk form med `/lengde`.",
+    "svar": [
+      "fe80::/10"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 setter prefikset til `fe80::/10` (bitmønsteret 1111111010).",
+        "De neste 54 bitene skal være 0, så på en gitt link brukes typisk `fe80::/64`."
+      ]
+    }
+  },
+  {
+    "id": "23-006",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilket prefiks har alle IPv6-multicast-adresser? Skriv kanonisk form med `/lengde`.",
+    "svar": [
+      "ff00::/8"
+    ],
+    "forklaring": {
+      "steg": [
+        "Multicast starter alltid med `ff`, altså `ff00::/8` (RFC 4291)."
+      ]
+    }
+  },
+  {
+    "id": "23-007",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilket prefiks er reservert til IPv6-dokumentasjon og eksempler (RFC 3849)? Skriv kanonisk form med `/lengde`.",
+    "svar": [
+      "2001:db8::/32"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 3849 reserverer `2001:db8::/32`.",
+        "Bruk den i kurs og dokumentasjon, ikke som vanlig GUA på internett."
+      ]
+    }
+  },
+  {
+    "id": "23-008",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilket prefiks bruker du i praksis når du lager unique local addresses (ULA) etter RFC 4193? Skriv kanonisk form med `/lengde`.",
+    "svar": [
+      "fd00::/8"
+    ],
+    "forklaring": {
+      "steg": [
+        "ULA-rommet er `fc00::/7`, men bare `fd00::/8` (L=1, lokalt tildelt) er definert for bruk.",
+        "`fc00::/8` er reservert. Du trekker et tilfeldig 40-bit Global ID og får typisk en `/48` som starter med `fd`."
+      ]
+    }
+  },
+  {
+    "id": "23-009",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Fra hvilket prefiks tildeles global unicast (GUA) i dag?",
+    "svar": [
+      "2000::/3 (adresser som starter med 2 eller 3)"
+    ],
+    "forklaring": {
+      "steg": [
+        "IANA tildeler globalt rutbar unicast fra `2000::/3`.",
+        "Første heks-siffer er `2` eller `3`. Unntak finnes inne i blokken, som dokumentasjonsprefikset `2001:db8::/32`."
+      ]
+    },
+    "alternativer": [
+      "2000::/3 (adresser som starter med 2 eller 3)",
+      "fe80::/10",
+      "ff00::/8",
+      "fc00::/7"
+    ]
+  },
+  {
+    "id": "23-010",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken type er adressen `2001:db8:1::10`?",
+    "svar": [
+      "Dokumentasjonsadresse i det globale unicast-rommet (`2001:db8::/32`)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Den starter med `2`, så den ligger i `2000::/3`.",
+        "Men `2001:db8::/32` er reservert til eksempler, så den skal ikke brukes som vanlig GUA på internett."
+      ]
+    },
+    "alternativer": [
+      "Dokumentasjonsadresse i det globale unicast-rommet (`2001:db8::/32`)",
+      "Link-lokal unicast",
+      "Unique local (ULA)",
+      "Multicast"
+    ]
+  },
+  {
+    "id": "23-011",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken type er adressen `fe80::200:5eff:fe00:53`?",
+    "svar": [
+      "Link-lokal unicast"
+    ],
+    "forklaring": {
+      "steg": [
+        "Alt som starter med `fe80` (prefiks `fe80::/10`) er link-lokal unicast.",
+        "Scope er den lokale linken; adressen rutes ikke videre."
+      ]
+    },
+    "alternativer": [
+      "Link-lokal unicast",
+      "Global unicast",
+      "ULA",
+      "Multicast"
+    ]
+  },
+  {
+    "id": "23-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken type er adressen `fd12:3456:789a:1::1`?",
+    "svar": [
+      "Unique local unicast (ULA)"
+    ],
+    "forklaring": {
+      "steg": [
+        "ULA som er i bruk starter med `fd` (`fd00::/8`).",
+        "Den er ment for internt bruk og rutes ikke på det offentlige internettet."
+      ]
+    },
+    "alternativer": [
+      "Unique local unicast (ULA)",
+      "Global unicast",
+      "Link-lokal unicast",
+      "Multicast"
+    ]
+  },
+  {
+    "id": "23-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken type er adressen `ff02::1`?",
+    "svar": [
+      "Multicast, link-lokal scope (alle noder på linken)"
+    ],
+    "forklaring": {
+      "steg": [
+        "`ff` betyr multicast. Andre nibble ender på `2`, som er link-lokal scope.",
+        "`ff02::1` er den faste adressen for alle noder på linken."
+      ]
+    },
+    "alternativer": [
+      "Multicast, link-lokal scope (alle noder på linken)",
+      "Link-lokal unicast",
+      "Loopback",
+      "Global unicast"
+    ]
+  },
+  {
+    "id": "23-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er `ff02::2`?",
+    "svar": [
+      "Multicast til alle rutere på linken"
+    ],
+    "forklaring": {
+      "steg": [
+        "`ff02::` er multicast med link-lokal scope.",
+        "`::2` er den faste gruppeadressen for alle rutere på linken."
+      ]
+    },
+    "alternativer": [
+      "Multicast til alle rutere på linken",
+      "Multicast til alle noder på linken",
+      "Subnet-router anycast",
+      "Den første GUA-adressen på et nett"
+    ]
+  },
+  {
+    "id": "23-015",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken multicast-scope har adresser som starter med `ff0e:`?",
+    "svar": [
+      "Global"
+    ],
+    "forklaring": {
+      "steg": [
+        "Scope-feltet er de fire siste bitene i andre nibble. Verdien `e` betyr global (RFC 4291, RFC 7346).",
+        "En slik gruppe kan i prinsippet nås over hele internettet, ikke bare på linken."
+      ]
+    },
+    "alternativer": [
+      "Global",
+      "Link-lokal",
+      "Bare på grensesnittet",
+      "Organisasjonen"
+    ]
+  },
+  {
+    "id": "23-016",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken multicast-scope har adresser som starter med `ff05:`?",
+    "svar": [
+      "Site-local"
+    ],
+    "forklaring": {
+      "steg": [
+        "Scope-verdien `5` er site-local (RFC 4291).",
+        "Det er rekkevidden til gruppen, ikke det avviklede site-local *unicast*-prefikset `fec0::/10`."
+      ]
+    },
+    "alternativer": [
+      "Site-local",
+      "Link-lokal",
+      "Global",
+      "Interface-local"
+    ]
+  },
+  {
+    "id": "23-017",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor har en typisk IPv6-vert flere adresser på samme grensesnitt?",
+    "svar": [
+      "Minst én link-lokal, ofte pluss GUA eller ULA, og flere multicast-grupper den lytter på"
+    ],
+    "forklaring": {
+      "steg": [
+        "Link-lokal kommer opp av seg selv på hvert grensesnitt.",
+        "I tillegg kan verten ha GUA og/eller ULA, og den lytter alltid på visse multicast-adresser (som `ff02::1`)."
+      ]
+    },
+    "alternativer": [
+      "Minst én link-lokal, ofte pluss GUA eller ULA, og flere multicast-grupper den lytter på",
+      "IPv6 tillater bare én adresse per maskin, så dette skjer aldri",
+      "Alle ekstra adresser er feilkonfigurasjon",
+      "Bare når NAT er slått på"
+    ]
+  },
+  {
+    "id": "23-018",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er den viktige forskjellen mellom ULA og RFC 1918-adressene i IPv4?",
+    "svar": [
+      "ULA har et (tilfeldig) unik-aktig Global ID, og den erstatter ikke en global adresse"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4193 ber deg trekke et tilfeldig 40-bit Global ID, så to firmaer sjelden kolliderer om de senere kobles sammen.",
+        "ULA rutes ikke på internett, men de fleste steder har *også* GUA. ULA er ikke en erstatning for global tilkobling."
+      ]
+    },
+    "alternativer": [
+      "ULA har et (tilfeldig) unik-aktig Global ID, og den erstatter ikke en global adresse",
+      "ULA rutes fritt på det offentlige internettet, i motsetning til RFC 1918",
+      "ULA bruker nøyaktig de samme tallene som `10.0.0.0/8`",
+      "ULA krever NAT for å virke internt"
+    ]
+  },
+  {
+    "id": "23-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva skjedde med de gamle site-local unicast-adressene (`fec0::/10`)?",
+    "svar": [
+      "De er avviklet (RFC 3879); bruk ULA i stedet for intern unicast"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 3879 deprekert site-local unicast fordi scope «site» var for uklart.",
+        "For intern unicast uten offentlig ruting brukes ULA (`fd00::/8`)."
+      ]
+    },
+    "alternativer": [
+      "De er avviklet (RFC 3879); bruk ULA i stedet for intern unicast",
+      "De er den anbefalte erstatningen for GUA",
+      "De er det samme som link-lokal `fe80::/10`",
+      "De er multicast med site-scope"
+    ]
+  },
+  {
+    "id": "23-020",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om link-lokale adresser er riktig?",
+    "svar": [
+      "De har scope begrenset til linken og rutes ikke videre"
+    ],
+    "forklaring": {
+      "steg": [
+        "`fe80::/10` er bare gyldig på den lokale linken (samme lag-2-nett).",
+        "Trenger du å si hvilken link det gjelder, brukes soneindeks, for eksempel `fe80::1%eth0` (RFC 4007)."
+      ]
+    },
+    "alternativer": [
+      "De har scope begrenset til linken og rutes ikke videre",
+      "De rutes globalt, akkurat som GUA",
+      "De starter med `ff02:`",
+      "En vert får dem bare hvis DHCPv6 er slått på"
+    ]
+  },
+  {
+    "id": "23-021",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er anycast i IPv6?",
+    "svar": [
+      "Samme unicast-adresse konfigurert på flere steder; pakken går til nærmeste"
+    ],
+    "forklaring": {
+      "steg": [
+        "Anycast bruker unicast-format. Flere noder tar samme adresse, og rutingen leverer til den nærmeste.",
+        "Et eksempel er subnet-router anycast (interface-ID alle bit 0) i et `/64`."
+      ]
+    },
+    "alternativer": [
+      "Samme unicast-adresse konfigurert på flere steder; pakken går til nærmeste",
+      "Det samme som broadcast i IPv4",
+      "En adresse som bare virker på loopback",
+      "En multicast-gruppe med scope global"
+    ]
+  },
+  {
+    "id": "23-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva brukes prefikset `100::/64` til?",
+    "svar": [
+      "Discard-only: pakker dit skal kastes (RFC 6666)"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 6666 definerer `100::/64` som et prefiks der mottatte pakker kastes.",
+        "Det brukes blant annet til måling og til å evakuere trafikk, ikke som vanlig LAN-adresse."
+      ]
+    },
+    "alternativer": [
+      "Discard-only: pakker dit skal kastes (RFC 6666)",
+      "Link-lokal unicast",
+      "Dokumentasjon, som `2001:db8::/32`",
+      "NAT64-oversetting"
+    ]
+  },
+  {
+    "id": "23-023",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er det velkjente prefikset `64:ff9b::/96` brukt til?",
+    "svar": [
+      "IPv4/IPv6-oversetting (NAT64), RFC 6052"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 6052 definerer `64:ff9b::/96` som Well-Known Prefix for å bygge IPv6-adresser som bærer en IPv4-adresse.",
+        "Det er ikke et vanlig LAN-prefiks til verter."
+      ]
+    },
+    "alternativer": [
+      "IPv4/IPv6-oversetting (NAT64), RFC 6052",
+      "Unique local addresses",
+      "Alle multicast-grupper i en organisasjon",
+      "Loopback for IPv6"
+    ]
+  },
+  {
+    "id": "23-024",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken type er `::1`?",
+    "svar": [
+      "Loopback"
+    ],
+    "forklaring": {
+      "steg": [
+        "`::1/128` er loopback, bare verten selv.",
+        "Ikke forveksle den med den uspesifiserte adressen `::`."
+      ]
+    },
+    "alternativer": [
+      "Loopback",
+      "Uspesifisert adresse",
+      "Link-lokal",
+      "Multicast"
+    ]
+  },
+  {
+    "id": "23-025",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om `fe80::/10` og `fe80::/64` er riktig?",
+    "svar": [
+      "Typen er `fe80::/10`, men de neste 54 bitene skal være 0, så på en link brukes `fe80::/64`"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 definerer link-lokal som 10-bit prefiks `1111111010`, deretter 54 nullbit og 64 bit interface-ID.",
+        "Derfor er typen `fe80::/10`, mens adressen du faktisk ser på et grensesnitt ligger i `fe80::/64`."
+      ]
+    },
+    "alternativer": [
+      "Typen er `fe80::/10`, men de neste 54 bitene skal være 0, så på en link brukes `fe80::/64`",
+      "RFC 4291 sier at link-lokal alltid er et `/32`",
+      "`fe80::/10` og `fe80::/64` er to helt ulike adressetyper",
+      "Link-lokal starter med `ff80::/10`"
+    ]
+  },
+  {
+    "id": "23-026",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En maskin har adressen `2001:db8:1:1::10` på et grensesnitt. Hvilken annen unicast-adresse har den typisk *også* på samme grensesnitt?",
+    "svar": [
+      "En link-lokal adresse i `fe80::/64`"
+    ],
+    "forklaring": {
+      "steg": [
+        "Link-lokal konfigureres på hvert IPv6-grensesnitt, uavhengig av om det finnes GUA.",
+        "Maskinen kan i tillegg lytte på multicast som `ff02::1`, men det er ikke unicast."
+      ]
+    },
+    "alternativer": [
+      "En link-lokal adresse i `fe80::/64`",
+      "En IPv4-adresse i `127.0.0.0/8`",
+      "Adressen `ff02::1` som unicast",
+      "Ingen: IPv6 tillater bare én adresse per grensesnitt"
+    ]
+  },
+  {
+    "id": "23-027",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken av disse adressene er multicast?",
+    "svar": [
+      "ff05::1:3"
+    ],
+    "forklaring": {
+      "steg": [
+        "Alt som starter med `ff` er multicast. `ff05::` har site-local scope.",
+        "`fd00:…` er ULA, `fe80::` er link-lokal, `2001:db8:…` er dokumentasjon/GUA-rom."
+      ]
+    },
+    "alternativer": [
+      "ff05::1:3",
+      "fd00:a:b::100",
+      "fe80::a:b:100",
+      "2001:db8:1::c1"
+    ]
+  },
+  {
+    "id": "23-028",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er *solicited-node* multicast (`ff02::1:ffXX:XXXX`) brukt til, i korte trekk?",
+    "svar": [
+      "NDP bruker den i stedet for å rope til alle på linken når en unicast-adresse skal løses"
+    ],
+    "forklaring": {
+      "steg": [
+        "De siste 24 bitene av unicast-adressen limer seg på `ff02::1:ff00:0000/104`.",
+        "Slik spør NDP etter naboen uten broadcast. Mekanismen dekkes mer i modul 3."
+      ]
+    },
+    "alternativer": [
+      "NDP bruker den i stedet for å rope til alle på linken når en unicast-adresse skal løses",
+      "Det er den globale adressen til alle DNS-rot-tjenere",
+      "Det er loopback for multicast",
+      "Det er ULA for skrivere"
+    ]
+  },
+  {
+    "id": "23-029",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken scope har en vanlig GUA, for eksempel `2001:67c:2e:1::c1`?",
+    "svar": [
+      "Global — den kan rutes på internett"
+    ],
+    "forklaring": {
+      "steg": [
+        "Global unicast har globalt virkeområde og kan (når den er tildelt og rutbar) nås over internett.",
+        "Sammenlign med `fe80::` som stopper på linken, og `fd00::` som er ment internt."
+      ]
+    },
+    "alternativer": [
+      "Global — den kan rutes på internett",
+      "Bare linken",
+      "Bare verten selv, som loopback",
+      "Bare multicast-grupper"
+    ]
+  },
+  {
+    "id": "23-030",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om ULA og GUA på samme sted er mest presis?",
+    "svar": [
+      "Et sted kan (og bør ofte) ha begge: ULA internt og GUA ut mot internett"
+    ],
+    "forklaring": {
+      "steg": [
+        "ULA og GUA utelukker ikke hverandre. Verten kan ha én adresse av hver typen på samme grensesnitt.",
+        "ULA gir stabile interne adresser; GUA gir global rekkevidde. NAT er vanligvis unødvendig."
+      ]
+    },
+    "alternativer": [
+      "Et sted kan (og bør ofte) ha begge: ULA internt og GUA ut mot internett",
+      "Hvis du har ULA, er GUA forbudt",
+      "Hvis du har GUA, trenger du NAT for å bruke ULA",
+      "ULA og GUA er to navn på samme prefiks"
+    ]
+  },
+  {
+    "id": "23-031",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er prefikset som definerer link-lokale adresser i RFC 4291 (`fe80::/10`)?",
+    "svar": [
+      "10"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 bruker et 10-bit prefiks, `1111111010`, som skrives `fe80::/10`.",
+        "De neste 54 bitene skal være 0, slik at adressene på en link ligger i `fe80::/64`."
+      ]
+    }
+  },
+  {
+    "id": "23-032",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er prefikset for alle IPv6-multicast-adresser (`ff00::/8`)?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "Multicast starter med `11111111`, altså 8 bit, skrevet `ff00::/8`."
+      ]
+    }
+  },
+  {
+    "id": "23-033",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange hovedformer for IPv6-adresser definerer RFC 4291 (unicast, multicast og …)? Skriv tallet.",
+    "svar": [
+      "3"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 definerer tre former: unicast, multicast og anycast. Broadcast finnes ikke."
+      ]
+    }
+  }
+]

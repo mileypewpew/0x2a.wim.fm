@@ -1,0 +1,506 @@
+[
+  {
+    "id": "22-001",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett rommer en `/48`? Skriv hele tallet.",
+    "svar": [
+      "65536"
+    ],
+    "forklaring": {
+      "steg": [
+        "Forskjellen i prefikslengde er $64 - 48 = 16$ bit.",
+        "$2^{16} = 65536$."
+      ]
+    }
+  },
+  {
+    "id": "22-002",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett rommer en `/56`?",
+    "svar": [
+      "256"
+    ],
+    "forklaring": {
+      "steg": [
+        "$64 - 56 = 8$ bit til subnett.",
+        "$2^8 = 256$."
+      ]
+    }
+  },
+  {
+    "id": "22-003",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett rommer en `/60`?",
+    "svar": [
+      "16"
+    ],
+    "forklaring": {
+      "steg": [
+        "$64 - 60 = 4$ bit, altså ett heksadesimalt siffer.",
+        "$2^4 = 16$."
+      ]
+    }
+  },
+  {
+    "id": "22-004",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/56`-nett rommer en `/48`?",
+    "svar": [
+      "256"
+    ],
+    "forklaring": {
+      "steg": [
+        "$56 - 48 = 8$ bit.",
+        "$2^8 = 256$."
+      ]
+    }
+  },
+  {
+    "id": "22-005",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/48`-nett rommer en `/32`?",
+    "svar": [
+      "65536"
+    ],
+    "forklaring": {
+      "steg": [
+        "$48 - 32 = 16$ bit.",
+        "$2^{16} = 65536$."
+      ]
+    }
+  },
+  {
+    "id": "22-006",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/56`-nett rommer en `/32`? Skriv hele tallet.",
+    "svar": [
+      "16777216"
+    ],
+    "forklaring": {
+      "steg": [
+        "$56 - 32 = 24$ bit.",
+        "$2^{24} = 16777216$."
+      ]
+    }
+  },
+  {
+    "id": "22-007",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er det mellom et `/48`-prefiks og et `/64`-subnett (subnett-ID-feltet)?",
+    "svar": [
+      "16"
+    ],
+    "forklaring": {
+      "steg": [
+        "Subnett-ID er bitene etter det du har fått, fram til `/64`.",
+        "$64 - 48 = 16$ bit, som er hele den fjerde gruppen."
+      ]
+    }
+  },
+  {
+    "id": "22-008",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett rommer en `/52`?",
+    "svar": [
+      "4096"
+    ],
+    "forklaring": {
+      "steg": [
+        "$64 - 52 = 12$ bit.",
+        "$2^{12} = 4096$."
+      ]
+    }
+  },
+  {
+    "id": "22-009",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett rommer et `/61`-prefiks?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "$64 - 61 = 3$ bit.",
+        "$2^3 = 8$. `/61` kutter midt i et heks-siffer, derfor er tallet 8 og ikke en «pen» 16-er-potens av nibble-grenser."
+      ]
+    }
+  },
+  {
+    "id": "22-010",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor bør et vanlig LAN (Ethernet, Wi-Fi) være et `/64`?",
+    "svar": [
+      "SLAAC og adresseringen i RFC 4291 forutsetter 64 bit til interface-ID"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 og RFC 6177 sier at et subnett bør være `/64`.",
+        "SLAAC (RFC 4862) bygger interface-ID i de siste 64 bitene. Et kortere LAN-prefiks ødelegger det."
+      ]
+    },
+    "alternativer": [
+      "SLAAC og adresseringen i RFC 4291 forutsetter 64 bit til interface-ID",
+      "Et `/64` er det minste prefikset IPv6 i det hele tatt tillater",
+      "Et `/64` rommer nøyaktig 254 verter, som i IPv4 `/24`",
+      "Rutere kan bare slå opp tabeller med `/64`"
+    ]
+  },
+  {
+    "id": "22-011",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva anbefaler RFC 6177 typisk for tildeling til et hjem eller et lite sted som trenger flere LAN, men ikke en full `/48`?",
+    "svar": [
+      "En `/56` eller `/60`, tilpasset behovet"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 6177 droppet «alle skal ha `/48`» og sier at størrelsen skal passe behovet.",
+        "Til hjem og små steder er `/56` eller `/60` vanlige valg. `/64` bare når du virkelig bare trenger ett subnett. Unngå å gi bare en `/128` til et sted."
+      ]
+    },
+    "alternativer": [
+      "En `/56` eller `/60`, tilpasset behovet",
+      "Alltid nøyaktig én `/48`, aldri noe annet",
+      "Alltid en enkelt `/128` per bolig",
+      "Et `/24`, som i IPv4"
+    ]
+  },
+  {
+    "id": "22-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva menes med å dele på nibble-grense?",
+    "svar": [
+      "Å bruke prefikslengder som er delelige med 4, så skillet lander på et heksadesimalt siffer"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ett heks-siffer er 4 bit. Lengder som `/48`, `/52`, `/56`, `/60` og `/64` er derfor lette å lese.",
+        "Et prefiks som `/61` er lov, men kutter midt i et siffer og er vanskeligere å se."
+      ]
+    },
+    "alternativer": [
+      "Å bruke prefikslengder som er delelige med 4, så skillet lander på et heksadesimalt siffer",
+      "Å alltid dele i nøyaktig 16 like store nett",
+      "Å sette interface-ID til bare ett heks-siffer",
+      "Å bruke `::` i hver subnettadresse"
+    ]
+  },
+  {
+    "id": "22-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er formelen for antall undernett når du deler et prefiks med lengde $p$ i nett med lengde $q$ ($q > p$)?",
+    "svar": [
+      "$2^{q-p}$"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hver ekstra prefiksbit dobler antall nett.",
+        "Eksempel: `/48` til `/56` gir $2^{56-48} = 256$."
+      ]
+    },
+    "alternativer": [
+      "$2^{q-p}$",
+      "$2^{p-q}$",
+      "$q - p$",
+      "$128 - q$"
+    ]
+  },
+  {
+    "id": "22-014",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00::/48`. Skriv det første `/64`-nettet i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Den fjerde gruppen er subnettnummeret. Det første nettet har nummer 0.",
+        "Kanonisk form: `2001:db8:aa00::/64`."
+      ]
+    }
+  },
+  {
+    "id": "22-015",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00::/48`. Skriv det andre `/64`-nettet (neste etter det første) i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00:1::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Etter `2001:db8:aa00::/64` kommer subnett 1.",
+        "Kanonisk form: `2001:db8:aa00:1::/64`."
+      ]
+    }
+  },
+  {
+    "id": "22-016",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00::/48`. Skriv det siste `/64`-nettet i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00:ffff::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Subnett-ID har 16 bit, så siste nummer er `ffff`.",
+        "Kanonisk form: `2001:db8:aa00:ffff::/64`."
+      ]
+    }
+  },
+  {
+    "id": "22-017",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00::/48`. Skriv det første `/56`-nettet i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00::/56"
+    ],
+    "forklaring": {
+      "steg": [
+        "I et `/56` brukes de første 8 bitene av fjerde gruppe som nummer, de siste 8 er 0 i nettadressen.",
+        "Første nett er nummer 0: `2001:db8:aa00::/56`."
+      ]
+    }
+  },
+  {
+    "id": "22-018",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00::/48`. Skriv det andre `/56`-nettet (neste etter det første) i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00:100::/56"
+    ],
+    "forklaring": {
+      "steg": [
+        "Neste `/56` øker de to første heks-sifrene i fjerde gruppe med 1, altså `0100`.",
+        "Kanonisk form (ledende null i `0100` vekk): `2001:db8:aa00:100::/56`."
+      ]
+    }
+  },
+  {
+    "id": "22-019",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00::/48`. Skriv det siste `/56`-nettet i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00:ff00::/56"
+    ],
+    "forklaring": {
+      "steg": [
+        "Siste av 256 nett har fjerde gruppe `ff00`.",
+        "Kanonisk form: `2001:db8:aa00:ff00::/56`."
+      ]
+    }
+  },
+  {
+    "id": "22-020",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv det tredje `/56`-nettet i `2001:db8:aa00::/48` i kanonisk form, med `/lengde`. Tell det første som nummer 1.",
+    "svar": [
+      "2001:db8:aa00:200::/56"
+    ],
+    "forklaring": {
+      "steg": [
+        "Nummer 1, 2, 3 tilsvarer indeks 0, 1, 2. Det tredje har fjerde gruppe `0200`.",
+        "Kanonisk form: `2001:db8:aa00:200::/56`."
+      ]
+    }
+  },
+  {
+    "id": "22-021",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00:ab00::/56`. Skriv det første `/64`-nettet i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00:ab00::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "I denne `/56` varierer de siste 8 bitene av fjerde gruppe, altså de to siste sifrene etter `ab`.",
+        "Første `/64` er `2001:db8:aa00:ab00::/64`."
+      ]
+    }
+  },
+  {
+    "id": "22-022",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Du har `2001:db8:aa00:ab00::/56`. Skriv det siste `/64`-nettet i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00:abff::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "256 `/64` går fra `ab00` til `abff`.",
+        "Siste nett: `2001:db8:aa00:abff::/64`."
+      ]
+    }
+  },
+  {
+    "id": "22-023",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hva er den siste adressen i nettet `2001:db8:aa00:1::/64`? Skriv adressen i kanonisk form, uten `/lengde`.",
+    "svar": [
+      "2001:db8:aa00:1:ffff:ffff:ffff:ffff"
+    ],
+    "forklaring": {
+      "steg": [
+        "Interface-ID er 64 bit, alle satt til 1 gir `ffff:ffff:ffff:ffff`.",
+        "Adressen blir `2001:db8:aa00:1:ffff:ffff:ffff:ffff`."
+      ]
+    }
+  },
+  {
+    "id": "22-024",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv prefikset for blokken som starter på `2001:0db8:aa00:0000:0000:0000:0000:0000` og er 48 bit langt, i kanonisk form med `/lengde`.",
+    "svar": [
+      "2001:db8:aa00::/48"
+    ],
+    "forklaring": {
+      "steg": [
+        "De første 48 bitene er `2001:0db8:aa00`. Resten settes til 0 i nettadressen.",
+        "Kanonisk form: `2001:db8:aa00::/48`."
+      ]
+    }
+  },
+  {
+    "id": "22-025",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket prefiks dekker adressene fra `2001:0db8:0000:0000:0000:0000:0000:0000` til `2001:0db8:0000:0007:ffff:ffff:ffff:ffff`?",
+    "svar": [
+      "2001:db8::/61"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjerde gruppe går fra `0000` til `0007`, altså de første 13 bitene av gruppen er 0 og de siste 3 varierer.",
+        "48 + 13 = 61 bit fast prefiks. Kanonisk skrives det `2001:db8::/61`."
+      ]
+    },
+    "alternativer": [
+      "2001:db8::/61",
+      "2001:db8::/64",
+      "2001:db8::/48",
+      "2001:db8:0:7::/64"
+    ]
+  },
+  {
+    "id": "22-026",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor er det en dårlig idé å gi et vanlig Ethernet-LAN prefikset `/120` «for å spare adresser»?",
+    "svar": [
+      "Du sparer ingenting nyttig, og SLAAC på LAN forutsetter `/64`"
+    ],
+    "forklaring": {
+      "steg": [
+        "I IPv6 planlegger du etter antall *nett*, ikke antall verter. Et `/64` har mer enn nok adresser.",
+        "SLAAC forventer 64 bit interface-ID. Et `/120` kutter det feltet og bryter med anbefalt praksis."
+      ]
+    },
+    "alternativer": [
+      "Du sparer ingenting nyttig, og SLAAC på LAN forutsetter `/64`",
+      "Et `/120` er for stort til at en switch kan håndtere det",
+      "RFC 6177 forbyr alle prefiks lengre enn `/56`",
+      "Et `/120` kan bare brukes til multicast"
+    ]
+  },
+  {
+    "id": "22-027",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om `2001:db8:aa00:100::/56` er riktig?",
+    "svar": [
+      "Det er det andre `/56`-nettet i `2001:db8:aa00::/48`"
+    ],
+    "forklaring": {
+      "steg": [
+        "Første `/56` er `2001:db8:aa00::/56` (fjerde gruppe `0000`).",
+        "Neste har `0100` i fjerde gruppe, som kanonisk skrives `2001:db8:aa00:100::/56`."
+      ]
+    },
+    "alternativer": [
+      "Det er det andre `/56`-nettet i `2001:db8:aa00::/48`",
+      "Det er et enkelt `/64` fordi adressen slutter med `::`",
+      "Det rommer bare 56 adresser",
+      "Det ligger utenfor `2001:db8:aa00::/48`"
+    ]
+  },
+  {
+    "id": "22-028",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er den typiske minste IPv6-tildelingen til en LIR hos RIPE NCC, slik IPv6 Fundamentals gjennomgår den?",
+    "svar": [
+      "En `/32` (som blant annet rommer 65 536 `/48`)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kurset tar utgangspunkt i at en LIR typisk får minst en `/32`.",
+        "En `/32` inneholder $2^{16} = 65\\,536$ `/48` og $2^{24}$ `/56`."
+      ]
+    },
+    "alternativer": [
+      "En `/32` (som blant annet rommer 65 536 `/48`)",
+      "En enkelt `/64` til hele LIR-en",
+      "En `/24`, som i IPv4",
+      "En `/12`, som er hele RIR-blokken"
+    ]
+  },
+  {
+    "id": "22-029",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv det tiende `/64`-nettet i `2001:db8:aa00::/48` i kanonisk form, med `/lengde`. Tell det første som nummer 1.",
+    "svar": [
+      "2001:db8:aa00:9::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Nummer 10 har indeks 9, og 9 i heks er `9`.",
+        "Kanonisk form: `2001:db8:aa00:9::/64`."
+      ]
+    }
+  },
+  {
+    "id": "22-030",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken adresse er *subnet-router anycast* i nettet `2001:db8:aa00:1::/64`?",
+    "svar": [
+      "2001:db8:aa00:1::"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 reserverer adressen der alle interface-ID-bit er 0 som subnet-router anycast.",
+        "I dette nettet er det `2001:db8:aa00:1::`."
+      ]
+    },
+    "alternativer": [
+      "2001:db8:aa00:1::",
+      "2001:db8:aa00:1:ffff:ffff:ffff:ffff",
+      "ff02::1",
+      "2001:db8:aa00:1::1"
+    ]
+  }
+]
