@@ -9,7 +9,7 @@ Nettstedet er ren statisk HTML, CSS og JS uten byggesteg. Repo-roten tilsvarer s
 ### Mappestruktur
 
 - `index.html` — forsiden
-- `assets/` — felles ressurser (blant annet `portal.css`)
+- `assets/` — felles ressurser. `assets/css/tokens.css` er fargetokens, `assets/portal.css` er portalsidene.
 - `nettverk/` — nettverksseksjonen (`nettverk/index.html`)
 - `nettverk/ipv6/` — IPv6-treneren, med `css/`, `js/` og `js/modules/`
 - `content/nettverk/ipv6/` — statiske IPv6-moduler. Versjon i `<meta name="ipv6-innhold-versjon">`. Kartleggingen ligger i `nettverk/ipv6/js/modules/catalog.js`.
@@ -65,7 +65,7 @@ CSS- og JS-filer lenkes med queryen `?v=YYYYMMDDx`:
 - `YYYYMMDD` er datoen filen endres.
 - Bokstaven til slutt er `a` første gang den dagen, deretter `b`, `c` og videre hvis samme fil endres flere ganger samme dag.
 - Når en CSS- eller JS-fil endres, må `?v=` økes i alle HTML-sider som lenker den filen. En side som beholder den gamle queryen, kan fortsette å få den cachede utgaven.
-- `assets/portal.css` lenkes fra forsiden, `nettverk/` og `ai/` med `?v=20261118a`.
+- `assets/css/tokens.css` lenkes først på alle sider som bruker portal- eller trener-CSS, med `?v=20261119b`. `assets/portal.css` og trenernes `css/style.css` har samme query.
 
 LoRA-innhold har et eget versjonsmerke, atskilt fra `?v=` på CSS og JS. `<meta name="lora-innhold-versjon">` i `ai/lora/index.html` legges på `index.json`, `teori.md` og `oppgaver.json`. Øk meta-verdien når innhold eller manifest endres. Ellers kan Cloudflare fortsette å servere den gamle filen selv om HTML-en er ny.
 
