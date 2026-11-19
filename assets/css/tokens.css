@@ -1,28 +1,37 @@
-/* Felles custom properties for portalen og trenerne.
-   Lenkes før de andre stilarkene. Mål som avviker har egne tokens,
-   så maksbredde og kortramme blir som før.
-   Lys --accent var #2563eb (4.13:1 på --accent-soft #dbe6ff), nå #215ce5 (4.50:1).
-   Lys --border var #d9dee8 (1.35:1 på #ffffff), nå #8b8f98 (3.24:1 på #ffffff, 3.03:1 på --bg).
-   Mørk --border var #2c3442 (1.36:1 på --surface), nå #677080 (3.42:1 på --surface, 3.01:1 på --surface-2).
-   JetBrains Mono er ikke lastet, så den er ikke med i --mono. */
+/* Fjordlys (forslag 1) på variabelnavnene 0x2a allerede bruker.
+   Kilde: forslag/tokens-forslag-1.css i mileypewpew/test.wim.fm.
+   Mål og kortramme er beholdt, så bredde og rammetykkelse ikke hopper.
+   Inter er trimmet til latin og æøå. font-display: swap. */
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-latin-nb.woff2?v=20261119c") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
-  --bg: #f6f7fb;
+  color-scheme: light;
+  --bg: #f7f8f7;
   --surface: #ffffff;
-  --surface-2: #eef1f7;
-  --text: #1a1f2b;
-  --muted: #5d6576;
-  --border: #8b8f98;
-  --accent: #215ce5;
+  --surface-2: #eef1f0;
+  --text: #16201f;
+  --muted: #56625f;
+  --border: #7f8c88;
+  --accent: #0b6670;
   --accent-text: #ffffff;
-  --accent-soft: #dbe6ff;
-  --good: #15803d;
-  --good-soft: #dcfce7;
-  --bad: #b91c1c;
-  --bad-soft: #fee2e2;
-  --mid: #b45309;
+  --accent-soft: #dcefef;
+  --good: #17663a;
+  --good-soft: #e2f2e7;
+  --bad: #b3261e;
+  --bad-soft: #fbe7e5;
+  /* 0x2a bruker --mid der Fjordlys bruker --warn. */
+  --mid: #8a5300;
+  /* Fjordlys --radius-lg. Samme 14px som før. */
   --radius: 14px;
-  --shadow: 0 1px 3px rgba(16, 24, 40, .08), 0 1px 2px rgba(16, 24, 40, .04);
+  /* Fjordlys --shadow-sm. */
+  --shadow: 0 1px 2px rgb(16 32 31 / .06);
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --maxw: 860px;
   --maxw-portal: 900px;
   --card-border: 1px;
@@ -31,20 +40,21 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f131a;
-    --surface: #171c25;
-    --surface-2: #202733;
-    --text: #e6e9ef;
-    --muted: #9aa3b2;
-    --border: #677080;
-    --accent: #6b9bff;
-    --accent-text: #0b1020;
-    --accent-soft: #1d2a48;
-    --good: #4ade80;
-    --good-soft: #13301f;
-    --bad: #f87171;
-    --bad-soft: #3a1717;
-    --mid: #fbbf24;
-    --shadow: none;
+    color-scheme: dark;
+    --bg: #0f1414;
+    --surface: #161d1d;
+    --surface-2: #1f2828;
+    --text: #e7eeec;
+    --muted: #a3b1ad;
+    --border: #5f6e6b;
+    --accent: #5cc8c9;
+    --accent-text: #062626;
+    --accent-soft: #173535;
+    --good: #6fd39a;
+    --good-soft: #173322;
+    --bad: #ff8f86;
+    --bad-soft: #3a1b19;
+    --mid: #f2c063;
+    --shadow: 0 1px 2px rgb(0 0 0 / .4);
   }
 }
