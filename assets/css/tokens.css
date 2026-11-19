@@ -1,0 +1,50 @@
+/* Felles custom properties for portalen og trenerne.
+   Lenkes før de andre stilarkene. Mål som avviker har egne tokens,
+   så maksbredde og kortramme blir som før.
+   Lys --accent var #2563eb (4.13:1 på --accent-soft #dbe6ff), nå #215ce5 (4.50:1).
+   Lys --border var #d9dee8 (1.35:1 på #ffffff), nå #8b8f98 (3.24:1 på #ffffff, 3.03:1 på --bg).
+   Mørk --border var #2c3442 (1.36:1 på --surface), nå #677080 (3.42:1 på --surface, 3.01:1 på --surface-2).
+   JetBrains Mono er ikke lastet, så den er ikke med i --mono. */
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface-2: #eef1f7;
+  --text: #1a1f2b;
+  --muted: #5d6576;
+  --border: #8b8f98;
+  --accent: #215ce5;
+  --accent-text: #ffffff;
+  --accent-soft: #dbe6ff;
+  --good: #15803d;
+  --good-soft: #dcfce7;
+  --bad: #b91c1c;
+  --bad-soft: #fee2e2;
+  --mid: #b45309;
+  --radius: 14px;
+  --shadow: 0 1px 3px rgba(16, 24, 40, .08), 0 1px 2px rgba(16, 24, 40, .04);
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --maxw: 860px;
+  --maxw-portal: 900px;
+  --card-border: 1px;
+  --card-border-strong: 2px;
+  --card-border-portal: 2px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f131a;
+    --surface: #171c25;
+    --surface-2: #202733;
+    --text: #e6e9ef;
+    --muted: #9aa3b2;
+    --border: #677080;
+    --accent: #6b9bff;
+    --accent-text: #0b1020;
+    --accent-soft: #1d2a48;
+    --good: #4ade80;
+    --good-soft: #13301f;
+    --bad: #f87171;
+    --bad-soft: #3a1717;
+    --mid: #fbbf24;
+    --shadow: none;
+  }
+}
