@@ -1,0 +1,565 @@
+[
+  {
+    "id": "21-001",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit har en IPv6-adresse?",
+    "svar": [
+      "128"
+    ],
+    "forklaring": {
+      "steg": [
+        "IPv6-adresser er 128 bit lange (RFC 4291), fire ganger så lange som IPv4 sine 32 bit."
+      ]
+    }
+  },
+  {
+    "id": "21-002",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange grupper (hextets) skrives en IPv6-adresse med?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "128 bit deles i åtte grupper på 16 bit, skilt med kolon."
+      ]
+    }
+  },
+  {
+    "id": "21-003",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange heksadesimale siffer er det i én gruppe i en IPv6-adresse?",
+    "svar": [
+      "4"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ett heksadesimalt siffer er 4 bit. En gruppe på 16 bit blir derfor fire siffer, for eksempel `0db8`."
+      ]
+    }
+  },
+  {
+    "id": "21-004",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange heksadesimale siffer har en IPv6-adresse når den skrives fullt ut, uten `::`?",
+    "svar": [
+      "32"
+    ],
+    "forklaring": {
+      "steg": [
+        "Åtte grupper à fire siffer gir $8 \\times 4 = 32$ heksadesimale siffer."
+      ]
+    }
+  },
+  {
+    "id": "21-005",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er det i én gruppe (ett kolon-avsnitt) i en IPv6-adresse?",
+    "svar": [
+      "16"
+    ],
+    "forklaring": {
+      "steg": [
+        "128 bit fordelt på åtte grupper gir $128 / 8 = 16$ bit per gruppe."
+      ]
+    }
+  },
+  {
+    "id": "21-006",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er prefikset `2001:db8::/32` reservert til?",
+    "svar": [
+      "Dokumentasjon og eksempler (RFC 3849)"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 3849 reserverer `2001:db8::/32` til bøker, kurs og eksempler.",
+        "Adressene skal ikke brukes som vanlige, rutbare adresser på internett."
+      ]
+    },
+    "alternativer": [
+      "Dokumentasjon og eksempler (RFC 3849)",
+      "Link-lokale adresser på Ethernet",
+      "Unique local addresses (ULA) i et firma",
+      "Multicast til alle rutere"
+    ]
+  },
+  {
+    "id": "21-007",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:0db8:0000:0000:0000:0000:0000:0001` til kanonisk form (RFC 5952). Skriv bare adressen, uten `/`.",
+    "svar": [
+      "2001:db8::1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjern ledende nuller i hver gruppe: `2001:db8:0:0:0:0:0:1`.",
+        "Seks 0-grupper på rad erstattes med `::`. Resultatet er `2001:db8::1`."
+      ]
+    }
+  },
+  {
+    "id": "21-008",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Utvid `2001:db8::1` til full form: åtte grupper med fire siffer i hver. Bruk små bokstaver.",
+    "svar": [
+      "2001:0db8:0000:0000:0000:0000:0000:0001"
+    ],
+    "forklaring": {
+      "steg": [
+        "Adressen har to grupper før `::` (`2001` og `db8`) og én etter (`1`). Det er tre skrevne grupper, så det mangler fem.",
+        "Fyll inn fem `0000` og fire siffer i hver gruppe: `2001:0db8:0000:0000:0000:0000:0000:0001`."
+      ]
+    }
+  },
+  {
+    "id": "21-009",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken skrivemåte er den kanoniske formen (RFC 5952) av `2001:0db8:0000:0000:0000:0000:0000:0b40`?",
+    "svar": [
+      "2001:db8::b40"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ledende nuller vekk: `2001:db8:0:0:0:0:0:b40`. Merk at `0b40` blir `b40`, ikke `b4`.",
+        "`::` erstatter de seks 0-gruppene: `2001:db8::b40`."
+      ]
+    },
+    "alternativer": [
+      "2001:db8::b40",
+      "2001:db8::b4",
+      "2001:0db8::0b40",
+      "2001:db8:0:0:0:0:0:0b40"
+    ]
+  },
+  {
+    "id": "21-010",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Gruppen `0c50` skal forkortes etter RFC 5952. Hva blir den?",
+    "svar": [
+      "c50"
+    ],
+    "forklaring": {
+      "steg": [
+        "Bare *ledende* nuller fjernes. `0c50` mister den første nullen og blir `c50`.",
+        "Å skrive `c5` ville fjernet en betydningsfull null og endret verdien."
+      ]
+    },
+    "alternativer": [
+      "c50",
+      "c5",
+      "0c50",
+      "0c5"
+    ]
+  },
+  {
+    "id": "21-011",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:0db8:00ab:0000:0000:0000:0000:000d` til kanonisk form (RFC 5952).",
+    "svar": [
+      "2001:db8:ab::d"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ledende nuller vekk: `2001:db8:ab:0:0:0:0:d`.",
+        "De fire 0-gruppene blir `::`. Kanonisk form er `2001:db8:ab::d`."
+      ]
+    }
+  },
+  {
+    "id": "21-012",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor er `2001:db8::1::2` en ugyldig IPv6-adresse?",
+    "svar": [
+      "`::` kan bare brukes én gang i en adresse"
+    ],
+    "forklaring": {
+      "steg": [
+        "Med to `::` vet du ikke hvor mange null-grupper hver av dem står for.",
+        "RFC 4291 tillater bare én slik komprimering per adresse."
+      ]
+    },
+    "alternativer": [
+      "`::` kan bare brukes én gang i en adresse",
+      "Adressen starter med `2001` og må derfor være IPv4",
+      "Sifferet `8` er ikke tillatt i heksadesimal notasjon",
+      "En adresse må alltid ha nøyaktig åtte kolon"
+    ]
+  },
+  {
+    "id": "21-013",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hva er kanonisk form (RFC 5952) av `2001:db8:0:0:1:0:0:1`?",
+    "svar": [
+      "2001:db8::1:0:0:1"
+    ],
+    "forklaring": {
+      "steg": [
+        "To 0-grupper står til venstre for `1`, og to til høyre. De er like lange.",
+        "Ved lik lengde komprimeres den venstre rekken: `2001:db8::1:0:0:1`.",
+        "`2001:db8:0:0:1::1` er en lovlig RFC 4291-kortform, men ikke kanonisk."
+      ]
+    },
+    "alternativer": [
+      "2001:db8::1:0:0:1",
+      "2001:db8:0:0:1::1",
+      "2001:db8::1::1",
+      "2001:db8:0:0:1:0:0:1"
+    ]
+  },
+  {
+    "id": "21-014",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken skrivemåte er kanonisk for `2001:db8:0:1:1:1:1:1`?",
+    "svar": [
+      "2001:db8:0:1:1:1:1:1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Her er det bare *én* 0-gruppe. RFC 5952 sier at `::` ikke skal brukes på en enkelt 0-gruppe.",
+        "Derfor skrives den som `2001:db8:0:1:1:1:1:1`."
+      ]
+    },
+    "alternativer": [
+      "2001:db8:0:1:1:1:1:1",
+      "2001:db8::1:1:1:1:1",
+      "2001:db8:0:1::1",
+      "2001:0db8:0:1:1:1:1:1"
+    ]
+  },
+  {
+    "id": "21-015",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:db8:0:1:1:1:1:1` til kanonisk form (RFC 5952).",
+    "svar": [
+      "2001:db8:0:1:1:1:1:1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Det finnes bare én 0-gruppe, og den skal skrives som `0`, ikke som `::`.",
+        "Kanonisk form er derfor `2001:db8:0:1:1:1:1:1`."
+      ]
+    }
+  },
+  {
+    "id": "21-016",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Utvid `2001:db8:a::b` til full form: åtte grupper med fire siffer i hver. Bruk små bokstaver.",
+    "svar": [
+      "2001:0db8:000a:0000:0000:0000:0000:000b"
+    ],
+    "forklaring": {
+      "steg": [
+        "Skrevet står `2001`, `db8`, `a` og `b` — fire grupper. Det mangler fire `0000`.",
+        "Full form: `2001:0db8:000a:0000:0000:0000:0000:000b`."
+      ]
+    }
+  },
+  {
+    "id": "21-017",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvordan åpner du en IPv6-nettjeneste på `2001:db8::1` port 443 i en nettleser?",
+    "svar": [
+      "https://[2001:db8::1]:443/"
+    ],
+    "forklaring": {
+      "steg": [
+        "Kolon brukes både i IPv6-adressen og foran portnummeret.",
+        "RFC 3986 krever derfor hakeparentes rundt IPv6-adressen i en URL."
+      ]
+    },
+    "alternativer": [
+      "https://[2001:db8::1]:443/",
+      "https://2001:db8::1:443/",
+      "https://2001:db8::1.port443/",
+      "https://2001.db8.0.1:443/"
+    ]
+  },
+  {
+    "id": "21-018",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om prefikset `2001:db8:1234::/64` er riktig?",
+    "svar": [
+      "Det er det samme nettet som `2001:db8:1234:0::/64`"
+    ],
+    "forklaring": {
+      "steg": [
+        "`::` etter `1234` skjuler at den fjerde gruppen er null.",
+        "Et `/64` bruker de første 64 bitene, altså de fire første gruppene: `2001:0db8:1234:0000`."
+      ]
+    },
+    "alternativer": [
+      "Det er det samme nettet som `2001:db8:1234:0::/64`",
+      "Det dekker bare én enkelt adresse, nemlig `2001:db8:1234::`",
+      "Det er det samme som `2001:db8:1234::/32`",
+      "Den fjerde gruppen er `1234`"
+    ]
+  },
+  {
+    "id": "21-019",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:0DB8:0000:0000:0000:0000:0000:00AB` til kanonisk form (RFC 5952). Husk små bokstaver.",
+    "svar": [
+      "2001:db8::ab"
+    ],
+    "forklaring": {
+      "steg": [
+        "Små bokstaver og ledende nuller vekk: `2001:db8:0:0:0:0:0:ab`.",
+        "`::` for 0-gruppene gir `2001:db8::ab`."
+      ]
+    }
+  },
+  {
+    "id": "21-020",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken regel gir RFC 5952 for bokstavene i en IPv6-adresse i kanonisk form?",
+    "svar": [
+      "De skal skrives med små bokstaver (a–f)"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 5952 krever at sifrene a–f skrives med små bokstaver i kanonisk form.",
+        "Samme adresse med store bokstaver er fortsatt gyldig å ta imot (RFC 4291), men skal ikke brukes når du *skriver* adressen."
+      ]
+    },
+    "alternativer": [
+      "De skal skrives med små bokstaver (a–f)",
+      "De skal skrives med store bokstaver (A–F)",
+      "Store og små bokstaver kan blandes fritt i kanonisk form",
+      "Bokstaver er ikke tillatt; bare sifrene 0–9"
+    ]
+  },
+  {
+    "id": "21-021",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:0db8:0000:0000:0001:0000:0000:0001` til kanonisk form (RFC 5952).",
+    "svar": [
+      "2001:db8::1:0:0:1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Etter fjerning av ledende nuller: `2001:db8:0:0:1:0:0:1`.",
+        "To like lange 0-rekker: komprimer den venstre.",
+        "Kanonisk form: `2001:db8::1:0:0:1`."
+      ]
+    }
+  },
+  {
+    "id": "21-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Adressen `2001:db8:0:0:0:0:2:1` skal skrives kanonisk. Hva er riktig?",
+    "svar": [
+      "2001:db8::2:1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fire 0-grupper på rad skal alle med i `::`. Da blir det `2001:db8::2:1`.",
+        "`2001:db8::0:2:1` er ikke kanonisk, fordi `::` kunne vært brukt lenger."
+      ]
+    },
+    "alternativer": [
+      "2001:db8::2:1",
+      "2001:db8::0:2:1",
+      "2001:db8:0:0:0:0:2:1",
+      "2001:db8:0::2:1"
+    ]
+  },
+  {
+    "id": "21-023",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv prefikset `2001:0db8:0000:0000:0000:0000:0000:0000/32` i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8::/32"
+    ],
+    "forklaring": {
+      "steg": [
+        "Adressedelen forkortes som vanlig: `2001:db8::`.",
+        "Prefikslengden `/32` beholdes. Resultatet er `2001:db8::/32`."
+      ]
+    }
+  },
+  {
+    "id": "21-024",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken forkorting av gruppen `00e0` er riktig?",
+    "svar": [
+      "e0"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ledende nuller fjernes, men den siste nullen er en del av verdien.",
+        "`00e0` blir derfor `e0`, ikke `e`."
+      ]
+    },
+    "alternativer": [
+      "e0",
+      "e",
+      "00e",
+      "00e0"
+    ]
+  },
+  {
+    "id": "21-025",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Utvid `2001:db8:0:1::1` til full form: åtte grupper med fire siffer i hver. Bruk små bokstaver.",
+    "svar": [
+      "2001:0db8:0000:0001:0000:0000:0000:0001"
+    ],
+    "forklaring": {
+      "steg": [
+        "Skrevet står fire grupper før `::` (`2001`, `db8`, `0`, `1`) og én etter (`1`). Det mangler tre `0000`.",
+        "Full form: `2001:0db8:0000:0001:0000:0000:0000:0001`."
+      ]
+    }
+  },
+  {
+    "id": "21-026",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om RFC 4291 og RFC 5952 er riktig?",
+    "svar": [
+      "Flere kortformer kan være lovlige etter RFC 4291, men RFC 5952 peker ut én kanonisk form"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 tillater fleksibel kortform (deriblant ulike plasseringer av `::` når flere er mulige).",
+        "RFC 5952 strammer inn: én anbefalt skrivemåte, som systemer bør bruke når de *skriver* en adresse. Alle lovlige RFC 4291-former skal likevel *godtas* som inndata."
+      ]
+    },
+    "alternativer": [
+      "Flere kortformer kan være lovlige etter RFC 4291, men RFC 5952 peker ut én kanonisk form",
+      "RFC 5952 gjør alle andre kortformer ugyldige å ta imot",
+      "RFC 4291 krever at adresser alltid skrives med 32 siffer",
+      "RFC 5952 gjelder bare multicast-adresser"
+    ]
+  },
+  {
+    "id": "21-027",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:0db8:0100:0000:0000:0000:0000:00ff` til kanonisk form (RFC 5952).",
+    "svar": [
+      "2001:db8:100::ff"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ledende nuller vekk: `2001:db8:100:0:0:0:0:ff`.",
+        "Fire 0-grupper blir `::`. Kanonisk form: `2001:db8:100::ff`."
+      ]
+    }
+  },
+  {
+    "id": "21-028",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvor mange ganger kan `::` forekomme i én gyldig IPv6-adresse?",
+    "svar": [
+      "Høyst én gang"
+    ],
+    "forklaring": {
+      "steg": [
+        "`::` representerer en rekke 0-grupper. To slike merker ville gjort adressen tvetydig.",
+        "Den kan også utebli helt, hvis du ikke komprimerer noe."
+      ]
+    },
+    "alternativer": [
+      "Høyst én gang",
+      "Nøyaktig to ganger",
+      "Én gang per 0-gruppe",
+      "Åtte ganger, én per gruppe"
+    ]
+  },
+  {
+    "id": "21-029",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Utvid `fe80::1` til full form: åtte grupper med fire siffer i hver. Bruk små bokstaver.",
+    "svar": [
+      "fe80:0000:0000:0000:0000:0000:0000:0001"
+    ],
+    "forklaring": {
+      "steg": [
+        "Én gruppe før `::` og én etter: det mangler seks `0000`.",
+        "Full form: `fe80:0000:0000:0000:0000:0000:0000:0001`."
+      ]
+    }
+  },
+  {
+    "id": "21-030",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken av disse er den kanoniske formen av `2001:0db8:0000:0000:0000:0000:0000:0000`?",
+    "svar": [
+      "2001:db8::"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ledende nuller vekk og alle 0-gruppene til slutt blir `::`.",
+        "Kanonisk form er `2001:db8::` (ikke `2001:db8:0:0:0:0:0:0`)."
+      ]
+    },
+    "alternativer": [
+      "2001:db8::",
+      "2001:db8:0:0:0:0:0:0",
+      "2001:0db8::",
+      "2001:db8::0"
+    ]
+  },
+  {
+    "id": "21-031",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:0000:0000:0001:0000:0000:0000:0001` til kanonisk form (RFC 5952). Skriv bare adressen, uten `/`.",
+    "svar": [
+      "2001:0:0:1::1"
+    ],
+    "forklaring": {
+      "steg": [
+        "Etter fjerning av ledende nuller: `2001:0:0:1:0:0:0:1`.",
+        "Til venstre står to 0-grupper, til høyre tre. Den lengste rekken skal komprimeres.",
+        "Kanonisk form: `2001:0:0:1::1` (ikke `2001::1:0:0:0:1`)."
+      ]
+    }
+  },
+  {
+    "id": "21-032",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Forkort `2001:0db8:0001:0000:0000:0000:0000:0000` til kanonisk form (RFC 5952). Skriv bare adressen, uten `/`.",
+    "svar": [
+      "2001:db8:1::"
+    ],
+    "forklaring": {
+      "steg": [
+        "Ledende nuller vekk: `2001:db8:1:0:0:0:0:0`.",
+        "Fem 0-grupper til slutt blir `::`.",
+        "Kanonisk form slutter med `::`: `2001:db8:1::`."
+      ]
+    }
+  }
+]

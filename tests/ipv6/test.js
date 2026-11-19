@@ -13,6 +13,8 @@ if (!fs.existsSync(path.join(dir, 'index.html'))) {
 }
 require(path.join(dir, 'js/registry.js'));
 require(path.join(dir, 'js/modules/hex.js'));
+require(path.join(dir, 'js/modules/catalog.js'));
+require(path.join(dir, 'js/modules/static.js'));
 require(path.join(dir, 'js/modules/planned.js'));
 require(path.join(dir, 'js/modules/hvorfor.js'));
 require(path.join(dir, 'js/stats.js'));
@@ -34,10 +36,24 @@ function rngFrom(seed) {
 
 console.log('1) Register');
 var mods = IPV6T.registry.list();
-ok(mods.length === 6, 'forventer 6 moduler, fikk ' + mods.length);
-ok(IPV6T.registry.active().length === 2, 'to aktive moduler');
+ok(mods.length === 7, 'forventer 7 moduler, fikk ' + mods.length);
+ok(IPV6T.registry.active().length === 6, 'seks aktive moduler');
+ok(mods.map(function (m) { return m.code; }).join(',') === '0,1,2.1,2.2,2a,2.3,3', 'rekkefølge ' + mods.map(function (m) { return m.code; }).join(','));
 ok(mods[0].id === 'ipv6-hvorfor' && mods[0].code === '0' && mods[0].statsKey === 'ipv6t.hvorfor.stats.v1', 'modul 0 ligger først og har egen statistikk-nøkkel');
 ok(mods[1].id === 'hex' && mods[1].code === '1', 'hex beholder kode 1');
+ok(IPV6T.registry.get('notasjon').id === 'notasjon' && IPV6T.registry.get('subnetting').id === 'subnetting' && IPV6T.registry.get('typer').id === 'typer', 'gamle JS-id er beholdt');
+ok(IPV6T.registry.get('smarthus1').status === 'active' && IPV6T.registry.get('smarthus1').code === '2a' && IPV6T.registry.get('smarthus1').statsKey === 'ipv6t.smarthus1.stats.v1', '2a er åpen og har egen nøkkel');
+ok(IPV6T.registry.get('protokoller').status === 'soon', 'protokoller er fortsatt kommer snart');
+var mapRows = IPV6T.MODULE_MAP.map(function (r) { return [r.contentId, r.jsId, r.kode, r.statsKey, r.status].join('|'); });
+ok(mapRows.join(';') === [
+  'ipv6-hvorfor|ipv6-hvorfor|0|ipv6t.hvorfor.stats.v1|active',
+  '21-adressenotasjon|notasjon|2.1|ipv6t.notasjon.stats.v1|active',
+  '22-subnetting|subnetting|2.2|ipv6t.subnetting.stats.v1|active',
+  '2a-smarthus-del-1|smarthus1|2a|ipv6t.smarthus1.stats.v1|active',
+  '23-adressetyper|typer|2.3|ipv6t.typer.stats.v1|active'
+].join(';'), 'modulkartet');
+ok(IPV6T.MODULE_MAP.every(function (r) { return r.statsKey.indexOf('ngrunn') !== 0 && r.statsKey !== 'ipv6t.stats.v1'; }), 'ingen statisk modul deler nøkkel med heks eller grunnleggende');
+ok(!fs.existsSync(path.resolve(__dirname, '..', '..', 'content', 'nettverk', 'ipv6', '2a-ovning-notasjon')), '2a-ovning-notasjon finnes ikke');
 var threw = false; try { IPV6T.registry.register({ id: 'hex', title: 'x' }); } catch (e) { threw = true; }
 ok(threw, 'duplikat-id avvises');
 
@@ -198,6 +214,68 @@ console.log('6) Hvorfor IPv6');
   ok(drawn.length === 28 && drawn.every(function (t) { return t.validate(t.answers[0]); }), 'en hel runde godtar egen fasit');
 })();
 
+console.log('7) Nivå 2-modulene');
+(function () {
+  var root = path.resolve(__dirname, '..', '..', 'content', 'nettverk', 'ipv6');
+  var expect = {
+    notasjon: { dir: '21-adressenotasjon', n: 32, flervalg: 14, tall: 5, tekst: 13, prefix: '21-' },
+    subnetting: { dir: '22-subnetting', n: 30, flervalg: 9, tall: 9, tekst: 12, prefix: '22-' },
+    smarthus1: { dir: '2a-smarthus-del-1', n: 28, flervalg: 11, tall: 7, tekst: 10, prefix: '2a-' },
+    typer: { dir: '23-adressetyper', n: 33, flervalg: 24, tall: 3, tekst: 6, prefix: '23-' }
+  };
+  var mem = {};
+  var store = { getItem: function (k) { return mem[k] || null; }, setItem: function (k, v) { mem[k] = String(v); }, removeItem: function (k) { delete mem[k]; } };
+  var hexBlob = JSON.stringify({ version: 1, marker: 'hex', modules: { hex: { attempts: 9 } }, streak: { days: 1, best: 1, lastDay: '2026-11-01' }, run: { current: 1, best: 1 } });
+  var hvorforBlob = JSON.stringify({ version: 1, marker: 'hvorfor', modules: { 'ipv6-hvorfor': { attempts: 4 } } });
+  var ngBlob = JSON.stringify({ version: 1, marker: 'ng', modules: { '21-ipv4-cidr': { attempts: 2 } } });
+  mem[IPV6T.Stats.KEY] = hexBlob;
+  mem['ipv6t.hvorfor.stats.v1'] = hvorforBlob;
+  mem['ngrunn.stats.v1'] = ngBlob;
+  Object.keys(expect).forEach(function (jsId) {
+    var spec = expect[jsId];
+    var api = IPV6T.staticModules[jsId];
+    var folder = path.join(root, spec.dir);
+    api.install(fs.readFileSync(path.join(folder, 'teori.md'), 'utf8'), JSON.parse(fs.readFileSync(path.join(folder, 'oppgaver.json'), 'utf8')));
+    ok(api.count() === spec.n, jsId + ' antall ' + api.count());
+    var types = { flervalg: 0, tall: 0, tekst: 0 };
+    api.tasks().forEach(function (raw) {
+      types[raw.type]++;
+      ok(raw.id.indexOf(spec.prefix) === 0 && raw['nivå'] === 2, raw.id + ' id og nivå');
+      var task = api.taskById(raw.id);
+      raw.svar.forEach(function (s) { ok(task.validate(s), raw.id + ' godtar eget svar'); });
+      if (task.canonical) {
+        ok(IPV6T.canonical.isRfc5952(raw.svar[0]), raw.id + ' er gyldig RFC 5952: ' + raw.svar[0]);
+        if (raw.svar[0].toUpperCase() !== raw.svar[0]) ok(!task.validate(raw.svar[0].toUpperCase()), raw.id + ' avviser store bokstaver');
+        if (raw.svar[0].indexOf(':') >= 0) ok(!task.validate(raw.svar[0].replace(/:/g, ': ')), raw.id + ' avviser mellomrom inne i adressen');
+      }
+    });
+    ok(types.flervalg === spec.flervalg && types.tall === spec.tall && types.tekst === spec.tekst, jsId + ' fordeling ' + JSON.stringify(types));
+    var bucket = new IPV6T.Stats(store, IPV6T.registry.get(jsId).statsKey);
+    bucket.recordAnswer(jsId, 'tekst', true, new Date(2026, 10, 19));
+    ok(mem[IPV6T.Stats.KEY] === hexBlob, jsId + ' lot ipv6t.stats.v1 stå');
+    ok(mem['ipv6t.hvorfor.stats.v1'] === hvorforBlob, jsId + ' lot hvorfor-nøkkelen stå');
+    ok(mem['ngrunn.stats.v1'] === ngBlob, jsId + ' lot ngrunn.stats.v1 stå');
+    ok(bucket.data.modules[jsId].attempts === 1 && mem[bucket.key].indexOf('21-001') < 0, jsId + ' skriver bare til egen nøkkel');
+  });
+  var n7 = IPV6T.staticModules.notasjon.taskById('21-007');
+  ok(n7.canonical && n7.validate('2001:db8::1') && n7.validate('  2001:db8::1  '), '21-007 godtar kanonisk form, også med trim');
+  ok(!n7.validate('2001:DB8::1'), '21-007 avviser store bokstaver');
+  ok(!n7.validate('2001:db8:0:0:0:0:0:1'), '21-007 avviser uforkortet form');
+  ok(!n7.validate('2001:0db8::1'), '21-007 avviser ledende nuller');
+  ok(!n7.validate('2001:db8:0:0::1'), '21-007 avviser feil plassering av ::');
+  var n31 = IPV6T.staticModules.notasjon.taskById('21-031');
+  ok(n31.canonical && n31.validate('2001:0:0:1::1') && !n31.validate('2001::1:0:0:0:1'), '21-031 krever lengste nullrekke');
+  var n32 = IPV6T.staticModules.notasjon.taskById('21-032');
+  ok(n32.canonical && n32.validate('2001:db8:1::') && !n32.validate('2001:0db8:1::') && !n32.validate('2001:db8:1:0:0:0:0:0'), '21-032');
+  var n10 = IPV6T.staticModules.notasjon.taskById('21-010');
+  ok(n10.canonical && n10.validate('c50') && !n10.validate('C50') && !n10.validate('0c50'), '21-010 hextet');
+  var a11 = IPV6T.staticModules.smarthus1.taskById('2a-011');
+  ok(a11.canonical && a11.validate('2001:db8:a00:bb00::/64') && !a11.validate('2001:DB8:A00:BB00::/64') && !a11.validate('2001:db8:a00:bb00:0:0:0:0/64'), '2a-011');
+  var loop = IPV6T.staticModules.typer.taskById('23-003');
+  ok(loop.canonical && loop.validate('::1') && !loop.validate('0:0:0:0:0:0:0:1') && !loop.validate('0::1'), '23-003');
+  ok(IPV6T.staticModules.notasjon.tasks().filter(function (t) { return t.id === '21-008'; })[0] && !IPV6T.canonical.isTask(IPV6T.staticModules.notasjon.tasks().filter(function (t) { return t.id === '21-008'; })[0]), 'full form er ikke kanonisk-modus');
+})();
+
 console.log('7) DOM-røyktest (jsdom)');
 var JSDOM = null;
 try { JSDOM = require('jsdom').JSDOM; } catch (e) { /* ikke installert */ }
@@ -233,7 +311,7 @@ if (!JSDOM) {
   };
   var vendor = path.join(repo, 'ai', 'lora', 'vendor');
   var shared = path.join(repo, 'nettverk', 'grunnleggende', 'js');
-  [path.join(vendor, 'katex/katex.min.js'), path.join(vendor, 'marked/marked.min.js'), path.join(shared, 'yaml.js'), path.join(shared, 'grade.js'), path.join(shared, 'markdown.js'), path.join(dir, 'js/registry.js'), path.join(dir, 'js/modules/hex.js'), path.join(dir, 'js/modules/planned.js'), path.join(dir, 'js/modules/hvorfor.js'), path.join(dir, 'js/stats.js'), path.join(dir, 'js/charts.js'), path.join(dir, 'js/app.js')].forEach(function (abs) {
+  [path.join(vendor, 'katex/katex.min.js'), path.join(vendor, 'marked/marked.min.js'), path.join(shared, 'yaml.js'), path.join(shared, 'grade.js'), path.join(shared, 'markdown.js'), path.join(dir, 'js/registry.js'), path.join(dir, 'js/modules/catalog.js'), path.join(dir, 'js/modules/hex.js'), path.join(dir, 'js/modules/static.js'), path.join(dir, 'js/modules/planned.js'), path.join(dir, 'js/modules/hvorfor.js'), path.join(dir, 'js/stats.js'), path.join(dir, 'js/charts.js'), path.join(dir, 'js/app.js')].forEach(function (abs) {
     var rel = abs.indexOf(dir + path.sep) === 0 ? abs.slice(dir.length + 1) : path.relative(path.join(dir, '..'), abs).split(path.sep).join('/');
     if (abs.indexOf(vendor) === 0) rel = '../../ai/lora/vendor/' + path.relative(vendor, abs).split(path.sep).join('/');
     if (abs.indexOf(shared) === 0) rel = '../grunnleggende/js/' + path.basename(abs);
@@ -250,8 +328,8 @@ if (!JSDOM) {
     ok(!!found && !found.disabled, 'modulknapp ' + title);
     if (found) found.click();
   }
-  ok(d.querySelectorAll('.module-card').length === 6, 'startsiden viser 6 modulkort');
-  ok(d.querySelectorAll('.module-card.soon').length === 4, '4 «Kommer snart»-kort');
+  ok(d.querySelectorAll('.module-card').length === 7, 'startsiden viser 7 modulkort');
+  ok(d.querySelectorAll('.module-card.soon').length === 1, 'bare protokoller er kommer snart');
   ok(d.getElementById('level-fieldset').hidden, 'modul 0 har ingen vanskelighetsgrad');
   clickModule('Heksadesimalt tallsystem');
   ok(!d.getElementById('level-fieldset').hidden && d.getElementById('lvl-middels'), 'hex har vanskelighetsgrad');
@@ -318,6 +396,22 @@ if (!JSDOM) {
     ok(w.localStorage.getItem('ipv6t.stats.v1') === snapshot, 'IPv6-statistikken er uendret etter hvorfor-oppgaven');
     var own = JSON.parse(w.localStorage.getItem('ipv6t.hvorfor.stats.v1'));
     ok(own && own.modules['ipv6-hvorfor'].attempts === 1 && JSON.stringify(own).indexOf('hvorfor-007') < 0, 'hvorfor-statistikken er egen og uten oppgave-id');
+    var hvorforSnap = w.localStorage.getItem('ipv6t.hvorfor.stats.v1');
+    w.localStorage.setItem('ngrunn.stats.v1', '{"marker":"ng"}');
+    clickModule('Adressenotasjon');
+    var t21 = w.IPV6T.staticModules.notasjon.taskById('21-007');
+    ok(t21 && !t21.validate('2001:DB8::1') && t21.validate('2001:db8::1'), 'DOM: kanonisk form er streng');
+    w.IPV6T.app.startRound([t21], false);
+    ok(d.getElementById('task-question').innerHTML.indexOf('<code>') >= 0 && d.getElementById('task-question').innerHTML.indexOf('`') < 0, 'spørsmålet viser kode');
+    d.getElementById('answer-input').value = '2001:db8::1';
+    d.getElementById('answer-form').dispatchEvent(new w.Event('submit', { cancelable: true }));
+    ok(d.querySelector('#feedback .verdict').textContent.indexOf('Riktig') >= 0, '21-007 rettet');
+    d.getElementById('answer-form').dispatchEvent(new w.Event('submit', { cancelable: true }));
+    ok(w.localStorage.getItem('ipv6t.stats.v1') === snapshot && w.localStorage.getItem('ipv6t.hvorfor.stats.v1') === hvorforSnap, 'hex og hvorfor er urørt etter notasjon');
+    ok(w.localStorage.getItem('ngrunn.stats.v1') === '{"marker":"ng"}', 'ngrunn.stats.v1 er urørt');
+    var nota = w.localStorage.getItem('ipv6t.notasjon.stats.v1');
+    ok(nota && nota.indexOf('21-001') < 0 && nota.indexOf('21-007') < 0, 'notasjon har egen nøkkel uten oppgave-id');
+    clickModule('Hvorfor IPv6: historie og fremtid');
     d.querySelector('.nav [data-nav="teori"]').click();
     var theory = d.getElementById('theory-content');
     ok(theory.textContent.indexOf('Problemet med IPv4') >= 0 && theory.textContent.indexOf('46,77') >= 0, 'teorien viser historien og adopsjonstallet');
@@ -325,7 +419,8 @@ if (!JSDOM) {
     ok(!theory.querySelector('.katex-error'), 'ingen KaTeX-feil');
     d.getElementById('reset-stats-btn').click();
     ok(w.localStorage.getItem('ipv6t.stats.v1') === null, 'nullstilling sletter lagret statistikk');
-    ok(w.localStorage.getItem('ipv6t.hvorfor.stats.v1') === null, 'nullstilling sletter også hvorfor-nøkkelen');
+    ok(w.localStorage.getItem('ipv6t.hvorfor.stats.v1') === null && w.localStorage.getItem('ipv6t.notasjon.stats.v1') === null, 'nullstilling sletter også de egne nøklene');
+    ok(w.localStorage.getItem('ngrunn.stats.v1') === '{"marker":"ng"}', 'nullstilling rører ikke ngrunn');
     ok(errors.length === 0, 'ingen JS-feil: ' + errors.join('\n'));
     w.close();
     finish();

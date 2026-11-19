@@ -12,7 +12,7 @@ Nettstedet er ren statisk HTML, CSS og JS uten byggesteg. Repo-roten tilsvarer s
 - `assets/` — felles ressurser (blant annet `portal.css`)
 - `nettverk/` — nettverksseksjonen (`nettverk/index.html`)
 - `nettverk/ipv6/` — IPv6-treneren, med `css/`, `js/` og `js/modules/`
-- `content/nettverk/ipv6/ipv6-hvorfor/` — statisk modul 0, «Hvorfor IPv6». Versjon i `<meta name="ipv6-innhold-versjon">`
+- `content/nettverk/ipv6/` — statiske IPv6-moduler. Versjon i `<meta name="ipv6-innhold-versjon">`. Kartleggingen ligger i `nettverk/ipv6/js/modules/catalog.js`.
 - `nettverk/grunnleggende/` — treneren Nettverk grunnleggende
 - `content/nettverk/grunnleggende/` — temaene til den treneren, pluss manifestet `index.json`
 - `ai/` — AI-seksjonen (`ai/index.html`)
@@ -34,7 +34,19 @@ Nettstedet deployes fra `main`. Serveren henter `main` automatisk omtrent hvert 
 
 Selvtestene ligger i `tests/` og kjøres lokalt. Det finnes ingen `package.json` i repo-roten. jsdom er en devDependency i `tests/package.json` og brukes bare av DOM-røyktesten.
 
-IPv6-treneren dekkes av `tests/ipv6/test.js`. Den er verifisert med Node.js 22.23.4. Skriptet leser `nettverk/ipv6/` ut fra sin egen plassering (`path.resolve(__dirname, '../../nettverk/ipv6')`), så arbeidsmappen du starter Node fra spiller ingen rolle. Modul 0 leser `teori.md` og `oppgaver.json` og bruker YAML, retting og markdown fra `nettverk/grunnleggende/js/`. Fremgangen der lagres i `ipv6t.hvorfor.stats.v1`, ikke i `ipv6t.stats.v1`. Nettverk grunnleggende dekkes av `tests/grunnleggende/test.js`. `npm test` kjører begge.
+IPv6-treneren dekkes av `tests/ipv6/test.js`. Den er verifisert med Node.js 22.23.4. Skriptet leser `nettverk/ipv6/` ut fra sin egen plassering (`path.resolve(__dirname, '../../nettverk/ipv6')`), så arbeidsmappen du starter Node fra spiller ingen rolle. Statiske moduler leser `teori.md` og `oppgaver.json` og bruker YAML, retting og markdown fra `nettverk/grunnleggende/js/`. Hver statisk modul har egen localStorage-nøkkel. `ipv6t.stats.v1` er bare heks-modulen. Nettverk grunnleggende dekkes av `tests/grunnleggende/test.js`. `npm test` kjører begge.
+
+Kartet i `nettverk/ipv6/js/modules/catalog.js` er kilden. `jsId` for notasjon, subnetting og typer er de samme som de gamle plassholderne. Det finnes ingen hash-rute å bevare.
+
+| Innhold | JS-id | Kode | Statistikk |
+| --- | --- | --- | --- |
+| `ipv6-hvorfor` | `ipv6-hvorfor` | 0 | `ipv6t.hvorfor.stats.v1` |
+| `21-adressenotasjon` | `notasjon` | 2.1 | `ipv6t.notasjon.stats.v1` |
+| `22-subnetting` | `subnetting` | 2.2 | `ipv6t.subnetting.stats.v1` |
+| `2a-smarthus-del-1` | `smarthus1` | 2a | `ipv6t.smarthus1.stats.v1` |
+| `23-adressetyper` | `typer` | 2.3 | `ipv6t.typer.stats.v1` |
+
+Kode 2a sorteres med `order` `2.2a`, så rekkefølgen blir 2.1, 2.2, 2a, 2.3. En oppgave som ber om kanonisk form (eller «forkortes etter RFC 5952») og har et adressesvar, rettes eksakt: trim av endene, ellers tegn for tegn. Store bokstaver, ledende nuller, uforkortet form og feil plassering av `::` er feil. Svaret foldes ikke ut.
 
 ```bash
 cd tests
@@ -56,6 +68,8 @@ CSS- og JS-filer lenkes med queryen `?v=YYYYMMDDx`:
 - `assets/portal.css` lenkes fra forsiden, `nettverk/` og `ai/` med `?v=20261118a`.
 
 LoRA-innhold har et eget versjonsmerke, atskilt fra `?v=` på CSS og JS. `<meta name="lora-innhold-versjon">` i `ai/lora/index.html` legges på `index.json`, `teori.md` og `oppgaver.json`. Øk meta-verdien når innhold eller manifest endres. Ellers kan Cloudflare fortsette å servere den gamle filen selv om HTML-en er ny.
+
+IPv6-innhold har tilsvarende `<meta name="ipv6-innhold-versjon">` i `nettverk/ipv6/index.html`. Den legges på `teori.md` og `oppgaver.json`. Nåværende verdi er `20261119a`.
 
 KaTeX-fontene lastes relativt fra CSS-en (`fonts/*.woff2`). De har ikke eget `?v=`. woff2 står først i CSS-en, så nettleseren henter ikke woff/ttf, og de filene ligger ikke i repoet. Ved bytte av KaTeX-versjon byttes fontfilene ut.
 

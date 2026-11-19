@@ -1,0 +1,487 @@
+[
+  {
+    "id": "2a-001",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Husholdningen i Fjellveien 4 har fått `2001:db8:a00:bb00::/56`. Hvor mange `/64`-nett rommer denne blokken?",
+    "svar": [
+      "256"
+    ],
+    "forklaring": {
+      "steg": [
+        "Forskjellen i prefikslengde er $64 - 56 = 8$ bit.",
+        "$2^{8} = 256$."
+      ]
+    }
+  },
+  {
+    "id": "2a-002",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett rommer en `/60`, slik den første delen av tildelingen i Fjellveien 4 er satt av til?",
+    "svar": [
+      "16"
+    ],
+    "forklaring": {
+      "steg": [
+        "$64 - 60 = 4$ bit, altså ett heksadesimalt siffer.",
+        "$2^{4} = 16$."
+      ]
+    }
+  },
+  {
+    "id": "2a-003",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Husholdningen trenger 8 `/64`-nett nå og vil dele på nibble-grense. Hvor mange `/64` må blokken de setter av minst romme?",
+    "svar": [
+      "16"
+    ],
+    "forklaring": {
+      "steg": [
+        "Neste nibble-steg etter 8 er 16 (4 bit, prefiks `/60`).",
+        "8 er $2^{3}$, som ville gitt `/61`, men `/61` kutter midt i et heks-siffer."
+      ]
+    }
+  },
+  {
+    "id": "2a-004",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvilken prefikslengde (bare tallet, uten skråstrek) får du når du setter av 16 `/64`-nett fra en `/56`?",
+    "svar": [
+      "60"
+    ],
+    "forklaring": {
+      "steg": [
+        "16 nett krever 4 ekstra bit: $56 + 4 = 60$.",
+        "Lengden 60 er delelig med 4, altså på nibble-grense."
+      ]
+    }
+  },
+  {
+    "id": "2a-005",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "De åtte nettene i planen bruker nummer 0–7 i den første `/60`. Hvor mange `/64` i denne `/60`-en står da reservert til senere?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "En `/60` har 16 `/64`. Åtte er i bruk (0–7).",
+        "16 − 8 = 8 nett (`bb08`–`bb0f`) blir stående ledige."
+      ]
+    }
+  },
+  {
+    "id": "2a-006",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange `/64`-nett i `2001:db8:a00:bb00::/56` ligger *utenfor* den første `/60` (`2001:db8:a00:bb00::/60`)?",
+    "svar": [
+      "240"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hele tildelingen har 256 `/64`. Den første `/60` tar 16 av dem.",
+        "256 − 16 = 240 nett (`bb10`–`bbff`) er urørt."
+      ]
+    }
+  },
+  {
+    "id": "2a-007",
+    "nivå": 2,
+    "type": "tall",
+    "spørsmål": "Hvor mange bit er det fra `/56`-prefikset til et `/64`-subnett (subnett-ID-feltet i Fjellveien 4)?",
+    "svar": [
+      "8"
+    ],
+    "forklaring": {
+      "steg": [
+        "$64 - 56 = 8$ bit, som er de to siste heks-sifrene i fjerde gruppe (`bb00`–`bbff`)."
+      ]
+    }
+  },
+  {
+    "id": "2a-008",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvorfor får hvert rom eller hver enhetsgruppe i Fjellveien 4 et eget `/64`?",
+    "svar": [
+      "Et LAN skal være `/64` slik at blant annet SLAAC virker"
+    ],
+    "forklaring": {
+      "steg": [
+        "RFC 4291 og RFC 6177 anbefaler `/64` per subnett. SLAAC bruker 64 bit til interface-ID.",
+        "Du planlegger etter antall nett, ikke etter antall lyspærer eller kameraer."
+      ]
+    },
+    "alternativer": [
+      "Et LAN skal være `/64` slik at blant annet SLAAC virker",
+      "Et `/64` rommer nøyaktig 254 enheter, som et IPv4-`/24`",
+      "Internettleverandøren tillater bare ett `/64` totalt",
+      "Kameraer krever `/120` for å spare adresser"
+    ]
+  },
+  {
+    "id": "2a-009",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Husholdningen trenger 8 nett. Hvorfor setter de av en `/60` og ikke en `/61`?",
+    "svar": [
+      "`/60` ligger på nibble-grense (16 nett) og er lettere å lese og utvide"
+    ],
+    "forklaring": {
+      "steg": [
+        "`/61` ville gitt nøyaktig 8 `/64`, men kutter midt i fjerde gruppe.",
+        "På nibble-grense rundes det opp til 16 nett (`/60`). Da er det også rom til senere."
+      ]
+    },
+    "alternativer": [
+      "`/60` ligger på nibble-grense (16 nett) og er lettere å lese og utvide",
+      "En `/61` er ikke lov i IPv6",
+      "En `/60` er den minste blokken en internethusholdning kan få",
+      "En `/61` rommer bare 2 `/64`"
+    ]
+  },
+  {
+    "id": "2a-010",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket prefiks er den første `/60` i tildelingen `2001:db8:a00:bb00::/56`? Svar i kanonisk form.",
+    "svar": [
+      "2001:db8:a00:bb00::/60"
+    ],
+    "forklaring": {
+      "steg": [
+        "De første 60 bitene av `2001:db8:a00:bb00::` gir nettet `2001:db8:a00:bb00::/60`.",
+        "Det dekker fjerde gruppe `bb00`–`bb0f`."
+      ]
+    },
+    "alternativer": [
+      "2001:db8:a00:bb00::/60",
+      "2001:db8:a00:bb00::/64",
+      "2001:db8:a00:bb10::/60",
+      "2001:db8:a00:bb00::/56"
+    ]
+  },
+  {
+    "id": "2a-011",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv det første `/64`-nettet i `2001:db8:a00:bb00::/56` i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb00::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Første subnett har subnett-ID 0, altså fjerde gruppe `bb00`.",
+        "Kanonisk form: `2001:db8:a00:bb00::/64`. Det er infrastruktur-nettet i planen."
+      ]
+    }
+  },
+  {
+    "id": "2a-012",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv det siste `/64`-nettet i hele tildelingen `2001:db8:a00:bb00::/56` i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bbff::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Siste av 256 nett har fjerde gruppe `bbff`.",
+        "Kanonisk form: `2001:db8:a00:bbff::/64`. Det ligger utenfor den første `/60` og er ikke i bruk ennå."
+      ]
+    }
+  },
+  {
+    "id": "2a-013",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv det siste `/64`-nettet i den avsatte `/60` (`2001:db8:a00:bb00::/60`) i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb0f::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "En `/60` dekker 16 nett, `bb00`–`bb0f`.",
+        "Siste reserverte nett er `2001:db8:a00:bb0f::/64`."
+      ]
+    }
+  },
+  {
+    "id": "2a-014",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "I planen telles subnett fra 0. Skriv prefikset til subnett nummer 5 (kameraer) i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb05::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Nummer 5 gir fjerde gruppe `bb05`.",
+        "Kamera-nettet er `2001:db8:a00:bb05::/64`."
+      ]
+    }
+  },
+  {
+    "id": "2a-015",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv prefikset til gjestenettet (subnett nummer 3, telt fra 0) i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb03::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Nummer 3 gir fjerde gruppe `bb03`.",
+        "Gjestenettet er `2001:db8:a00:bb03::/64`."
+      ]
+    }
+  },
+  {
+    "id": "2a-016",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv prefikset til IoT-nettet (lys, termostater, høyttalere) i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb04::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "IoT er nummer 4 i tabellen.",
+        "Prefikset er `2001:db8:a00:bb04::/64`."
+      ]
+    }
+  },
+  {
+    "id": "2a-017",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilket `/64`-nett tilhører adressen `2001:db8:a00:bb04:2::15`? Skriv prefikset i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb04::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjerde gruppe er `bb04`. De siste 64 bitene er interface-ID og teller ikke med i `/64`-prefikset.",
+        "Adressen ligger i IoT-nettet `2001:db8:a00:bb04::/64`."
+      ]
+    }
+  },
+  {
+    "id": "2a-018",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Hvilket `/64`-nett tilhører adressen `2001:db8:a00:bb03::cafe`? Skriv prefikset i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb03::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjerde gruppe er `bb03`.",
+        "Det er gjestenettet `2001:db8:a00:bb03::/64`."
+      ]
+    }
+  },
+  {
+    "id": "2a-019",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket nett i planen tilhører adressen `2001:db8:a00:bb00::1`?",
+    "svar": [
+      "Infrastruktur (ruter og aksesspunkter)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjerde gruppe `bb00` er subnett nummer 0 i tabellen.",
+        "Det er infrastruktur-nettet, `2001:db8:a00:bb00::/64`."
+      ]
+    },
+    "alternativer": [
+      "Infrastruktur (ruter og aksesspunkter)",
+      "Gjestenett",
+      "Kameraer",
+      "Ute og garasje (lader og port)"
+    ]
+  },
+  {
+    "id": "2a-020",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilket nett i planen tilhører adressen `2001:db8:a00:bb07:0:0:0:aa`?",
+    "svar": [
+      "Ute og garasje (lader og port)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjerde gruppe `bb07` er subnett nummer 7.",
+        "Ifølge tabellen er det ute- og garasje-nettet."
+      ]
+    },
+    "alternativer": [
+      "Ute og garasje (lader og port)",
+      "Hjemmekontor",
+      "IoT (lys, termostater, høyttalere)",
+      "Infrastruktur (ruter og aksesspunkter)"
+    ]
+  },
+  {
+    "id": "2a-021",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hvilken påstand om adressen `2001:db8:a00:bb0c:1::2` er riktig?",
+    "svar": [
+      "Den ligger i den avsatte `/60`, men i et `/64` som foreløpig bare er reservert"
+    ],
+    "forklaring": {
+      "steg": [
+        "`bb0c` er subnett 12, altså blant nummer 8–15 i `2001:db8:a00:bb00::/60`.",
+        "Det er ikke tatt i bruk i de åtte nettene nå, men det ligger klart til senere."
+      ]
+    },
+    "alternativer": [
+      "Den ligger i den avsatte `/60`, men i et `/64` som foreløpig bare er reservert",
+      "Den ligger utenfor hele `/56`-tildelingen",
+      "Den tilhører IoT-nettet `bb04`",
+      "Den tilhører gjestenettet"
+    ]
+  },
+  {
+    "id": "2a-022",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hører adressen `2001:db8:a00:bb80::1` til den første `/60` som huset har satt av?",
+    "svar": [
+      "Nei, men den ligger likevel i `/56`-tildelingen"
+    ],
+    "forklaring": {
+      "steg": [
+        "`bb80` er utenfor `bb00`–`bb0f`, så den er ikke i `2001:db8:a00:bb00::/60`.",
+        "Den er derimot inne i `2001:db8:a00:bb00::/56` (`bb00`–`bbff`)."
+      ]
+    },
+    "alternativer": [
+      "Nei, men den ligger likevel i `/56`-tildelingen",
+      "Ja, den er i kamera-nettet",
+      "Nei, den ligger helt utenfor tildelingen fra leverandøren",
+      "Ja, alle adresser som starter med `2001:db8:a00` er i den første `/60`"
+    ]
+  },
+  {
+    "id": "2a-023",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Hører adressen `2001:db8:a00:bc00::1` til tildelingen `2001:db8:a00:bb00::/56`?",
+    "svar": [
+      "Nei, `bc00` ligger utenfor `bb00`–`bbff`"
+    ],
+    "forklaring": {
+      "steg": [
+        "Et `/56` låser de første 8 bitene av fjerde gruppe. Her er de `bb`.",
+        "`bc00` skiller seg allerede der, så adressen er ikke i blokken huset har fått."
+      ]
+    },
+    "alternativer": [
+      "Nei, `bc00` ligger utenfor `bb00`–`bbff`",
+      "Ja, fordi både `bb00` og `bc00` starter med `b`",
+      "Ja, den er det siste nettet i `/56`-en",
+      "Ja, den er i den andre `/60`"
+    ]
+  },
+  {
+    "id": "2a-024",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Senere vil huset kanskje bruke neste gruppe på 16 `/64` (for eksempel til et anneks). Skriv den andre `/60` i `2001:db8:a00:bb00::/56` i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb10::/60"
+    ],
+    "forklaring": {
+      "steg": [
+        "Etter `2001:db8:a00:bb00::/60` kommer neste `/60` med fjerde gruppe `bb10`.",
+        "Kanonisk form: `2001:db8:a00:bb10::/60`."
+      ]
+    }
+  },
+  {
+    "id": "2a-025",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Husholdningen trenger 20 `/64` i stedet for 8, og vil fortsatt holde nibble-grense. Hva er minste blokk de da kan sette av innenfor `/56`-en?",
+    "svar": [
+      "Hele `/56` (256 `/64`)"
+    ],
+    "forklaring": {
+      "steg": [
+        "16 nett (`/60`) er for lite til 20. Neste nibble-steg fra `/56` er hele `/56` (256 nett).",
+        "Et `/59` ville gitt 32 nett, men 59 er ikke delelig med 4."
+      ]
+    },
+    "alternativer": [
+      "Hele `/56` (256 `/64`)",
+      "Den første `/60` (16 `/64`)",
+      "Ett enkelt `/64`",
+      "En `/48`, som de må bestille på nytt for 20 nett"
+    ]
+  },
+  {
+    "id": "2a-026",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "Ifølge planen, hvilket prefiks har hjemmekontoret?",
+    "svar": [
+      "2001:db8:a00:bb01::/64"
+    ],
+    "forklaring": {
+      "steg": [
+        "Hjemmekontor er subnett nummer 1.",
+        "Fjerde gruppe blir `bb01`, altså `2001:db8:a00:bb01::/64`."
+      ]
+    },
+    "alternativer": [
+      "2001:db8:a00:bb01::/64",
+      "2001:db8:a00:bb00::/64",
+      "2001:db8:a00:bb10::/64",
+      "2001:db8:a00:bb01::/56"
+    ]
+  },
+  {
+    "id": "2a-027",
+    "nivå": 2,
+    "type": "tekst",
+    "spørsmål": "Skriv tildelingen `2001:0db8:0a00:bb00:0000:0000:0000:0000/56` i kanonisk form, med `/lengde`.",
+    "svar": [
+      "2001:db8:a00:bb00::/56"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjern ledende nuller og komprimer 0-gruppene etter RFC 5952.",
+        "Prefikslengden `/56` beholdes: `2001:db8:a00:bb00::/56`."
+      ]
+    }
+  },
+  {
+    "id": "2a-028",
+    "nivå": 2,
+    "type": "flervalg",
+    "spørsmål": "En termostat har adressen `2001:db8:a00:bb04:aa::3`. Hvilken rad i planen er det?",
+    "svar": [
+      "IoT (lys, termostater, høyttalere)"
+    ],
+    "forklaring": {
+      "steg": [
+        "Fjerde gruppe `bb04` er subnett nummer 4.",
+        "I tabellen er det IoT-nettet."
+      ]
+    },
+    "alternativer": [
+      "IoT (lys, termostater, høyttalere)",
+      "Kameraer",
+      "Kjøkken",
+      "Media og stue"
+    ]
+  }
+]
