@@ -65,7 +65,7 @@ CSS- og JS-filer lenkes med queryen `?v=YYYYMMDDx`:
 - `YYYYMMDD` er datoen filen endres.
 - Bokstaven til slutt er `a` første gang den dagen, deretter `b`, `c` og videre hvis samme fil endres flere ganger samme dag.
 - Når en CSS- eller JS-fil endres, må `?v=` økes i alle HTML-sider som lenker den filen. En side som beholder den gamle queryen, kan fortsette å få den cachede utgaven.
-- `assets/css/tokens.css` lenkes først på alle sider som bruker portal- eller trener-CSS, med `?v=20261119b`. `assets/portal.css` og trenernes `css/style.css` har samme query.
+- `assets/css/tokens.css` lenkes først på alle sider som bruker portal- eller trener-CSS, med `?v=20261119c`. `assets/portal.css`, trenernes `css/style.css` og `assets/fonts/Inter-latin-nb.woff2` har samme query. Inter forhåndslastes på portalsidene.
 
 LoRA-innhold har et eget versjonsmerke, atskilt fra `?v=` på CSS og JS. `<meta name="lora-innhold-versjon">` i `ai/lora/index.html` legges på `index.json`, `teori.md` og `oppgaver.json`. Øk meta-verdien når innhold eller manifest endres. Ellers kan Cloudflare fortsette å servere den gamle filen selv om HTML-en er ny.
 

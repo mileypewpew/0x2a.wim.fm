@@ -6,7 +6,7 @@ main, .view, .card, .table-wrap { min-width: 0; max-width: 100%; }
 button, .btn, .nav button, .linklike, .module-card, .segmented label { touch-action: manipulation; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
-  font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font: 17px/1.55 var(--sans);
   display: flex; flex-direction: column; min-height: 100vh;
 }
 code, .mono { font-family: var(--mono); overflow-wrap: anywhere; }
@@ -51,7 +51,9 @@ main { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 1.2rem 1rem
 }
 .module-card:hover:not(:disabled) { border-color: var(--accent); }
 .module-card.selected { border-color: var(--accent); background: var(--accent-soft); }
-.module-card.soon { opacity: .5; cursor: not-allowed; filter: grayscale(1); }
+/* Uten opacity: halvdekning mot --bg kom under 4.5:1. */
+.module-card.soon { cursor: not-allowed; color: var(--muted); }
+.module-card.soon .module-code, .module-card.soon .module-title { color: var(--muted); }
 .module-code { font-family: var(--mono); font-size: .85rem; color: var(--accent); font-weight: 700; }
 .module-title { font-weight: 650; }
 .module-desc { font-size: .88rem; color: var(--muted); }
@@ -81,7 +83,8 @@ input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1p
   font: inherit; font-weight: 600; padding: .6rem 1.1rem; border-radius: 10px; cursor: pointer;
   border: 1px solid var(--border); background: var(--surface); color: var(--text);
 }
-.btn:hover { background: var(--surface-2); }
+/* Ramme på --surface-2 er under 3:1 i mørkt Fjordlys. Aksentramme holder AA. */
+.btn:hover { background: var(--surface-2); border-color: var(--accent); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
 .btn.primary:hover { filter: brightness(1.08); }
 .btn.danger { color: var(--bad); border-color: var(--bad); }
@@ -161,7 +164,7 @@ th { font-size: .85rem; color: var(--muted); font-weight: 600; }
 
 .chart { width: 100%; max-width: 100%; height: auto; display: block; margin: .3rem 0 .6rem; }
 .chart .grid { stroke: var(--border); stroke-width: 1; }
-.chart .axis { fill: var(--muted); font-size: 12px; font-family: system-ui, sans-serif; }
+.chart .axis { fill: var(--muted); font-size: 12px; font-family: var(--sans); }
 .chart .lbl { font-size: 13px; fill: var(--text); }
 .chart .line { fill: none; stroke: var(--accent); stroke-width: 2.5; }
 .chart .dot { fill: var(--accent); }
